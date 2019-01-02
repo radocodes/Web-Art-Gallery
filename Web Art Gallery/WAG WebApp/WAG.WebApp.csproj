@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WAG.Data\WAG.Data.csproj" />
+    <ProjectReference Include="..\WAG.Services\WAG.Services.csproj" />
     <ProjectReference Include="..\WAG.ViewModels\WAG.ViewModels.csproj" />
   </ItemGroup>
 

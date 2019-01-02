@@ -13,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WAG.Data;
 using WAG.Data.Models;
+using WAG.Services.Interfaces;
+using WAG.Services;
 
 namespace WAG.WebApp
 {
@@ -49,6 +51,8 @@ namespace WAG.WebApp
             })
                 .AddEntityFrameworkStores<WAGDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddScoped<IUserAccountService, UserAccountService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
