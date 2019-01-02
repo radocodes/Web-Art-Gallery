@@ -19,6 +19,10 @@ namespace WAG.Data.Models
 
         public string OrderInfo { get; set; }
 
+        public string TelephoneNumberForContact { get; set; }
+
+        public string DeliveryAddress { get; set; }
+
         public virtual ICollection<ArtisticWork> ArtisticWorks { get; set; }
     }
 }

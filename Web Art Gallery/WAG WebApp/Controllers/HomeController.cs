@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WAG_WebApp.Models;
 
-namespace WAG_WebApp.Controllers
+namespace WAG.WebApp.Controllers
 {
     public class HomeController : Controller
     {

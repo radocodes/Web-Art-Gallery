@@ -12,8 +12,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WAG.Data;
+using WAG.Data.Models;
 
-namespace WAG_WebApp
+namespace WAG.WebApp
 {
     public class Startup
     {
@@ -37,8 +38,17 @@ namespace WAG_WebApp
             services.AddDbContext<WAGDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<WAGDbContext>();
+            services.AddIdentity<WAGUser, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 4;
+                options.Password.RequiredUniqueChars = 0;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            })
+                .AddEntityFrameworkStores<WAGDbContext>()
+                .AddDefaultTokenProviders();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

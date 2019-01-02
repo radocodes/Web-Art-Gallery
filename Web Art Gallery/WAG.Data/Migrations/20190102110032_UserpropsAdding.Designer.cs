@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WAG.Data;
 
 namespace WAG.Data.Migrations
 {
     [DbContext(typeof(WAGDbContext))]
-    partial class WAGDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190102110032_UserpropsAdding")]
+    partial class UserpropsAdding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -397,8 +399,6 @@ namespace WAG.Data.Migrations
                     b.Property<int>("AccessFailedCount");
 
                     b.Property<string>("Address");
-
-                    b.Property<string>("City");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
