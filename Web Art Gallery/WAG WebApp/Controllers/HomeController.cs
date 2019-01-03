@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WAG_WebApp.Models;
 
@@ -11,6 +12,17 @@ namespace WAG.WebApp.Controllers
     public class HomeController : Controller
     {
         public IActionResult Index()
+        {
+            if (this.User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("IndexLogged", "Home");
+            }
+
+            return View();
+        }
+
+        [Authorize]
+        public IActionResult IndexLogged()
         {
             return View();
         }

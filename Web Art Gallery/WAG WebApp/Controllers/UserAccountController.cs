@@ -58,7 +58,7 @@ namespace WAG.WebApp.Controllers
         [HttpPost]
         public IActionResult Register(RegisterInputViewModel registerInputViewModel)
         {
-            var registerResult = this.UserAccountService.RegisterUserSuccessfully(registerInputViewModel).Result;
+            var registerResult = this.UserAccountService.RegisterUserSuccessfullyAsync(registerInputViewModel).Result;
 
             if (registerResult != SignInResult.Success)
             {

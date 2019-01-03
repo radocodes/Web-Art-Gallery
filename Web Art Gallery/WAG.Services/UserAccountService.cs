@@ -38,7 +38,7 @@ namespace WAG.Services
             return this.SignInManager.PasswordSignInAsync(user, inputPassword, true, false).Result;
         }
 
-        public async Task<SignInResult> RegisterUserSuccessfully(RegisterInputViewModel registerInputViewModel)
+        public async Task<SignInResult> RegisterUserSuccessfullyAsync(RegisterInputViewModel registerInputViewModel)
         {
             var user = new WAGUser()
             {

@@ -1,0 +1,62 @@
+﻿@model WAG.ViewModels.InputViewModels.ArtWorkInputViewModel
+@{
+    ViewData["Title"] = "AddArtWork";
+}
+
+<h2>AddArtWork</h2>
+
+<form method="post" enctype="multipart/form-data" class="center-block">
+    <hr style="height: 3px; background-color: black" />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label asp-for="Year"></label>
+                <input asp-for="Year" class="form-control" placeholder="Year..." />
+                <span asp-validation-for="Year" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Height"></label>
+                <input asp-for="Height" class="form-control" placeholder="Height..." />
+                <span asp-validation-for="Height" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Width"></label>
+                <input asp-for="Width" class="form-control" placeholder="Width..." />
+                <span asp-validation-for="Width" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price"></label>
+                <input asp-for="Price" class="form-control" placeholder="Price..." />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Availability"></label>
+                <input asp-for="Availability" class="form-control" placeholder="Availability..." />
+                <span asp-validation-for="Availability" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HasFrame"></label>
+                <input asp-for="HasFrame" class="form-control" placeholder="HasFrame..." />
+                <span asp-validation-for="HasFrame" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Category"></label>
+                <input asp-for="Category" class="form-control" placeholder="Category..." />
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Technique"></label>
+                <input asp-for="Technique" class="form-control" placeholder="Technique..." />
+                <span asp-validation-for="Technique" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <asp-controller ="ArtisticWork" name="Picture" asp-action="AddArtWork">
+                    <input type="file" name="Picture">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-default" style="background-color: black; color: white">Добави произведение</button>
+    </div>
+</form>

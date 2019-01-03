@@ -53,6 +53,7 @@ namespace WAG.WebApp
                 .AddDefaultTokenProviders();
 
             services.AddScoped<IUserAccountService, UserAccountService>();
+            services.AddScoped<IArtisticWorkService, ArtisticWorkService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
