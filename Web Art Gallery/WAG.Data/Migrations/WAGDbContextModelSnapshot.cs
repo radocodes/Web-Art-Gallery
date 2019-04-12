@@ -135,6 +135,8 @@ namespace WAG.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("CreatedOn");
+
                     b.Property<DateTime>("EventDate");
 
                     b.Property<string>("Info");
@@ -175,7 +177,7 @@ namespace WAG.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("Date");
+                    b.Property<DateTime>("CreatedOn");
 
                     b.Property<bool>("IsDeleted");
 
@@ -221,15 +223,17 @@ namespace WAG.Data.Migrations
 
                     b.Property<bool>("Availability");
 
+                    b.Property<DateTime>("CreatedOn");
+
+                    b.Property<DateTime>("EditedOn");
+
                     b.Property<bool>("HasFrame");
 
                     b.Property<double>("Height");
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<int>("OrderId");
-
-                    b.Property<int>("PictureId");
+                    b.Property<int?>("OrderId");
 
                     b.Property<decimal>("Price");
 
@@ -317,15 +321,11 @@ namespace WAG.Data.Migrations
 
                     b.Property<string>("Title");
 
-                    b.Property<string>("WAGUser");
-
-                    b.Property<int>("WAGUserId");
-
-                    b.Property<string>("WAGUserId1");
+                    b.Property<string>("WAGUserId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("WAGUserId1");
+                    b.HasIndex("WAGUserId");
 
                     b.ToTable("ContactMessages");
                 });
@@ -336,6 +336,8 @@ namespace WAG.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("CreatedOn");
+
                     b.Property<string>("DeliveryAddress");
 
                     b.Property<bool>("IsDeleted");
@@ -344,13 +346,11 @@ namespace WAG.Data.Migrations
 
                     b.Property<string>("TelephoneNumberForContact");
 
-                    b.Property<int>("WAGUserId");
-
-                    b.Property<string>("WAGUserId1");
+                    b.Property<string>("WAGUserId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("WAGUserId1");
+                    b.HasIndex("WAGUserId");
 
                     b.ToTable("Orders");
                 });
@@ -359,7 +359,7 @@ namespace WAG.Data.Migrations
                 {
                     b.Property<int>("Id");
 
-                    b.Property<int>("ArtisticWorkId");
+                    b.Property<DateTime>("CreatedOn");
 
                     b.Property<bool>("IsDeleted");
 
@@ -376,9 +376,7 @@ namespace WAG.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatedTime");
-
-                    b.Property<int>("EventId");
+                    b.Property<DateTime>("CreatedOn");
 
                     b.Property<string>("LogLevel");
 
@@ -549,8 +547,7 @@ namespace WAG.Data.Migrations
 
                     b.HasOne("WAG.Data.Models.Order", "Order")
                         .WithMany("ArtisticWorks")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("OrderId");
                 });
 
             modelBuilder.Entity("WAG.Data.Models.Comment", b =>
@@ -567,16 +564,16 @@ namespace WAG.Data.Migrations
 
             modelBuilder.Entity("WAG.Data.Models.ContactMessage", b =>
                 {
-                    b.HasOne("WAG.Data.Models.WAGUser")
+                    b.HasOne("WAG.Data.Models.WAGUser", "WAGUser")
                         .WithMany("ContactMessages")
-                        .HasForeignKey("WAGUserId1");
+                        .HasForeignKey("WAGUserId");
                 });
 
             modelBuilder.Entity("WAG.Data.Models.Order", b =>
                 {
                     b.HasOne("WAG.Data.Models.WAGUser", "WAGUser")
                         .WithMany("Orders")
-                        .HasForeignKey("WAGUserId1");
+                        .HasForeignKey("WAGUserId");
                 });
 
             modelBuilder.Entity("WAG.Data.Models.Picture", b =>

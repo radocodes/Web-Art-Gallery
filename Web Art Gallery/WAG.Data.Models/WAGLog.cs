@@ -8,10 +8,8 @@ namespace WAG.Data.Models
     {
         public string Message { get; set; }
 
-        public int EventId { get; set; }
-
         public string LogLevel { get; set; }
 
-        public DateTime CreatedTime { get; set; }
+        public DateTime CreatedOn { get; set; }
     }
 }

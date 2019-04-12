@@ -9,6 +9,6 @@ namespace WAG.Services.Interfaces
 {
     public interface IArtisticWorkService
     {
-        void AddArtWork(ArtWorkInputViewModel inputViewModel);
+        void AddArtWorkAsync(ArtWorkInputViewModel inputViewModel);
     }
 }

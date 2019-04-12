@@ -2,22 +2,38 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WAG.Data;
 using WAG.Data.Models;
 using WAG.Services.Interfaces;
 using WAG.ViewModels.InputViewModels;
 
 namespace WAG.Services
 {
-    public class ArtisticWorkService :IArtisticWorkService
+    public class ArtisticWorkService : IArtisticWorkService
     {
-        public void AddArtWork(ArtWorkInputViewModel inputViewModel)
+        private WAGDbContext DbContext;
+
+        public ArtisticWorkService(WAGDbContext dbContext)
         {
-            var category = new ArtisticWorkCategory()
+            this.DbContext = dbContext;
+        }
+
+        public void AddArtWorkAsync(ArtWorkInputViewModel inputViewModel)
+        {
+            var category = new ArtisticWorkCategory();
+
+            if (DbContext.ArtisticWorkCategories.Any(x => x.Name == inputViewModel.Category))
             {
-                Name = inputViewModel.Category
-            };
+                category = DbContext.ArtisticWorkCategories.FirstOrDefault(x => x.Name == inputViewModel.Category);
+            }
+
+            else
+            {
+                category.Name = inputViewModel.Category;
+            }
 
             var technique = new ArtisticWorkTechnique()
             {
@@ -27,6 +43,11 @@ namespace WAG.Services
             var pictureUrl = new Picture()
             {
                 URL = UploadPictureAsync(inputViewModel.Picture).Result
+            };
+
+            var order = new Order()
+            {
+                OrderInfo = "Test"
             };
 
             var artWork = new ArtisticWork()
@@ -39,8 +60,12 @@ namespace WAG.Services
                 HasFrame = inputViewModel.HasFrame,
                 ArtisticWorkCategory = category,
                 ArtisticWorkTechnique = technique,
-                Picture = pictureUrl
+                Picture = pictureUrl,
             };
+
+            this.DbContext.ArtisticWorks.Add(artWork);
+
+            this.DbContext.SaveChanges();
         }
 
         private async Task<string> UploadPictureAsync(IFormFile picture)

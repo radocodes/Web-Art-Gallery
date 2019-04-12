@@ -11,17 +11,19 @@ namespace WAG.Data.Models
             this.ArtisticWorks = new HashSet<ArtisticWork>();
         }
 
-        public int WAGUserId { get; set; }
+        public string WAGUserId { get; set; }
 
         public virtual WAGUser WAGUser { get; set; }
-
-        public bool IsDeleted { get; set; }
 
         public string OrderInfo { get; set; }
 
         public string TelephoneNumberForContact { get; set; }
 
         public string DeliveryAddress { get; set; }
+
+        public bool IsDeleted { get; set; }
+
+        public DateTime CreatedOn { get; set; }
 
         public virtual ICollection<ArtisticWork> ArtisticWorks { get; set; }
     }

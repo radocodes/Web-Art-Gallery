@@ -19,8 +19,6 @@ namespace WAG.Data.Models
 
         public bool HasFrame { get; set; }
 
-        public int PictureId { get; set; }
-
         public virtual Picture Picture { get; set; }
 
         public int ArtisticWorkCategoryId { get; set; }
@@ -31,10 +29,13 @@ namespace WAG.Data.Models
 
         public virtual ArtisticWorkTechnique ArtisticWorkTechnique { get; set; }
 
-        public int OrderId { get; set; }
-
         public virtual Order Order { get; set; }
 
+        public DateTime CreatedOn { get; set; }
+
+        public DateTime EditedOn { get; set; }
+
         public bool IsDeleted { get; set; }
+
     }
 }

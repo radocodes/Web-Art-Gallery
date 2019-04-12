@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WAG.Data.Models
 {
-    public class Picture 
+    public class Picture : BaseModel<int>
     {
         public Picture()    
         {
@@ -15,13 +15,14 @@ namespace WAG.Data.Models
 
         [ForeignKey("ArtisticWork")]
         public int Id { get; set; }
-        public string URL { get; set; }
 
-        public int ArtisticWorkId { get; set; }
+        public string URL { get; set; }
 
         public virtual ArtisticWork ArtisticWork { get; set; }
 
         public bool IsDeleted { get; set; }
+
+        public DateTime CreatedOn { get; set; }
 
         public virtual ICollection<ArticlePicture> ArticlePictures { get; set; }
 

@@ -29,6 +29,5 @@ namespace WAG.ViewModels.InputViewModels
         public IFormFile Picture { get; set; }
 
         public string PictureUrl { get; set; }
-
     }
 }

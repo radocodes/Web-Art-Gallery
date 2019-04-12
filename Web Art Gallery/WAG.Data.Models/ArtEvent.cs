@@ -21,6 +21,8 @@ namespace WAG.Data.Models
 
         public bool IsDeleted { get; set; }
 
+        public DateTime CreatedOn { get; set; }
+
         public virtual ICollection<ArtEventPicture> ArtEventPictures { get; set; }
     }
 }

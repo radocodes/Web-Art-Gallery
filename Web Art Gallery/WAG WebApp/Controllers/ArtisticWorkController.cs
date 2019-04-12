@@ -35,7 +35,7 @@ namespace WAG.WebApp.Controllers
         [HttpPost]
         public IActionResult AddArtWork(ArtWorkInputViewModel artWorkInputViewModel)
         {
-            this.ArtisticWorkService.AddArtWork(artWorkInputViewModel);
+            this.ArtisticWorkService.AddArtWorkAsync(artWorkInputViewModel);
 
             return RedirectToAction("Index", "Home");
         }

@@ -14,7 +14,7 @@ namespace WAG.Data.Models
 
         public string TextBody { get; set; }
 
-        public DateTime Date { get; set; }
+        public DateTime CreatedOn { get; set; }
 
         public string WAGUserId { get; set; }
 

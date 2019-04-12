@@ -6,9 +6,9 @@ namespace WAG.Data.Models
 {
     public class ContactMessage : BaseModel<int>
     {
-        public int WAGUserId { get; set; }
+        public string WAGUserId { get; set; }
 
-        public virtual string WAGUser { get; set; }
+        public virtual WAGUser WAGUser { get; set; }
 
         public string Title { get; set; }
 
