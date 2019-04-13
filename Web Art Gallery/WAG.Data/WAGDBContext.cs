@@ -34,7 +34,7 @@ namespace WAG.Data
 
         public DbSet<Order> Orders { get; set; }
 
-        public DbSet<Picture> Pictures { get; set; }
+        //public DbSet<Picture> Pictures { get; set; }
 
         public DbSet<WAGLog> WAGLogs { get; set; }
 

@@ -19,7 +19,7 @@ namespace WAG.Data.Models
 
         public bool HasFrame { get; set; }
 
-        public virtual Picture Picture { get; set; }
+        public string Picture { get; set; }
 
         public int ArtisticWorkCategoryId { get; set; }
 

@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="OutputViewModels\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\WAG.Data.Models\WAG.Data.Models.csproj" />
   </ItemGroup>
 

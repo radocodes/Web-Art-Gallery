@@ -1,0 +1,26 @@
+﻿@model WAG.ViewModels.ArtWorkCollectionViewModel
+@{
+    ViewData["Title"] = "ArtWorksByCategory";
+}
+
+<h2>@Model.ArtWorkCategory.Name</h2>
+
+<main class="container-fluid">
+    <div class="row">
+        <section>
+            @foreach (var artWork in Model.ArtWorkCollection)
+            {
+                <div class="col-6 col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <a asp-action="ArtWorkDetails" asp-controller="ArtisticWork" asp-route-id="@artWork.Id">
+                        <div>
+                            <img src="~/images/@artWork.Picture" alt="Card image cap" style="width:200px">
+                            <br />
+                            <div style="width:200px; font-size:large; color:black;"><b>Click for details</b></div>
+                        </div>
+                    </a>
+
+                </div>
+            }
+        </section>
+    </div>
+</main>

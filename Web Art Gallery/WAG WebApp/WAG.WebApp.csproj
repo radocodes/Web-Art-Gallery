@@ -19,4 +19,10 @@
     <ProjectReference Include="..\WAG.ViewModels\WAG.ViewModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\ArtisticWork\Categories.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

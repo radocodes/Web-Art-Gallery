@@ -35,15 +35,17 @@ namespace WAG.Services
                 category.Name = inputViewModel.Category;
             }
 
-            var technique = new ArtisticWorkTechnique()
-            {
-                Name = inputViewModel.Technique
-            };
+            var technique = new ArtisticWorkTechnique();
 
-            var pictureUrl = new Picture()
+            if (DbContext.ArtisticWorkTechniques.Any(x => x.Name == inputViewModel.Technique))
             {
-                URL = UploadPictureAsync(inputViewModel.Picture).Result
-            };
+                technique = DbContext.ArtisticWorkTechniques.FirstOrDefault(x => x.Name == inputViewModel.Technique);
+            }
+
+            else
+            {
+                technique.Name = inputViewModel.Technique;
+            }
 
             var order = new Order()
             {
@@ -60,7 +62,7 @@ namespace WAG.Services
                 HasFrame = inputViewModel.HasFrame,
                 ArtisticWorkCategory = category,
                 ArtisticWorkTechnique = technique,
-                Picture = pictureUrl,
+                Picture = UploadPictureAsync(inputViewModel.Picture).Result,
             };
 
             this.DbContext.ArtisticWorks.Add(artWork);
@@ -70,15 +72,43 @@ namespace WAG.Services
 
         private async Task<string> UploadPictureAsync(IFormFile picture)
         {
-            var filePath = $@"D:\RADO\IT\Projects\Web Art Gallery\Web Art Gallery\WAG WebApp\wwwroot\images\{Guid.NewGuid()}.jpg";
+            var fileName = $"{Guid.NewGuid()}.jpg";
+
+            var filePath = $@"D:\RADO\IT\Projects\Web Art Gallery\Web Art Gallery\WAG WebApp\wwwroot\images\{fileName}";
 
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await picture.CopyToAsync(stream);
             };
 
-            return filePath;
+            return fileName;
         }
 
+        public List<ArtisticWorkCategory> GetArtisticWorkCategories()
+        {
+            var categories = this.DbContext.ArtisticWorkCategories.ToList();
+
+            return categories;
+        }
+        public List<ArtisticWork> GetArtWorksByCategoryId(int id)
+        {
+            var artworks = DbContext.ArtisticWorks.Where(x => x.ArtisticWorkCategoryId == id).OrderByDescending(x => x.Id).ToList();
+
+            return artworks;
+        }
+
+        public ArtisticWork GetArtisticWorkById(int id)
+        {
+            var artWork = DbContext.ArtisticWorks.FirstOrDefault(x => x.Id == id);
+
+            return artWork;
+        }
+
+        public ArtisticWorkCategory GetCategoryById(int id)
+        {
+            var category = DbContext.ArtisticWorkCategories.FirstOrDefault(x => x.Id == id);
+
+            return category;
+        }
     }
 }

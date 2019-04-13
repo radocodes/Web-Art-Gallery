@@ -1,0 +1,27 @@
+﻿@model WAG.ViewModels.OutputViewModels.ArtWorkCategoriesViewOutputModel
+@{
+    ViewData["Title"] = "Categories";
+
+}
+
+<h1 style="text-align:center">Categories</h1>
+
+<main class="container-fluid">
+    <div class="row">
+        <section>
+            @foreach (var category in Model.Categories)
+            {
+                <a asp-action="ArtWorksByCategory" asp-controller="ArtisticWork" asp-route-id="@category.Id">
+                    <div class="col-6 col-sm-6 col-md-4 col-lg-3 mb-3">
+                        <div>
+                            <img class="card-img-top" src="~/images/08b17379-3182-43dd-8dba-fd6196c2b4d5.jpg" style="width: 200px; alt="Card image cap">
+                            <div style="width: 200pxl; font-size:large; color:black; "><b>@category.Name</b></div>
+                        </div>
+                    </div>
+                </a>
+            }
+        </section>
+    </div>
+</main>
+<ul></ul>
+
