@@ -14,15 +14,5 @@ namespace WAG.WebApp.Areas.Administration.Controllers
         {
             return View();
         }
-
-        public IActionResult ManageUsers()
-        {
-            return View();
-        }
-
-        public IActionResult AddUserInRole()
-        {
-            return View();
-        }
     }
 }

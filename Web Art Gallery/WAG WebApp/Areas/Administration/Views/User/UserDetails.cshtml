@@ -1,0 +1,38 @@
+﻿@model WAG.ViewModels.OutputViewModels.UserDetailsViewModel
+
+@{
+    ViewData["Title"] = "UserDetails";
+}
+
+<header class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="text-center">User details</h2>
+        </div>
+    </div>
+</header>
+
+<main class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="center-block text-center" style="width:30%; border:solid">
+                <p>Username: @Model.User.UserName</p>
+                <p>First name: @Model.User.FirstName</p>
+                <p>Last name: @Model.User.LastName</p>
+                <p>City: @Model.User.City</p>
+                <p>Address: @Model.User.Address</p>
+                <p>Phone number: @Model.User.PhoneNumber</p>
+                <p>Email: @Model.User.Email</p>
+                <p>
+                    Identity Roles:
+                    @if (Model.IdentityRoles != null)
+                    {
+                        @String.Join(", ", Model.IdentityRoles);
+                    }
+                </p>
+
+            </div>
+        </div>
+    </div>
+</main>
+

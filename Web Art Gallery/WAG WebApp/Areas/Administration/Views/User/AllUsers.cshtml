@@ -1,0 +1,50 @@
+﻿@model WAG.ViewModels.OutputViewModels.AllUsersViewModel
+
+@{
+    ViewData["Title"] = "AllUser";
+}
+
+<header class="container">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="text-center">All users</h2>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="container" style="border:solid; width:50%">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Username</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.AllUsers != null)
+                        {
+                            @for (int i = 0; i < Model.AllUsers.Count; i++)
+                            {
+                                <tr>
+                                    <td>@(i + 1)</td>
+                                    <td><a asp-area="Administration" asp-controller="User" asp-action="UserDetails" asp-route-id="@Model.AllUsers[i].Id">@Model.AllUsers[i].UserName</a></td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <th scope="row">None</th>
+                                <td>None</td>
+                            </tr>
+                        }
+                    </tbody>
+            </div>
+            </table>
+        </div>
+    </div>
+</main>
+
