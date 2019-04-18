@@ -15,6 +15,7 @@ using WAG.Data;
 using WAG.Data.Models;
 using WAG.Services.Interfaces;
 using WAG.Services;
+using WAG.WebApp.Middlewares;
 
 namespace WAG.WebApp
 {
@@ -55,7 +56,8 @@ namespace WAG.WebApp
             services.AddScoped<IUserAccountService, UserAccountService>();
             services.AddScoped<IArtisticWorkService, ArtisticWorkService>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services
+                .AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,8 +80,15 @@ namespace WAG.WebApp
 
             app.UseAuthentication();
 
+            app.UseSeedDataMiddleware();
+
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                  name: "areas",
+                  template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

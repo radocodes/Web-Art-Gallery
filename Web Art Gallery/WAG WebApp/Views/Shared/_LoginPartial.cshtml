@@ -5,8 +5,18 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <form asp-action="Logout" asp-controller="UserAccount" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
-        <ul class="nav navbar-nav navbar-right">
+    if (User.IsInRole("Admin"))
+    {
+        <ul class=" nav navbar-nav">
+            <li>
+                <a asp-area="Administration" asp-action="IndexAdmin" asp-controller="AppManager">Administrator</a>
+            </li>
+        </ul>
+    }
+
+
+    <form asp-area="" asp-action="Logout" asp-controller="UserAccount" method="post" id="logoutForm" class="navbar-right">
+        <ul class="nav navbar-nav">
             <li>
                 <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
             </li>

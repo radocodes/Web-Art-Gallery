@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WAG.Services.Interfaces;
 using WAG.ViewModels;
@@ -52,28 +53,5 @@ namespace WAG.WebApp.Controllers
 
             return View(viewModel);
         }
-
-        public IActionResult AddArtWork()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult AddArtWork(ArtWorkInputViewModel artWorkInputViewModel)
-        {
-            this.ArtisticWorkService.AddArtWorkAsync(artWorkInputViewModel);
-
-            return RedirectToAction("Categories", "ArtisticWork");
-        }
-
-        public IActionResult DeleteArtWork()
-        {
-            return View();
-        }
-
-        //public IActionResult EditArtWork()
-        //{
-        //    return View();
-        //}
     }
 }

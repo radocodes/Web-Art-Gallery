@@ -35,3 +35,20 @@ body {
         display: none;
     }
 }
+
+#footer-text {
+    text-align: center;
+    background-color: #333;
+    color: rgb(235, 235, 235);
+    margin: 0%;
+}
+footer {
+    position: fixed;
+    bottom: 0%;
+    left: 0%;
+    width: 100%;
+    margin-bottom: 0%;
+    margin-top: 0%;
+}
+
+

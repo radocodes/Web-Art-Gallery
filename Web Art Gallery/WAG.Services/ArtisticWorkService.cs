@@ -63,6 +63,7 @@ namespace WAG.Services
                 ArtisticWorkCategory = category,
                 ArtisticWorkTechnique = technique,
                 Picture = UploadPictureAsync(inputViewModel.Picture).Result,
+                CreatedOn = DateTime.UtcNow
             };
 
             this.DbContext.ArtisticWorks.Add(artWork);
@@ -90,6 +91,7 @@ namespace WAG.Services
 
             return categories;
         }
+
         public List<ArtisticWork> GetArtWorksByCategoryId(int id)
         {
             var artworks = DbContext.ArtisticWorks.Where(x => x.ArtisticWorkCategoryId == id).OrderByDescending(x => x.Id).ToList();
