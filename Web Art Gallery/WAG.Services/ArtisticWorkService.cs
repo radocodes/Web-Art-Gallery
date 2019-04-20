@@ -103,6 +103,17 @@ namespace WAG.Services
             }
         }
 
+        public void DeleteArtWork(int id)
+        {
+            var product = this.DbContext.ArtisticWorks.FirstOrDefault(p => p.Id == id);
+
+            if (product != null)
+            {
+                this.DbContext.ArtisticWorks.Remove(product);
+                this.DbContext.SaveChanges();
+            }
+        }
+
         public EditArtWorkViewModel GetEditArtWorkViewModel(int id)
         {
             var artWork = GetArtisticWorkById(id);

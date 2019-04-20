@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WAG.Services.Interfaces;
+using WAG.ViewModels;
 using WAG.ViewModels.InputViewModels;
 using WAG.ViewModels.OutputViewModels;
 
@@ -51,9 +52,19 @@ namespace WAG.WebApp.Areas.Administration.Controllers
             return RedirectToAction("Categories", "ArtisticWork", new { area = "" });
         }
 
-        public IActionResult DeleteArtWork()
+        public IActionResult DeleteArtWork(int id, ArtWorkViewModel artWorkViewModel)
         {
-            return View();
+            artWorkViewModel.ArtisticWork = ArtisticWorkService.GetArtisticWorkById(id);
+
+            return View(artWorkViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteArtWork(int id)
+        {
+            this.ArtisticWorkService.DeleteArtWork(id);
+
+            return RedirectToAction("Index", "Home", new { area = "" });
         }
 
         

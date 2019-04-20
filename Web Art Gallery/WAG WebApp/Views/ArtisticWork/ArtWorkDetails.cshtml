@@ -20,7 +20,9 @@
             <br />
             @if (User.IsInRole("Admin"))
             {
-            <a class="btn btn-primary" asp-area="Administration" asp-controller="ArtisticWork" asp-action="EditArtWork" asp-route-id="@Model.ArtisticWork.Id">Edit</a>
+                <a class="btn btn-primary" asp-area="Administration" asp-controller="ArtisticWork" asp-action="EditArtWork" asp-route-id="@Model.ArtisticWork.Id">Edit</a>
+                <a class="btn btn-primary" asp-area="Administration" asp-controller="ArtisticWork" asp-action="DeleteArtWork" asp-route-id="@Model.ArtisticWork.Id">Delete</a>
+
             }
         </aside>
         <section class="col-sm-9 col-12 right-panel">

@@ -13,6 +13,10 @@ namespace WAG.Services.Interfaces
     {
         void AddArtWorkAsync(ArtWorkInputViewModel inputViewModel);
 
+        void EditArtWork(int id, ArtWorkInputViewModel artWorkInputViewModel);
+
+        void DeleteArtWork(int id);
+
         List<ArtisticWorkCategory> GetArtisticWorkCategories();
 
         List<ArtisticWork> GetArtWorksByCategoryId(int id);
@@ -22,7 +26,5 @@ namespace WAG.Services.Interfaces
         ArtisticWorkCategory GetCategoryById(int id);
 
         EditArtWorkViewModel GetEditArtWorkViewModel(int id);
-
-        void EditArtWork(int id, ArtWorkInputViewModel artWorkInputViewModel);
     }
 }
