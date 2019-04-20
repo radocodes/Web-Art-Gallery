@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WAG.Data.Models;
 using WAG.ViewModels.InputViewModels;
+using WAG.ViewModels.OutputViewModels;
 
 namespace WAG.Services.Interfaces
 {
@@ -19,5 +20,9 @@ namespace WAG.Services.Interfaces
         ArtisticWork GetArtisticWorkById(int id);
 
         ArtisticWorkCategory GetCategoryById(int id);
+
+        EditArtWorkViewModel GetEditArtWorkViewModel(int id);
+
+        void EditArtWork(int id, ArtWorkInputViewModel artWorkInputViewModel);
     }
 }

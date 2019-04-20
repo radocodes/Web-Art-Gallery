@@ -9,6 +9,7 @@ using WAG.Data;
 using WAG.Data.Models;
 using WAG.Services.Interfaces;
 using WAG.ViewModels.InputViewModels;
+using WAG.ViewModels.OutputViewModels;
 
 namespace WAG.Services
 {
@@ -83,6 +84,40 @@ namespace WAG.Services
             };
 
             return fileName;
+        }
+
+        public void EditArtWork(int id, ArtWorkInputViewModel artWorkInputViewModel)
+        {
+            var currArtwork = this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id);
+            if (currArtwork != null)
+            {
+                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).Year = artWorkInputViewModel.Year;
+                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).Height = artWorkInputViewModel.Height;
+                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).Width = artWorkInputViewModel.Width;
+                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).Price = artWorkInputViewModel.Price;
+                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).Availability = artWorkInputViewModel.Availability;
+                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).HasFrame = artWorkInputViewModel.HasFrame;
+                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).IsDeleted = artWorkInputViewModel.IsDeleted;
+                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).EditedOn = DateTime.UtcNow;
+                DbContext.SaveChanges();
+            }
+        }
+
+        public EditArtWorkViewModel GetEditArtWorkViewModel(int id)
+        {
+            var artWork = GetArtisticWorkById(id);
+
+            var viewModel = new EditArtWorkViewModel()
+            {
+                Year = artWork.Year,
+                Height = artWork.Height,
+                Width = artWork.Width,
+                Price = artWork.Price,
+                Availability = artWork.Availability,
+                HasFrame = artWork.HasFrame,
+            };
+
+            return viewModel;
         }
 
         public List<ArtisticWorkCategory> GetArtisticWorkCategories()

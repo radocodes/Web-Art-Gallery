@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WAG.Services.Interfaces;
 using WAG.ViewModels.InputViewModels;
+using WAG.ViewModels.OutputViewModels;
 
 namespace WAG.WebApp.Areas.Administration.Controllers
 {
@@ -35,14 +36,26 @@ namespace WAG.WebApp.Areas.Administration.Controllers
             return RedirectToAction("Categories", "ArtisticWork");
         }
 
+        public IActionResult EditArtWork(int id)
+        {
+            var editArtWorkViewModel = ArtisticWorkService.GetEditArtWorkViewModel(id);
+
+            return View(editArtWorkViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult EditArtWork(int id, ArtWorkInputViewModel artWorkInputViewModel)
+        {
+            this.ArtisticWorkService.EditArtWork(id, artWorkInputViewModel);
+
+            return RedirectToAction("Categories", "ArtisticWork", new { area = "" });
+        }
+
         public IActionResult DeleteArtWork()
         {
             return View();
         }
 
-        public IActionResult EditArtWork()
-        {
-            return View();
-        }
+        
     }
 }
