@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 using WAG.Data;
 using WAG.Data.Models;
 using WAG.Services.Interfaces;
-using WAG.ViewModels.InputViewModels;
-using WAG.ViewModels.OutputViewModels;
+using WAG.ViewModels.ArtisticWorks;
 
 namespace WAG.Services
 {

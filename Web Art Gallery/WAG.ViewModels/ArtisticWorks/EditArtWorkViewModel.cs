@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WAG.ViewModels.OutputViewModels
+namespace WAG.ViewModels.ArtisticWorks
 {
     public class EditArtWorkViewModel
     {

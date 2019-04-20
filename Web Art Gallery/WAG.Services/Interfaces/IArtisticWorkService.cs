@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using WAG.Data.Models;
-using WAG.ViewModels.InputViewModels;
-using WAG.ViewModels.OutputViewModels;
+using WAG.ViewModels.ArtisticWorks;
 
 namespace WAG.Services.Interfaces
 {

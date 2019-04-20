@@ -4,9 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WAG.Services.Interfaces;
-using WAG.ViewModels;
-using WAG.ViewModels.InputViewModels;
-using WAG.ViewModels.OutputViewModels;
+using WAG.ViewModels.ArtisticWorks;
 
 namespace WAG.WebApp.Areas.Administration.Controllers
 {

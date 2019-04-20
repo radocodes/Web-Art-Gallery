@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using WAG.Data;
 using WAG.Data.Models;
 using WAG.Services.Interfaces;
-using WAG.ViewModels.InputViewModels;
+using WAG.ViewModels.UserAccounts;
 
 namespace WAG.Services
 {

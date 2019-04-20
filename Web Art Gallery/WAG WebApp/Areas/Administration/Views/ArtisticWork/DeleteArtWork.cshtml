@@ -1,0 +1,38 @@
+﻿@model WAG.ViewModels.ArtisticWorks.ArtWorkViewModel
+
+@{
+    ViewData["Title"] = "DeleteArtWork";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <header class="col-12">
+            <h1 class="text-center">Delete Artwork</h1>
+        </header>
+    </div>
+</div>
+
+<main class="container-fluid">
+    <div class="row">
+
+        <aside class="col-sm-3 col-12 left-panel">
+            <img src="~/images/@Model.ArtisticWork.Picture" style="width:200px; padding-bottom:25px" />
+            <div>
+                <p>Year: @Model.ArtisticWork.Year</p>
+                <p>Price: @Model.ArtisticWork.Price</p>
+
+            </div>
+        </aside>
+
+        <section class="col-sm-9 col-12 right-panel">
+            <div>
+                <h2>Are you sure you want to delete permanently this Artwork?</h2>
+                <br />
+                <form method="post" asp-area="Administration" asp-controller="ArtisticWork" asp-action="DeleteArtWork" asp-route-id="@Model.ArtisticWork.Id">
+                    <button type="submit" class="btn btn-warning">Delete</button>
+                </form>
+            </div>
+        </section>
+
+    </div>
+</main>

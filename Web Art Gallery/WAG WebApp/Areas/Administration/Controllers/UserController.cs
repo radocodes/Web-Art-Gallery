@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WAG.Data.Models;
 using WAG.Services.Interfaces;
-using WAG.ViewModels.OutputViewModels;
+using WAG.ViewModels.Users;
 
 namespace WAG.WebApp.Areas.Administration.Controllers
 {

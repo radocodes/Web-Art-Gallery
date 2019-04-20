@@ -4,14 +4,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.28010.2050
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WAG.WebApp", "WAG WebApp\WAG.WebApp.csproj", "{AEE2D7C2-4451-46C9-A2A5-CDA0C91E1643}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BF882D00-62A9-4DB5-AD7D-E9C25C07A431} = {BF882D00-62A9-4DB5-AD7D-E9C25C07A431}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WAG.Data", "WAG.Data\WAG.Data.csproj", "{B6B3B180-4F97-4875-994D-717260E94D6B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WAG.Data.Models", "WAG.Data.Models\WAG.Data.Models.csproj", "{844FA41F-E298-4464-B355-CA77F25EAB38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WAG.ViewModels", "WAG.ViewModels\WAG.ViewModels.csproj", "{BF882D00-62A9-4DB5-AD7D-E9C25C07A431}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WAG.ViewModels", "WAG.ViewModels\WAG.ViewModels.csproj", "{BF882D00-62A9-4DB5-AD7D-E9C25C07A431}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WAG.Services", "WAG.Services\WAG.Services.csproj", "{C39C4E59-20E4-45DD-8B87-CF18032A7A9E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WAG.Services", "WAG.Services\WAG.Services.csproj", "{C39C4E59-20E4-45DD-8B87-CF18032A7A9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

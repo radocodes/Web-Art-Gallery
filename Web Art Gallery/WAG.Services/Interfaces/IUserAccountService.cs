@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using WAG.ViewModels.InputViewModels;
+using WAG.ViewModels.UserAccounts;
 
 namespace WAG.Services.Interfaces
 {
