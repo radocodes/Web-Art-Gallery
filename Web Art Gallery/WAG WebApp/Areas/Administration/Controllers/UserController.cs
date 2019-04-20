@@ -11,10 +11,12 @@ namespace WAG.WebApp.Areas.Administration.Controllers
 {
     public class UserController : AdministrationController
     {
+        private IUserAccountService UserAccountService;
         private IUserService UserService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IUserAccountService userAccountService)
         {
+            this.UserAccountService = userAccountService;
             this.UserService = userService;
         }
 
@@ -41,6 +43,21 @@ namespace WAG.WebApp.Areas.Administration.Controllers
             userDetailsViewModel.IdentityRoles = userRoles;
 
             return View(userDetailsViewModel);
+        }
+
+        public IActionResult DeleteUser(string id, UserDetailsViewModel userDetailsViewModel)
+        {
+            userDetailsViewModel.User = this.UserService.GetUserById(id);
+
+            return View(userDetailsViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteUser(string id)
+        {
+            this.UserAccountService.DeleteUser(id);
+
+            return RedirectToAction("Index", "Home", new { area = "" });
         }
 
         public IActionResult AddUserInRole()

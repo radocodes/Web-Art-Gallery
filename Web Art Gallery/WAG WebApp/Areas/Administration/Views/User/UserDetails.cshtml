@@ -30,7 +30,8 @@
                         @String.Join(", ", Model.IdentityRoles);
                     }
                 </p>
-
+                <br />
+                <a class="btn btn-primary" asp-area="Administration" asp-controller="User" asp-action="DeleteUser" asp-route-id="@Model.User.Id">Delete</a>
             </div>
         </div>
     </div>

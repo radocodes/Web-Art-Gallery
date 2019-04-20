@@ -14,5 +14,7 @@ namespace WAG.Services.Interfaces
         Task<SignInResult> RegisterUserSuccessfullyAsync(RegisterInputViewModel registerInputViewModel);
 
         void Logout();
+
+        void DeleteUser(string id);
     }
 }

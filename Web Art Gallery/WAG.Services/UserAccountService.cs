@@ -67,5 +67,17 @@ namespace WAG.Services
         {
             await this.SignInManager.SignOutAsync();
         }
+
+        public void DeleteUser(string id)
+        {
+            var user = DbContext.Users.FirstOrDefault(currUser => currUser.Id == id);
+
+            if (user != null)
+            {
+                this.DbContext.Users.Remove(user);
+
+                this.DbContext.SaveChanges();
+            }
+        }
     }
 }
