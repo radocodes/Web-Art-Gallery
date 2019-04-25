@@ -1,4 +1,4 @@
-﻿@model WAG.ViewModels.Users.AllUsersViewModel
+﻿@model WAG.ViewModels.UserAccount.AllUsersViewModel
 
 @{
     ViewData["Title"] = "AllUser";
@@ -30,7 +30,7 @@
                             {
                                 <tr>
                                     <td>@(i + 1)</td>
-                                    <td><a asp-area="Administration" asp-controller="User" asp-action="UserDetails" asp-route-id="@Model.AllUsers[i].Id">@Model.AllUsers[i].UserName</a></td>
+                                    <td><a asp-area="Administration" asp-controller="UserAccount" asp-action="UserDetails" asp-route-id="@Model.AllUsers[i].Id">@Model.AllUsers[i].UserName</a></td>
                                 </tr>
                             }
                         }

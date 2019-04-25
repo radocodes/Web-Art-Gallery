@@ -5,19 +5,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WAG.Data.Models;
 using WAG.Services.Interfaces;
-using WAG.ViewModels.Users;
+using WAG.ViewModels.UserAccount;
 
 namespace WAG.WebApp.Areas.Administration.Controllers
 {
-    public class UserController : AdministrationController
+    public class UserAccountController : AdministrationController
     {
         private IUserAccountService UserAccountService;
-        private IUserService UserService;
 
-        public UserController(IUserService userService, IUserAccountService userAccountService)
+        public UserAccountController(IUserAccountService userAccountService)
         {
             this.UserAccountService = userAccountService;
-            this.UserService = userService;
         }
 
         public IActionResult ManageUsers()
@@ -27,16 +25,16 @@ namespace WAG.WebApp.Areas.Administration.Controllers
 
         public IActionResult AllUsers(AllUsersViewModel allUsersViewModel)
         {
-            allUsersViewModel.AllUsers = this.UserService.GetAllUsers().ToList();
+            allUsersViewModel.AllUsers = this.UserAccountService.GetAllUsers().ToList();
 
             return View(allUsersViewModel);
         }
 
         public IActionResult UserDetails(string id, UserDetailsViewModel userDetailsViewModel)
         {
-            var currUser = this.UserService.GetUserById(id);
+            var currUser = this.UserAccountService.GetUserById(id);
 
-            var userRoles = this.UserService.GetUserRolesNameById(id).ToList();
+            var userRoles = this.UserAccountService.GetUserRolesNameById(id).ToList();
 
             userDetailsViewModel.User = currUser;
 
@@ -47,7 +45,7 @@ namespace WAG.WebApp.Areas.Administration.Controllers
 
         public IActionResult DeleteUser(string id, UserDetailsViewModel userDetailsViewModel)
         {
-            userDetailsViewModel.User = this.UserService.GetUserById(id);
+            userDetailsViewModel.User = this.UserAccountService.GetUserById(id);
 
             return View(userDetailsViewModel);
         }

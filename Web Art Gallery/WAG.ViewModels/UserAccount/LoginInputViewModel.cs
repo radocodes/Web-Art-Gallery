@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WAG.ViewModels.UserAccounts
+namespace WAG.ViewModels.UserAccount
 {
     public class LoginInputViewModel
     {

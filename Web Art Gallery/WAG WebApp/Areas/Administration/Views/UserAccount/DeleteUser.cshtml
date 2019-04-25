@@ -1,4 +1,4 @@
-﻿@model WAG.ViewModels.Users.UserDetailsViewModel
+﻿@model WAG.ViewModels.UserAccount.UserDetailsViewModel
 
 @{
     ViewData["Title"] = "DeleteUser";
@@ -25,7 +25,7 @@
                 </div>
                 <br />
                 <div class="text-center">
-                    <form method="post" asp-area="Administration" asp-controller="User" asp-action="DeleteUser" asp-route-id="@Model.User.Id">
+                    <form method="post" asp-area="Administration" asp-controller="UserAccount" asp-action="DeleteUser" asp-route-id="@Model.User.Id">
                         <button type="submit" class="btn btn-warning">Delete</button>
                     </form>
                 </div>

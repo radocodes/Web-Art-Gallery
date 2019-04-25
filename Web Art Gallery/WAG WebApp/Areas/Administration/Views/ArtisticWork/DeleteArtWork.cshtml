@@ -28,9 +28,11 @@
             <div>
                 <h2>Are you sure you want to delete permanently this Artwork?</h2>
                 <br />
-                <form method="post" asp-area="Administration" asp-controller="ArtisticWork" asp-action="DeleteArtWork" asp-route-id="@Model.ArtisticWork.Id">
-                    <button type="submit" class="btn btn-warning">Delete</button>
-                </form>
+                <div>
+                    <form method="post" asp-area="Administration" asp-controller="ArtisticWork" asp-action="DeleteArtWork" asp-route-id="@Model.ArtisticWork.Id">
+                        <button type="submit" class="btn btn-warning">Delete</button>
+                    </form>
+                </div>
             </div>
         </section>
 

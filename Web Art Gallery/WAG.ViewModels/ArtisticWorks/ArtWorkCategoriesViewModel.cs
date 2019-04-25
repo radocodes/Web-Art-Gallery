@@ -5,7 +5,7 @@ using WAG.Data.Models;
 
 namespace WAG.ViewModels.ArtisticWorks
 {
-    public class ArtWorkCategoriesViewOutputModel
+    public class ArtWorkCategoriesViewModel
     {
         public List<ArtisticWorkCategory> Categories { get; set; }
     }

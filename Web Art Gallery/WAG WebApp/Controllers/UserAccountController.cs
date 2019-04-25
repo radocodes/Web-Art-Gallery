@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using WAG.Data.Models;
 using WAG.Services;
 using WAG.Services.Interfaces;
-using WAG.ViewModels.UserAccounts;
+using WAG.ViewModels.UserAccount;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace WAG.WebApp.Controllers

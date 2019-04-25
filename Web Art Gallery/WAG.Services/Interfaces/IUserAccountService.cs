@@ -3,7 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using WAG.ViewModels.UserAccounts;
+using WAG.Data.Models;
+using WAG.ViewModels.UserAccount;
 
 namespace WAG.Services.Interfaces
 {
@@ -16,5 +17,11 @@ namespace WAG.Services.Interfaces
         void Logout();
 
         void DeleteUser(string id);
+
+        IEnumerable<WAGUser> GetAllUsers();
+
+        WAGUser GetUserById(string id);
+
+        IList<string> GetUserRolesNameById(string id);
     }
 }

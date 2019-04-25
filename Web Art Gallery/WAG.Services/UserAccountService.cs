@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using WAG.Data;
 using WAG.Data.Models;
 using WAG.Services.Interfaces;
-using WAG.ViewModels.UserAccounts;
+using WAG.ViewModels.UserAccount;
 
 namespace WAG.Services
 {
@@ -78,6 +78,29 @@ namespace WAG.Services
 
                 this.DbContext.SaveChanges();
             }
+        }
+
+        public IEnumerable<WAGUser> GetAllUsers()
+        {
+            var allUsers = this.DbContext.Users.ToList();
+
+            return allUsers;
+        }
+
+        public WAGUser GetUserById(string id)
+        {
+            var currUser = DbContext.Users.FirstOrDefault(user => user.Id == id);
+
+            return currUser;
+        }
+
+        public IList<string> GetUserRolesNameById(string id)
+        {
+            var user = GetUserById(id);
+
+            var roles = UserManager.GetRolesAsync(user).Result;
+
+            return roles;
         }
     }
 }

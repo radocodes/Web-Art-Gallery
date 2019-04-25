@@ -19,11 +19,11 @@ namespace WAG.WebApp.Controllers
             this.ArtisticWorkService = artisticWorkService;
         }
 
-        public IActionResult Categories(ArtWorkCategoriesViewOutputModel categoriesOutputViewModel)
+        public IActionResult Categories(ArtWorkCategoriesViewModel categoriesViewModel)
         {
-            categoriesOutputViewModel.Categories = ArtisticWorkService.GetArtisticWorkCategories();
+            categoriesViewModel.Categories = ArtisticWorkService.GetArtisticWorkCategories();
 
-            return View(categoriesOutputViewModel);
+            return View(categoriesViewModel);
         }
 
         public IActionResult ArtWorksByCategory(int id)

@@ -55,8 +55,6 @@ namespace WAG.WebApp
 
             services.AddScoped<IUserAccountService, UserAccountService>();
             services.AddScoped<IArtisticWorkService, ArtisticWorkService>();
-            services.AddScoped<IUserService, UserService>();
-
 
             services
                 .AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

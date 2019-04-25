@@ -1,4 +1,4 @@
-﻿@model WAG.ViewModels.Users.UserDetailsViewModel
+﻿@model WAG.ViewModels.UserAccount.UserDetailsViewModel
 
 @{
     ViewData["Title"] = "UserDetails";
@@ -31,7 +31,7 @@
                     }
                 </p>
                 <br />
-                <a class="btn btn-primary" asp-area="Administration" asp-controller="User" asp-action="DeleteUser" asp-route-id="@Model.User.Id">Delete</a>
+                <a class="btn btn-primary" asp-area="Administration" asp-controller="UserAccount" asp-action="DeleteUser" asp-route-id="@Model.User.Id">Delete</a>
             </div>
         </div>
     </div>
