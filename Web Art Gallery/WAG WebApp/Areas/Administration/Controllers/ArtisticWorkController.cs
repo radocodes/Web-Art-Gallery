@@ -32,7 +32,7 @@ namespace WAG.WebApp.Areas.Administration.Controllers
         {
             this.ArtisticWorkService.AddArtWorkAsync(artWorkInputViewModel);
 
-            return RedirectToAction("Categories", "ArtisticWork");
+            return RedirectToAction("Categories", "ArtisticWork", new { area = "" });
         }
 
         public IActionResult EditArtWork(int id)

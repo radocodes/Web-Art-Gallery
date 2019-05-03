@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WAG.Common.User;
 using WAG.Data.Models;
 using WAG.Services.Interfaces;
 using WAG.ViewModels.UserAccount;
@@ -58,9 +59,48 @@ namespace WAG.WebApp.Areas.Administration.Controllers
             return RedirectToAction("Index", "Home", new { area = "" });
         }
 
-        public IActionResult AddUserInRole()
+        public IActionResult MakeUserAdmin(string userId, MakeUserAdminViewModel makeUserAdminViewModel)
+        { 
+            makeUserAdminViewModel.User = this.UserAccountService.GetUserById(userId);
+
+            return View(makeUserAdminViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult MakeUserAdmin(string userId)
         {
-            return View();
+            var adminRoleName = nameof(UserRoles.Admin);
+
+            var addingResult = this.UserAccountService.AddUserInRoleAsync(userId, adminRoleName).Result;
+
+            if (addingResult.Succeeded)
+            {
+                return RedirectToAction("Success", "Home", new { area = "" });
+            }
+
+            return RedirectToAction("AllUsers", "UserAccount", new { area = "Administration"});
+        }
+
+        public IActionResult RemoveUserFromAdminRole(string userId, RemoveUserFromAdminRoleViewModel removeUserFromAdminRoleViewModel)
+        {
+            removeUserFromAdminRoleViewModel.User = this.UserAccountService.GetUserById(userId);
+
+            return View(removeUserFromAdminRoleViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult RemoveUserFromAdminRole(string id)
+        {
+            var adminRoleName = nameof(UserRoles.Admin);
+
+            var removingResult = this.UserAccountService.RemoveUserFromRoleAsync(id, adminRoleName).Result;
+
+            if (removingResult.Succeeded)
+            {
+                return RedirectToAction("Success", "Home", new { area = "" });
+            }
+
+            return RedirectToAction("AllUsers", "UserAccount", new { area = "Administration" });
         }
     }
 }

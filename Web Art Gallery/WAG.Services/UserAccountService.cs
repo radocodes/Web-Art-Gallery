@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using WAG.Common.User;
 using WAG.Data;
 using WAG.Data.Models;
 using WAG.Services.Interfaces;
@@ -15,12 +16,14 @@ namespace WAG.Services
     {
         private SignInManager<WAGUser> SignInManager;
         private UserManager<WAGUser> UserManager;
+        private RoleManager<IdentityRole> RoleManager;
         private WAGDbContext DbContext;
 
-        public UserAccountService(SignInManager<WAGUser> signInManager, UserManager<WAGUser> userManager, WAGDbContext dbContext)
+        public UserAccountService(SignInManager<WAGUser> signInManager, UserManager<WAGUser> userManager, RoleManager<IdentityRole> roleManager, WAGDbContext dbContext)
         {
             this.SignInManager = signInManager;
             this.UserManager = userManager;
+            this.RoleManager = roleManager;
             this.DbContext = dbContext;
         }
 
@@ -70,7 +73,7 @@ namespace WAG.Services
 
         public void DeleteUser(string id)
         {
-            var user = DbContext.Users.FirstOrDefault(currUser => currUser.Id == id);
+            var user = GetUserById(id);
 
             if (user != null)
             {
@@ -99,6 +102,58 @@ namespace WAG.Services
             var user = GetUserById(id);
 
             var roles = UserManager.GetRolesAsync(user).Result;
+
+            return roles;
+        }
+
+        public async Task<IdentityResult> AddUserInRoleAsync(string userId, string role)
+        {
+            var user = GetUserById(userId);
+
+            var result = new IdentityResult();
+
+            if (user != null)
+            {
+                if (this.RoleManager.RoleExistsAsync(role).Result)
+                {
+                    if (!UserManager.IsInRoleAsync(user, role).Result)
+                    {
+                        result = await this.UserManager.AddToRoleAsync(user, role);
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public async Task<IdentityResult> RemoveUserFromRoleAsync(string userId, string role)
+        {
+            var user = GetUserById(userId);
+
+            var result = new IdentityResult();
+
+            if (user != null)
+            {
+                if (this.RoleManager.RoleExistsAsync(role).Result)
+                {
+                    if (UserManager.IsInRoleAsync(user, role).Result)
+                    {
+                        result = await this.UserManager.RemoveFromRoleAsync(user, role);
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public List<string> GetRolesList()
+        {
+            var roles = new List<string>();
+
+            foreach (var role in Enum.GetNames(typeof(UserRoles)))
+            {
+                roles.Add(role);
+            }
 
             return roles;
         }

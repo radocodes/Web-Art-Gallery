@@ -1,0 +1,37 @@
+﻿@model WAG.ViewModels.UserAccount.MakeUserAdminViewModel
+
+@{
+    ViewData["Title"] = "MakeUserAdmin";
+}
+
+<div class="container">
+    <div class="row">
+        <header class="col-12">
+            <h1 class="text-center">Make current user administrator</h1>
+        </header>
+    </div>
+</div>
+
+<main class="container">
+    <div class="row">
+        <section class="col-12">
+            <div>
+                <h2 class="text-center">Are you sure you want to make this user Administrator?</h2>
+                <br />
+                <div class="text-center center-block" style="border:dotted; width:30%">
+                    <p>UserName: @Model.User.UserName</p>
+                    <p>First Name: @Model.User.FirstName</p>
+                    <p>Last Name: @Model.User.LastName</p>
+                </div>
+                <br />
+                <div class="text-center">
+                    <form method="post" asp-area="Administration" asp-controller="UserAccount" asp-action="MakeUserAdmin" asp-route-userId="@Model.User.Id">
+                        <button type="submit" class="btn btn-warning">Make this user Administrator</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</main>
+

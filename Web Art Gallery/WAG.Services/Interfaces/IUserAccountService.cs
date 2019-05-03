@@ -23,5 +23,12 @@ namespace WAG.Services.Interfaces
         WAGUser GetUserById(string id);
 
         IList<string> GetUserRolesNameById(string id);
+
+        Task<IdentityResult> AddUserInRoleAsync(string userId, string role);
+
+        Task<IdentityResult> RemoveUserFromRoleAsync(string userId, string role);
+
+        List<string> GetRolesList();
+
     }
 }

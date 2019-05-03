@@ -32,6 +32,16 @@
                 </p>
                 <br />
                 <a class="btn btn-primary" asp-area="Administration" asp-controller="UserAccount" asp-action="DeleteUser" asp-route-id="@Model.User.Id">Delete</a>
+                @if (!Model.IdentityRoles.Contains("Admin"))
+                {
+                    <a class="btn btn-primary" asp-area="Administration" asp-controller="UserAccount" asp-action="MakeUserAdmin" asp-route-userId="@Model.User.Id">Make Administrator</a>
+                }
+                else
+                {
+                    <a class="btn btn-primary" asp-area="Administration" asp-controller="UserAccount" asp-action="RemoveUserFromAdminRole" asp-route-userId="@Model.User.Id">Drop Admin Role</a>
+                }
+
+
             </div>
         </div>
     </div>

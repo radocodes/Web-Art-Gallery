@@ -1,0 +1,36 @@
+﻿@model WAG.ViewModels.UserAccount.RemoveUserFromAdminRoleViewModel
+@{
+    ViewData["Title"] = "RemoveUserFromAdminRole";
+}
+
+<div class="container">
+    <div class="row">
+        <header class="col-12">
+            <h1 class="text-center">Make current user to be no more administrator</h1>
+        </header>
+    </div>
+</div>
+
+<main class="container">
+    <div class="row">
+        <section class="col-12">
+            <div>
+                <h2 class="text-center">Are you sure you want to make this user NO MORE Administrator? (Drop user from admin role)</h2>
+                <br />
+                <div class="text-center center-block" style="border:dotted; width:30%">
+                    <p>UserName: @Model.User.UserName</p>
+                    <p>First Name: @Model.User.FirstName</p>
+                    <p>Last Name: @Model.User.LastName</p>
+                </div>
+                <br />
+                <div class="text-center">
+                    <form method="post" asp-area="Administration" asp-controller="UserAccount" asp-action="RemoveUserFromAdminRole" asp-route-id="@Model.User.Id">
+                        <button type="submit" class="btn btn-warning">Drop this user from Admin Role</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</main>
+
