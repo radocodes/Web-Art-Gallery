@@ -6,7 +6,6 @@ namespace WAG.Data.Models
 {
     public class Comment : BaseModel<int>
     {
-        
         public string TextBody { get; set; }
 
         public DateTime Date { get; set; }

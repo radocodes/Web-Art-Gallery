@@ -137,11 +137,19 @@ namespace WAG.Data.Migrations
 
                     b.Property<DateTime>("CreatedOn");
 
+                    b.Property<string>("Description");
+
+                    b.Property<DateTime>("EditedOn");
+
                     b.Property<DateTime>("EventDate");
 
-                    b.Property<string>("Info");
-
                     b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("MainPicture");
+
+                    b.Property<string>("ShortDescription");
+
+                    b.Property<string>("Title");
 
                     b.Property<string>("WAGUserId");
 
@@ -152,25 +160,6 @@ namespace WAG.Data.Migrations
                     b.ToTable("ArtEvents");
                 });
 
-            modelBuilder.Entity("WAG.Data.Models.ArtEventPicture", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ArtEventId");
-
-                    b.Property<int>("PictureId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArtEventId");
-
-                    b.HasIndex("PictureId");
-
-                    b.ToTable("ArtEventPictures");
-                });
-
             modelBuilder.Entity("WAG.Data.Models.Article", b =>
                 {
                     b.Property<int>("Id")
@@ -179,9 +168,17 @@ namespace WAG.Data.Migrations
 
                     b.Property<DateTime>("CreatedOn");
 
+                    b.Property<string>("Description");
+
+                    b.Property<DateTime>("EditedOn");
+
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<string>("TextBody");
+                    b.Property<string>("MainPicture");
+
+                    b.Property<string>("ShortDescription");
+
+                    b.Property<string>("Title");
 
                     b.Property<string>("WAGUserId");
 
@@ -192,25 +189,6 @@ namespace WAG.Data.Migrations
                     b.ToTable("Articles");
                 });
 
-            modelBuilder.Entity("WAG.Data.Models.ArticlePicture", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ArticleId");
-
-                    b.Property<int>("PictureId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArticleId");
-
-                    b.HasIndex("PictureId");
-
-                    b.ToTable("ArticlePictures");
-                });
-
             modelBuilder.Entity("WAG.Data.Models.ArtisticWork", b =>
                 {
                     b.Property<int>("Id")
@@ -218,8 +196,6 @@ namespace WAG.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("ArtisticWorkCategoryId");
-
-                    b.Property<int>("ArtisticWorkTechniqueId");
 
                     b.Property<bool>("Availability");
 
@@ -239,6 +215,8 @@ namespace WAG.Data.Migrations
 
                     b.Property<decimal>("Price");
 
+                    b.Property<string>("Technique");
+
                     b.Property<double>("Width");
 
                     b.Property<int>("Year");
@@ -246,8 +224,6 @@ namespace WAG.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ArtisticWorkCategoryId");
-
-                    b.HasIndex("ArtisticWorkTechniqueId");
 
                     b.HasIndex("OrderId");
 
@@ -262,26 +238,13 @@ namespace WAG.Data.Migrations
 
                     b.Property<bool>("IsDeleted");
 
+                    b.Property<string>("MainPicture");
+
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
 
                     b.ToTable("ArtisticWorkCategories");
-                });
-
-            modelBuilder.Entity("WAG.Data.Models.ArtisticWorkTechnique", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ArtisticWorkTechniques");
                 });
 
             modelBuilder.Entity("WAG.Data.Models.Comment", b =>
@@ -355,23 +318,6 @@ namespace WAG.Data.Migrations
                     b.HasIndex("WAGUserId");
 
                     b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("WAG.Data.Models.Picture", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedOn");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<string>("URL");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Picture");
                 });
 
             modelBuilder.Entity("WAG.Data.Models.WAGLog", b =>
@@ -504,19 +450,6 @@ namespace WAG.Data.Migrations
                         .HasForeignKey("WAGUserId");
                 });
 
-            modelBuilder.Entity("WAG.Data.Models.ArtEventPicture", b =>
-                {
-                    b.HasOne("WAG.Data.Models.ArtEvent", "ArtEvent")
-                        .WithMany("ArtEventPictures")
-                        .HasForeignKey("ArtEventId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("WAG.Data.Models.Picture", "Picture")
-                        .WithMany("ArtEventPictures")
-                        .HasForeignKey("PictureId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("WAG.Data.Models.Article", b =>
                 {
                     b.HasOne("WAG.Data.Models.WAGUser", "WAGUser")
@@ -524,29 +457,11 @@ namespace WAG.Data.Migrations
                         .HasForeignKey("WAGUserId");
                 });
 
-            modelBuilder.Entity("WAG.Data.Models.ArticlePicture", b =>
-                {
-                    b.HasOne("WAG.Data.Models.Article", "Article")
-                        .WithMany("ArticlePictures")
-                        .HasForeignKey("ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("WAG.Data.Models.Picture", "Picture")
-                        .WithMany("ArticlePictures")
-                        .HasForeignKey("PictureId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("WAG.Data.Models.ArtisticWork", b =>
                 {
                     b.HasOne("WAG.Data.Models.ArtisticWorkCategory", "ArtisticWorkCategory")
                         .WithMany("ArtisticWorks")
                         .HasForeignKey("ArtisticWorkCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("WAG.Data.Models.ArtisticWorkTechnique", "ArtisticWorkTechnique")
-                        .WithMany("ArtisticWorks")
-                        .HasForeignKey("ArtisticWorkTechniqueId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("WAG.Data.Models.Order", "Order")

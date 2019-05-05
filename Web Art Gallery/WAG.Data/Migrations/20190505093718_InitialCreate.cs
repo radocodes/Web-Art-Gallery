@@ -15,25 +15,12 @@ namespace WAG.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
+                    MainPicture = table.Column<string>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ArtisticWorkCategories", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ArtisticWorkTechniques",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ArtisticWorkTechniques", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -81,21 +68,6 @@ namespace WAG.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Picture",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    URL = table.Column<string>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    CreatedOn = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Picture", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "WAGLogs",
                 columns: table => new
                 {
@@ -137,11 +109,15 @@ namespace WAG.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Info = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true),
+                    ShortDescription = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
                     EventDate = table.Column<DateTime>(nullable: false),
                     WAGUserId = table.Column<string>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    CreatedOn = table.Column<DateTime>(nullable: false)
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    EditedOn = table.Column<DateTime>(nullable: false),
+                    MainPicture = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -160,10 +136,14 @@ namespace WAG.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    TextBody = table.Column<string>(nullable: true),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    ShortDescription = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
                     WAGUserId = table.Column<string>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false)
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    EditedOn = table.Column<DateTime>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    MainPicture = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -309,58 +289,6 @@ namespace WAG.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ArtEventPictures",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ArtEventId = table.Column<int>(nullable: false),
-                    PictureId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ArtEventPictures", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ArtEventPictures_ArtEvents_ArtEventId",
-                        column: x => x.ArtEventId,
-                        principalTable: "ArtEvents",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ArtEventPictures_Picture_PictureId",
-                        column: x => x.PictureId,
-                        principalTable: "Picture",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ArticlePictures",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ArticleId = table.Column<int>(nullable: false),
-                    PictureId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ArticlePictures", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ArticlePictures_Articles_ArticleId",
-                        column: x => x.ArticleId,
-                        principalTable: "Articles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ArticlePictures_Picture_PictureId",
-                        column: x => x.PictureId,
-                        principalTable: "Picture",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Comments",
                 columns: table => new
                 {
@@ -403,7 +331,7 @@ namespace WAG.Data.Migrations
                     HasFrame = table.Column<bool>(nullable: false),
                     Picture = table.Column<string>(nullable: true),
                     ArtisticWorkCategoryId = table.Column<int>(nullable: false),
-                    ArtisticWorkTechniqueId = table.Column<int>(nullable: false),
+                    Technique = table.Column<string>(nullable: true),
                     OrderId = table.Column<int>(nullable: true),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     EditedOn = table.Column<DateTime>(nullable: false),
@@ -419,12 +347,6 @@ namespace WAG.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ArtisticWorks_ArtisticWorkTechniques_ArtisticWorkTechniqueId",
-                        column: x => x.ArtisticWorkTechniqueId,
-                        principalTable: "ArtisticWorkTechniques",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_ArtisticWorks_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
@@ -433,29 +355,9 @@ namespace WAG.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ArtEventPictures_ArtEventId",
-                table: "ArtEventPictures",
-                column: "ArtEventId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ArtEventPictures_PictureId",
-                table: "ArtEventPictures",
-                column: "PictureId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ArtEvents_WAGUserId",
                 table: "ArtEvents",
                 column: "WAGUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ArticlePictures_ArticleId",
-                table: "ArticlePictures",
-                column: "ArticleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ArticlePictures_PictureId",
-                table: "ArticlePictures",
-                column: "PictureId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Articles_WAGUserId",
@@ -466,11 +368,6 @@ namespace WAG.Data.Migrations
                 name: "IX_ArtisticWorks_ArtisticWorkCategoryId",
                 table: "ArtisticWorks",
                 column: "ArtisticWorkCategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ArtisticWorks_ArtisticWorkTechniqueId",
-                table: "ArtisticWorks",
-                column: "ArtisticWorkTechniqueId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ArtisticWorks_OrderId",
@@ -540,10 +437,7 @@ namespace WAG.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ArtEventPictures");
-
-            migrationBuilder.DropTable(
-                name: "ArticlePictures");
+                name: "ArtEvents");
 
             migrationBuilder.DropTable(
                 name: "ArtisticWorks");
@@ -573,16 +467,7 @@ namespace WAG.Data.Migrations
                 name: "WAGLogs");
 
             migrationBuilder.DropTable(
-                name: "ArtEvents");
-
-            migrationBuilder.DropTable(
-                name: "Picture");
-
-            migrationBuilder.DropTable(
                 name: "ArtisticWorkCategories");
-
-            migrationBuilder.DropTable(
-                name: "ArtisticWorkTechniques");
 
             migrationBuilder.DropTable(
                 name: "Orders");

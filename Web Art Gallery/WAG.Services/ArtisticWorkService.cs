@@ -21,32 +21,12 @@ namespace WAG.Services
             this.DbContext = dbContext;
         }
 
-        public void AddArtWorkAsync(ArtWorkInputViewModel inputViewModel)
+        public void AddArtWork(ArtWorkInputViewModel inputViewModel)
         {
-            var category = new ArtisticWorkCategory();
+            var technique = inputViewModel.Technique;
 
-            if (DbContext.ArtisticWorkCategories.Any(x => x.Name == inputViewModel.Category))
-            {
-                category = DbContext.ArtisticWorkCategories.FirstOrDefault(x => x.Name == inputViewModel.Category);
-            }
-
-            else
-            {
-                category.Name = inputViewModel.Category;
-            }
-
-            var technique = new ArtisticWorkTechnique();
-
-            if (DbContext.ArtisticWorkTechniques.Any(x => x.Name == inputViewModel.Technique))
-            {
-                technique = DbContext.ArtisticWorkTechniques.FirstOrDefault(x => x.Name == inputViewModel.Technique);
-            }
-
-            else
-            {
-                technique.Name = inputViewModel.Technique;
-            }
-
+            var category = this.DbContext.ArtisticWorkCategories.First(c => c.Name == inputViewModel.Category);
+            
             var order = new Order()
             {
                 OrderInfo = "Test"
@@ -61,7 +41,7 @@ namespace WAG.Services
                 Availability = inputViewModel.Availability,
                 HasFrame = inputViewModel.HasFrame,
                 ArtisticWorkCategory = category,
-                ArtisticWorkTechnique = technique,
+                Technique = technique,
                 Picture = UploadPictureAsync(inputViewModel.Picture).Result,
                 CreatedOn = DateTime.UtcNow
             };
@@ -156,6 +136,22 @@ namespace WAG.Services
             var category = DbContext.ArtisticWorkCategories.FirstOrDefault(x => x.Id == id);
 
             return category;
+        }
+
+        public void AddCategory(AddCategoryViewModel addCategoryViewModel)
+        {
+            if (!DbContext.ArtisticWorkCategories.Any(x => x.Name == addCategoryViewModel.CategoryName))
+            {
+                var category = new ArtisticWorkCategory();
+
+                category.Name = addCategoryViewModel.CategoryName;
+
+                category.MainPicture = UploadPictureAsync(addCategoryViewModel.Picture).Result;
+
+                this.DbContext.ArtisticWorkCategories.Add(category);
+
+                this.DbContext.SaveChanges();
+            }
         }
     }
 }

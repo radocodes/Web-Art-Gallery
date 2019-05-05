@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace WAG.Data.Models
@@ -8,10 +9,14 @@ namespace WAG.Data.Models
     {
         public ArtEvent()
         {
-            this.ArtEventPictures = new HashSet<ArtEventPicture>();
+            this.Pictures = new HashSet<string>();
         }
 
-        public string Info { get; set; }
+        public string Title { get; set; }
+
+        public string ShortDescription { get; set; }
+
+        public string Description { get; set; }
 
         public DateTime EventDate { get; set; }
 
@@ -23,6 +28,11 @@ namespace WAG.Data.Models
 
         public DateTime CreatedOn { get; set; }
 
-        public virtual ICollection<ArtEventPicture> ArtEventPictures { get; set; }
+        public DateTime EditedOn { get; set; }
+
+        public string MainPicture { get; set; }
+
+        [NotMapped]
+        public ICollection<string> Pictures { get; set; }
     }
 }

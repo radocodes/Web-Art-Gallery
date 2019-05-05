@@ -25,9 +25,7 @@ namespace WAG.Data.Models
 
         public virtual ArtisticWorkCategory ArtisticWorkCategory { get; set; }
 
-        public int ArtisticWorkTechniqueId { get; set; }
-
-        public virtual ArtisticWorkTechnique ArtisticWorkTechnique { get; set; }
+        public string Technique { get; set; }
 
         public virtual Order Order { get; set; }
 

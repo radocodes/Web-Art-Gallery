@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WAG.Data.Models;
 using WAG.Services.Interfaces;
 using WAG.ViewModels.ArtisticWorks;
 
@@ -30,7 +31,7 @@ namespace WAG.WebApp.Areas.Administration.Controllers
         [HttpPost]
         public IActionResult AddArtWork(ArtWorkInputViewModel artWorkInputViewModel)
         {
-            this.ArtisticWorkService.AddArtWorkAsync(artWorkInputViewModel);
+            this.ArtisticWorkService.AddArtWork(artWorkInputViewModel);
 
             return RedirectToAction("Categories", "ArtisticWork", new { area = "" });
         }
@@ -65,6 +66,21 @@ namespace WAG.WebApp.Areas.Administration.Controllers
             return RedirectToAction("Index", "Home", new { area = "" });
         }
 
-        
+        public IActionResult AddCategory()
+        {
+            var addCategoryViewModel = new AddCategoryViewModel();
+
+            addCategoryViewModel.Categories = ArtisticWorkService.GetArtisticWorkCategories();
+
+            return this.View(addCategoryViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult AddCategory(AddCategoryViewModel addCategoryViewModel)
+        {
+            this.ArtisticWorkService.AddCategory(addCategoryViewModel);
+
+            return RedirectToAction("Success", "Home", new { area = "" });
+        }
     }
 }
