@@ -25,15 +25,20 @@ namespace WAG.WebApp.Areas.Administration.Controllers
 
         public IActionResult AddArtWork()
         {
-            return View();
+            var addArtWorkViewModel = new AddArtWorkViewModel()
+            {
+                ExistingCategories = this.ArtisticWorkService.GetArtisticWorkCategories()
+            };
+
+            return View(addArtWorkViewModel);
         }
 
         [HttpPost]
-        public IActionResult AddArtWork(ArtWorkInputViewModel artWorkInputViewModel)
+        public IActionResult AddArtWork(AddArtWorkViewModel addArtWorkViewModel)
         {
-            this.ArtisticWorkService.AddArtWork(artWorkInputViewModel);
+            this.ArtisticWorkService.AddArtWork(addArtWorkViewModel);
 
-            return RedirectToAction("Categories", "ArtisticWork", new { area = "" });
+            return RedirectToAction("Success", "Home", new { area = "" });
         }
 
         public IActionResult EditArtWork(int id)
@@ -44,18 +49,18 @@ namespace WAG.WebApp.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditArtWork(int id, ArtWorkInputViewModel artWorkInputViewModel)
+        public IActionResult EditArtWork(int id, EditArtWorkViewModel editArtWorkViewModel)
         {
-            this.ArtisticWorkService.EditArtWork(id, artWorkInputViewModel);
+            this.ArtisticWorkService.EditArtWork(id, editArtWorkViewModel);
 
             return RedirectToAction("Categories", "ArtisticWork", new { area = "" });
         }
 
-        public IActionResult DeleteArtWork(int id, ArtWorkViewModel artWorkViewModel)
+        public IActionResult DeleteArtWork(int id, ArtWorkDetailsViewModel artWorkDetailsViewModel)
         {
-            artWorkViewModel.ArtisticWork = ArtisticWorkService.GetArtisticWorkById(id);
+            artWorkDetailsViewModel.ArtisticWork = ArtisticWorkService.GetArtisticWorkById(id);
 
-            return View(artWorkViewModel);
+            return View(artWorkDetailsViewModel);
         }
 
         [HttpPost]
@@ -68,17 +73,56 @@ namespace WAG.WebApp.Areas.Administration.Controllers
 
         public IActionResult AddCategory()
         {
-            var addCategoryViewModel = new AddCategoryViewModel();
-
-            addCategoryViewModel.Categories = ArtisticWorkService.GetArtisticWorkCategories();
-
-            return this.View(addCategoryViewModel);
+            return this.View();
         }
 
         [HttpPost]
         public IActionResult AddCategory(AddCategoryViewModel addCategoryViewModel)
         {
             this.ArtisticWorkService.AddCategory(addCategoryViewModel);
+
+            return RedirectToAction("Success", "Home", new { area = "" });
+        }
+
+        public IActionResult AllCategories(ArtWorkCategoriesViewModel artWorkCategoriesViewModel)
+        {
+            artWorkCategoriesViewModel.Categories = this.ArtisticWorkService.GetArtisticWorkCategories();
+
+            return this.View(artWorkCategoriesViewModel);
+        }
+
+        public IActionResult EditCategory(int id, EditCategoryViewModel editCategoryViewModel)
+        {
+            var currCategory = this.ArtisticWorkService.GetCategoryById(id);
+
+            editCategoryViewModel.CategoryId = id;
+
+            editCategoryViewModel.CategoryName = currCategory.Name;
+
+            editCategoryViewModel.PictureOld = currCategory.MainPicture;
+
+            return this.View(editCategoryViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult EditCategory(int id, EditCategoryInputViewModel editCategoryInputViewModel)
+        {
+            this.ArtisticWorkService.EditCategory(id, editCategoryInputViewModel);
+
+            return RedirectToAction("Success", "Home", new { area = "" });
+        }
+
+        public IActionResult DeleteCategory(int id, DeleteCategoryViewModel deleteCategoryViewModel)
+        {
+            deleteCategoryViewModel.ArtWorkCategory = this.ArtisticWorkService.GetCategoryById(id);
+
+            return this.View(deleteCategoryViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteCategory(int id)
+        {
+            this.ArtisticWorkService.DeleteCategory(id);
 
             return RedirectToAction("Success", "Home", new { area = "" });
         }

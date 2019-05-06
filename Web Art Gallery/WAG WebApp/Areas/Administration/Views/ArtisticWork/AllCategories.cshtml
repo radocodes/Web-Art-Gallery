@@ -1,0 +1,55 @@
+﻿@model WAG.ViewModels.ArtisticWorks.ArtWorkCategoriesViewModel
+
+@{
+    ViewData["Title"] = "AllCategories";
+}
+
+<div class="container">
+    <div class="row">
+        <header class="col-12">
+            <h1 class="text-center">All artwork categories</h1>
+        </header>
+    </div>
+</div>
+
+<main class="container">
+    <div class="row">
+        <section class="col-12 ">
+            <div>
+                <div class="text-center">
+                    <a class="btn btn-primary" asp-area="Administration" asp-controller="ArtisticWork" asp-action="AddCategory">Add new category</a>
+                </div>
+                <br />
+                <div >
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Category name</th>
+                                <th scope="col">Modify</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.Categories.Count; i++)
+                            {
+                                <tr>
+                                    <th scope="row">@(i + 1)</th>
+                                    <td>@Model.Categories[i].Name</td>
+                                    <td>
+                                        <a class="btn btn-primary" asp-area="Administration" asp-controller="ArtisticWork" asp-action="EditCategory" asp-route-id="@Model.Categories[i].Id">Edit</a>
+                                        <a class="btn btn-primary" asp-area="Administration" asp-controller="ArtisticWork" asp-action="DeleteCategory" asp-route-id="@Model.Categories[i].Id">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center">
+                    <a class="btn btn-primary" asp-area="Administration" asp-controller="ArtisticWork" asp-action="AddCategory">Add new category</a>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</main>

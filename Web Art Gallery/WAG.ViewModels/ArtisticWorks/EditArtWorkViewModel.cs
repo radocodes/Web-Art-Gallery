@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using WAG.Data.Models;
 
 namespace WAG.ViewModels.ArtisticWorks
 {
@@ -17,5 +18,13 @@ namespace WAG.ViewModels.ArtisticWorks
         public bool Availability { get; set; }
 
         public bool HasFrame { get; set; }
+
+        public int CategoryId { get; set; }
+
+        public string Technique { get; set; }
+
+        public string PictureUrl { get; set; }
+
+        public List<ArtisticWorkCategory> ExistingCategories { get; set; }
     }
 }

@@ -12,7 +12,7 @@
         <hr style="height: 3px; background-color: black" />
         <div asp-validation-summary="All" class="text-danger"></div>
         <div class="row">
-            <div class="col-xs-3" >
+            <div class="col-xs-3">
                 <div class="form-group">
                     <label asp-for="Year"></label>
                     <input asp-for="Year" class="form-control" placeholder="Year..." />
@@ -42,6 +42,18 @@
                     <label asp-for="HasFrame"></label>
                     <input asp-for="HasFrame" class="form-control" placeholder="HasFrame..." />
                     <span asp-validation-for="HasFrame" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CategoryId"></label>
+                    <select asp-for="CategoryId" class="form-control custom-select" asp-items="@(new SelectList(Model.ExistingCategories, "Id", "Name"))">
+                        <option>Please select category</option>
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Technique"></label>
+                    <input asp-for="Technique" class="form-control" placeholder="Technique..." />
+                    <span asp-validation-for="Technique" class="text-danger"></span>
                 </div>
             </div>
         </div>

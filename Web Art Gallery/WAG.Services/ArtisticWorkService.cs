@@ -21,11 +21,11 @@ namespace WAG.Services
             this.DbContext = dbContext;
         }
 
-        public void AddArtWork(ArtWorkInputViewModel inputViewModel)
+        public void AddArtWork(AddArtWorkViewModel addArtWorkViewModel)
         {
-            var technique = inputViewModel.Technique;
+            var technique = addArtWorkViewModel.Technique;
 
-            var category = this.DbContext.ArtisticWorkCategories.First(c => c.Name == inputViewModel.Category);
+            var category = this.DbContext.ArtisticWorkCategories.FirstOrDefault(c => c.Id == addArtWorkViewModel.CategoryId);
             
             var order = new Order()
             {
@@ -34,15 +34,15 @@ namespace WAG.Services
 
             var artWork = new ArtisticWork()
             {
-                Year = inputViewModel.Year,
-                Height = inputViewModel.Height,
-                Width = inputViewModel.Width,
-                Price = inputViewModel.Price,
-                Availability = inputViewModel.Availability,
-                HasFrame = inputViewModel.HasFrame,
+                Year = addArtWorkViewModel.Year,
+                Height = addArtWorkViewModel.Height,
+                Width = addArtWorkViewModel.Width,
+                Price = addArtWorkViewModel.Price,
+                Availability = addArtWorkViewModel.Availability,
+                HasFrame = addArtWorkViewModel.HasFrame,
                 ArtisticWorkCategory = category,
                 Technique = technique,
-                Picture = UploadPictureAsync(inputViewModel.Picture).Result,
+                Picture = this.UploadPictureAsync(addArtWorkViewModel.Picture).Result,
                 CreatedOn = DateTime.UtcNow
             };
 
@@ -65,18 +65,22 @@ namespace WAG.Services
             return fileName;
         }
 
-        public void EditArtWork(int id, ArtWorkInputViewModel artWorkInputViewModel)
+        public void EditArtWork(int id, EditArtWorkViewModel editArtWorkViewModel)
         {
-            var currArtwork = this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id);
+            var categoryNew = DbContext.ArtisticWorkCategories.FirstOrDefault(c => c.Id == editArtWorkViewModel.CategoryId);
+
+            var currArtwork = this.DbContext.ArtisticWorks.FirstOrDefault(artwork => artwork.Id == id);
+
             if (currArtwork != null)
             {
-                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).Year = artWorkInputViewModel.Year;
-                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).Height = artWorkInputViewModel.Height;
-                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).Width = artWorkInputViewModel.Width;
-                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).Price = artWorkInputViewModel.Price;
-                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).Availability = artWorkInputViewModel.Availability;
-                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).HasFrame = artWorkInputViewModel.HasFrame;
-                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).IsDeleted = artWorkInputViewModel.IsDeleted;
+                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).Year = editArtWorkViewModel.Year;
+                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).Height = editArtWorkViewModel.Height;
+                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).Width = editArtWorkViewModel.Width;
+                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).Price = editArtWorkViewModel.Price;
+                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).Availability = editArtWorkViewModel.Availability;
+                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).HasFrame = editArtWorkViewModel.HasFrame;
+                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).ArtisticWorkCategory = categoryNew;
+                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).Technique = editArtWorkViewModel.Technique;
                 this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).EditedOn = DateTime.UtcNow;
                 DbContext.SaveChanges();
             }
@@ -105,6 +109,8 @@ namespace WAG.Services
                 Price = artWork.Price,
                 Availability = artWork.Availability,
                 HasFrame = artWork.HasFrame,
+                Technique = artWork.Technique,
+                ExistingCategories = this.GetArtisticWorkCategories()
             };
 
             return viewModel;
@@ -149,6 +155,30 @@ namespace WAG.Services
                 category.MainPicture = UploadPictureAsync(addCategoryViewModel.Picture).Result;
 
                 this.DbContext.ArtisticWorkCategories.Add(category);
+
+                this.DbContext.SaveChanges();
+            }
+        }
+
+        public void EditCategory(int CategoryId, EditCategoryInputViewModel editCategoryInputViewModel)
+        {
+            var PictureNew = this.UploadPictureAsync(editCategoryInputViewModel.PictureNew).Result;
+
+            if (this.DbContext.ArtisticWorkCategories.Any(c => c.Id == CategoryId))
+            {
+                DbContext.ArtisticWorkCategories.First(c => c.Id == CategoryId).MainPicture = PictureNew;
+
+                DbContext.SaveChanges();
+            }
+        }
+
+        public void DeleteCategory(int categoryId)
+        {
+            var currCategory = this.DbContext.ArtisticWorkCategories.FirstOrDefault(c => c.Id == categoryId);
+
+            if (currCategory != null)
+            {
+                this.DbContext.ArtisticWorkCategories.Remove(currCategory);
 
                 this.DbContext.SaveChanges();
             }

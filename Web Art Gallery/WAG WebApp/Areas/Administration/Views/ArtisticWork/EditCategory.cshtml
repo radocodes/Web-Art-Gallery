@@ -1,0 +1,45 @@
+﻿@model WAG.ViewModels.ArtisticWorks.EditCategoryViewModel
+
+@{
+    ViewData["Title"] = "EditCategory";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <header class="col-12">
+            <h1 class="text-center">Edit Artwork Category</h1>
+        </header>
+    </div>
+</div>
+
+<main class="container-fluid">
+    <div class="row">
+
+        <aside class="col-sm-3 col-12 left-panel">
+            <img src="~/images/@Model.PictureOld" style="width:200px; padding-bottom:25px" />
+            <div>
+                <p>Category Name: @Model.CategoryName</p>
+            </div>
+        </aside>
+
+        <section class="col-sm-9 col-12 right-panel">
+            <div class="container">
+                <form method="post" enctype="multipart/form-data" asp-controller="ArtisticWork" asp-action="EditCategory">
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <p>Upload new picture to replace old one, using this form:</p>
+                            <input type="file" name="PictureNew" multiple>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <input type="submit" value="Upload">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+    </div>
+</main>
+

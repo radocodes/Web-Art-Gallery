@@ -1,4 +1,4 @@
-﻿@model WAG.ViewModels.ArtisticWorks.ArtWorkInputViewModel
+﻿@model WAG.ViewModels.ArtisticWorks.AddArtWorkViewModel
 
 @{
     ViewData["Title"] = "AddArtWork";
@@ -6,7 +6,7 @@
 
 <h2>Add Artwork</h2>
 
-<form method="post" enctype="multipart/form-data" class="center-block">
+<form method="post" enctype="multipart/form-data" asp-area="Administration" asp-controller="ArtisticWork" asp-action="AddArtWork" class="center-block">
     <hr style="height: 3px; background-color: black" />
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="row">
@@ -42,9 +42,11 @@
                 <span asp-validation-for="HasFrame" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Category"></label>
-                <input asp-for="Category" class="form-control" placeholder="Category..." />
-                <span asp-validation-for="Category" class="text-danger"></span>
+                <label asp-for="CategoryId"></label>
+                <select asp-for="CategoryId" class="form-control custom-select" asp-items="@(new SelectList(Model.ExistingCategories, "Id", "Name"))">
+                    <option>Please select category</option>
+                </select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Technique"></label>
@@ -52,8 +54,8 @@
                 <span asp-validation-for="Technique" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <asp-controller="ArtisticWork" name="Picture" asp-action="AddArtWork">
-                    <input type="file" name="Picture">
+                <label asp-for="Picture"></label>
+                <input type="file" name="Picture">
             </div>
         </div>
     </div>

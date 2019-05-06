@@ -6,7 +6,7 @@ using WAG.Data.Models;
 
 namespace WAG.ViewModels.ArtisticWorks
 {
-    public class ArtWorkInputViewModel
+    public class AddArtWorkViewModel
     {
         public int Year { get; set; }
 
@@ -20,14 +20,14 @@ namespace WAG.ViewModels.ArtisticWorks
 
         public bool HasFrame { get; set; }
 
-        public string Category { get; set; }
+        public int CategoryId { get; set; }
 
         public string Technique { get; set; }
-
-        public bool IsDeleted { get; set; }
 
         public IFormFile Picture { get; set; }
 
         public string PictureUrl { get; set; }
+
+        public List<ArtisticWorkCategory> ExistingCategories { get; set; }
     }
 }
