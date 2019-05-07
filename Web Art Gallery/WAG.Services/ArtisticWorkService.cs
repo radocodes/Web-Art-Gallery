@@ -15,10 +15,12 @@ namespace WAG.Services
     public class ArtisticWorkService : IArtisticWorkService
     {
         private WAGDbContext DbContext;
+        private ICommonService CommonService;
 
-        public ArtisticWorkService(WAGDbContext dbContext)
+        public ArtisticWorkService(WAGDbContext dbContext, ICommonService commonService)
         {
             this.DbContext = dbContext;
+            this.CommonService = commonService;
         }
 
         public void AddArtWork(AddArtWorkViewModel addArtWorkViewModel)
@@ -42,27 +44,13 @@ namespace WAG.Services
                 HasFrame = addArtWorkViewModel.HasFrame,
                 ArtisticWorkCategory = category,
                 Technique = technique,
-                Picture = this.UploadPictureAsync(addArtWorkViewModel.Picture).Result,
+                Picture = this.CommonService.UploadPictureAsync(addArtWorkViewModel.Picture).Result,
                 CreatedOn = DateTime.UtcNow
             };
 
             this.DbContext.ArtisticWorks.Add(artWork);
 
             this.DbContext.SaveChanges();
-        }
-
-        private async Task<string> UploadPictureAsync(IFormFile picture)
-        {
-            var fileName = $"{Guid.NewGuid()}.jpg";
-
-            var filePath = $@"D:\RADO\IT\Projects\Web Art Gallery\Web Art Gallery\WAG WebApp\wwwroot\images\{fileName}";
-
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await picture.CopyToAsync(stream);
-            };
-
-            return fileName;
         }
 
         public void EditArtWork(int id, EditArtWorkViewModel editArtWorkViewModel)
@@ -152,7 +140,7 @@ namespace WAG.Services
 
                 category.Name = addCategoryViewModel.CategoryName;
 
-                category.MainPicture = UploadPictureAsync(addCategoryViewModel.Picture).Result;
+                category.MainPicture = this.CommonService.UploadPictureAsync(addCategoryViewModel.Picture).Result;
 
                 this.DbContext.ArtisticWorkCategories.Add(category);
 
@@ -162,7 +150,7 @@ namespace WAG.Services
 
         public void EditCategory(int CategoryId, EditCategoryInputViewModel editCategoryInputViewModel)
         {
-            var PictureNew = this.UploadPictureAsync(editCategoryInputViewModel.PictureNew).Result;
+            var PictureNew = this.CommonService.UploadPictureAsync(editCategoryInputViewModel.PictureNew).Result;
 
             if (this.DbContext.ArtisticWorkCategories.Any(c => c.Id == CategoryId))
             {

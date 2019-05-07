@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewData["Title"] = "ManageArticles";
+}
+
+<header class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="text-center">Manage Articles</h2>
+        </div>
+    </div>
+</header>
+
+<main class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="list-group center-block text-center" style="width:30%">
+                <a asp-area="Administration" asp-controller="Blog" asp-action="CreateArticle" class="list-group-item list-group-item-action">Create New Article</a>
+                <a asp-area="" asp-controller="Blog" asp-action="Index" class="list-group-item list-group-item-action">Edit or Delete Article (choose first)</a>
+            </div>
+        </div>
+    </div>
+</main>
+
+

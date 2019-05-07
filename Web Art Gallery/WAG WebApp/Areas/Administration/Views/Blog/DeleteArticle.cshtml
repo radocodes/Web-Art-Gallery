@@ -1,0 +1,39 @@
+﻿@model WAG.ViewModels.Blog.DeleteArticleViewModel
+
+@{
+    ViewData["Title"] = "DeleteArticle";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <header class="col-12">
+            <h1 class="text-center">Delete Article</h1>
+        </header>
+    </div>
+</div>
+
+<main class="container-fluid">
+    <div class="row">
+
+        <aside class="col-sm-3 col-12 left-panel">
+            <img src="~/images/@Model.Article.MainPicture" style="width:200px; padding-bottom:25px" />
+            <div>
+                <p>Article Title: @Model.Article.Title</p>
+            </div>
+        </aside>
+
+        <section class="col-sm-9 col-12 right-panel">
+            <div>
+                <h2>Are you sure you want to delete permanently this Article?</h2>
+                <br />
+                <div>
+                    <form method="post" asp-area="Administration" asp-controller="Blog" asp-action="DeleteArticle" asp-route-id="@Model.Article.Id">
+                        <button type="submit" class="btn btn-warning">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</main>
+

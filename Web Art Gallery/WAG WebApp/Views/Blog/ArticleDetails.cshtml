@@ -1,0 +1,48 @@
+﻿@model WAG.ViewModels.Blog.ArticleDetailsViewModel
+
+@{
+    ViewData["Title"] = "ArticleDetails";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <header>
+                <h1>Welcome to Ema Ivanovas Artistic Blog</h1>
+            </header>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <main>
+                <div>
+                    <article>
+                        <div>
+                            <h2>@Model.Article.Title</h2>
+                        </div>
+                        <div>
+                            <p>@Model.Article.CreatedOn.ToShortDateString()</p>
+                        </div>
+                        <div>
+                            <pre style="background-color:white; border:none; font-size:medium">@Model.Article.ShortDescription</pre>
+                        </div>
+                        <div>
+                            <pre style="background-color:white; border:none; font-size:medium">@Model.ArticleContent</pre>
+                        </div>
+                        <br />
+                    </article>
+                </div>
+                @if (User.IsInRole("Admin"))
+                {
+                    <div>
+                        <a class="btn btn-primary" asp-area="Administration" asp-controller="Blog" asp-action="EditArticle" asp-route-id="@Model.Article.Id">Edit</a>
+                        <a class="btn btn-primary" asp-area="Administration" asp-controller="Blog" asp-action="DeleteArticle" asp-route-id="@Model.Article.Id">Delete</a>
+                    </div>
+                }
+            </main>
+        </div>
+    </div>
+</div>
+

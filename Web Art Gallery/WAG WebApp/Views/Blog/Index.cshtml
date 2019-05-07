@@ -1,0 +1,43 @@
+﻿@model WAG.ViewModels.Blog.BlogIndexViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <header>
+                <h1>Welcome to Ema Ivanova's Artistic Blog</h1>
+            </header>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <main>
+                @foreach (var article in Model.AllArticles)
+                {
+                    <div>
+                        <article>
+                            <div>
+                                <h2>@article.Title</h2>
+                            </div>
+                            <div>
+                                <p>@article.CreatedOn.ToShortDateString()</p>
+                            </div>
+                            <div>
+                                <p>@article.ShortDescription</p>
+                            </div> 
+                            <br />
+                            <a class="btn btn-default" asp-area="" asp-controller="Blog" asp-action="ArticleDetails" asp-route-id="@article.Id">READ MORE</a>
+                        </article>
+                    </div>
+                }
+
+            </main>
+        </div>
+    </div>
+</div>
+
