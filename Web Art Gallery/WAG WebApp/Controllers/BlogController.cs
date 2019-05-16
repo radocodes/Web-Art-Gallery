@@ -12,11 +12,13 @@ namespace WAG.WebApp.Controllers
     {
         private IBlogService BlogService;
         private ICommonService CommonService;
+        private ICommentService CommentService;
 
-        public BlogController(IBlogService blogService, ICommonService commonService)
+        public BlogController(IBlogService blogService, ICommonService commonService, ICommentService commentService)
         {
             this.BlogService = blogService;
             this.CommonService = commonService;
+            this.CommentService = commentService;
         }
 
         public IActionResult Index(BlogIndexViewModel blogIndexViewModel)
@@ -33,6 +35,8 @@ namespace WAG.WebApp.Controllers
             articleDetailsViewModel.Article = article;
 
             articleDetailsViewModel.ArticleContent = this.BlogService.DownloadArticleContent(article.Description);
+
+            articleDetailsViewModel.Comments = this.CommentService.GetArticleComments(article.Id);
 
             return this.View(articleDetailsViewModel);
         }

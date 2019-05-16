@@ -57,6 +57,7 @@ namespace WAG.WebApp
             services.AddScoped<IArtisticWorkService, ArtisticWorkService>();
             services.AddScoped<IBlogService, BlogService>();
             services.AddScoped<ICommonService, CommonService>();
+            services.AddScoped<ICommentService, CommentService>();
 
             services
                 .AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

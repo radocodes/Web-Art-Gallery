@@ -28,8 +28,8 @@
                                 <p>@article.CreatedOn.ToShortDateString()</p>
                             </div>
                             <div>
-                                <p>@article.ShortDescription</p>
-                            </div> 
+                                <pre style="background-color:white;  font-size:medium">@article.ShortDescription</pre>
+                            </div>
                             <br />
                             <a class="btn btn-default" asp-area="" asp-controller="Blog" asp-action="ArticleDetails" asp-route-id="@article.Id">READ MORE</a>
                         </article>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using WAG.Common.User;
 using WAG.Data;
@@ -156,6 +157,13 @@ namespace WAG.Services
             }
 
             return roles;
+        }
+
+        public WAGUser GetCurrentUser(HttpContext httpContext)
+        {
+            var currentUser = this.UserManager.GetUserAsync(httpContext.User).Result;
+
+            return currentUser;
         }
     }
 }

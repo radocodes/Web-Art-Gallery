@@ -51,4 +51,12 @@ footer {
     margin-top: 0%;
 }
 
+.comment .close {
+    visibility: hidden; 
+}
+
+.comment:hover .close{
+    visibility: visible;
+}
+
 

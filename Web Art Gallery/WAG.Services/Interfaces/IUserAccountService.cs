@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -29,6 +30,8 @@ namespace WAG.Services.Interfaces
         Task<IdentityResult> RemoveUserFromRoleAsync(string userId, string role);
 
         List<string> GetRolesList();
+
+        WAGUser GetCurrentUser(HttpContext httpContext);
 
     }
 }

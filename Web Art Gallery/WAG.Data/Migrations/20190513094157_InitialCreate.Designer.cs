@@ -10,7 +10,7 @@ using WAG.Data;
 namespace WAG.Data.Migrations
 {
     [DbContext(typeof(WAGDbContext))]
-    [Migration("20190505093718_InitialCreate")]
+    [Migration("20190513094157_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

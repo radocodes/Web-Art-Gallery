@@ -41,8 +41,115 @@
                         <a class="btn btn-primary" asp-area="Administration" asp-controller="Blog" asp-action="DeleteArticle" asp-route-id="@Model.Article.Id">Delete</a>
                     </div>
                 }
+                <br />
+                <div id="AllComments">
+                    <p>Comments:</p>
+                    @if (Model.Comments != null)
+                    {
+                        foreach (var comment in Model.Comments)
+                        {
+                            string user = null;
+
+                            if (comment.WAGUser.FirstName != null && comment.WAGUser.LastName != null)
+                            {
+                                user = $"{comment.WAGUser.FirstName} {comment.WAGUser.LastName}";
+
+                                if (User.IsInRole("Admin"))
+                                {
+                                    user = $"{comment.WAGUser.FirstName} {comment.WAGUser.LastName} ({comment.WAGUser.UserName})";
+                                }
+                            }
+                            else
+                            {
+                                user = $"{comment.WAGUser.UserName}";
+                            }
+
+                            <div id="comment-id-@comment.Id">
+                                <p class="comment" style="display:inline-block">@user: @comment.TextBody<button type="button" value="@comment.Id" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button></p>
+                            </div>
+                        }
+                    }
+                </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div>
+                        <div class="form-group">
+                            <label>Comment</label>
+                            <input id="content" placeholder="Comment..." style="width:70%" />
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" id="post" class="btn btn-primary">Post</button>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <br />
+                    <div>
+                        <p>Please Sign Up or Sign In to make comments</p>
+                    </div>
+                }
+
             </main>
         </div>
     </div>
 </div>
 
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        //Add Comment
+        $("#post").on("click", function () {
+            var comment = $("#content").val();
+            $("#content").val("");
+    $.ajax({
+        type: "POST",
+        url: "/Comment/AddComment",
+        dataType: 'Json',
+        data: {
+            comment: comment,
+            articleId: @Model.Article.Id,
+            },
+        success: function (data) {
+            var json = JSON.parse(data);
+            var userName = "";
+
+            if (json.UserFirstName != null && json.UserLastName != null) {
+                userName = `${json.UserFirstName} ${json.UserLastName}`
+            }
+            else {
+                userName = json.UserName;
+            }
+            if (json.Comment != null) {
+                $("#AllComments").append(`<div id="comment-id-${json.CommentId}"><p class="comment" style="display:inline-block">${userName}: ${json.Comment} <button type="button" value="${json.CommentId}" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button></p></div>`);
+            }
+
+        }
+    });
+        });
+
+        //Delete Comment
+        $(".close").click(function () {
+            var commentId = $(this).val();
+            $.ajax({
+        type: "POST",
+        url: "/Comment/DeleteComment",
+        dataType: 'Json',
+        data: {
+            commentId: commentId
+},
+    success: function (data) {
+        var json = JSON.parse(data);
+
+        if (json != null) {
+            if (json.CommentId != null && json.CommentId != 0) {
+                $(`#comment-id-${json.CommentId}`).hide();
+            }
+        }
+    }
+            });
+
+        });
+    </script>
+}

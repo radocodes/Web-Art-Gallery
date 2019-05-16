@@ -70,7 +70,7 @@ namespace WAG.Services
 
         public List<Article> GetAllArticles()
         {
-            var allArticles = this.DbContext.Articles.ToList();
+            var allArticles = this.DbContext.Articles.OrderByDescending(a => a.CreatedOn).ThenByDescending(a => a.EditedOn).ToList();
 
             return allArticles;
         }
