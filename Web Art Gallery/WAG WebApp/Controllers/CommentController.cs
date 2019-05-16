@@ -7,9 +7,11 @@ using WAG.Services.Interfaces;
 using System.Security.Claims;
 using WAG.ViewModels.Comment;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WAG.WebApp.Controllers
 {
+    [Authorize]
     public class CommentController : Controller
     {
         private ICommentService CommentService;
@@ -20,7 +22,7 @@ namespace WAG.WebApp.Controllers
             this.CommentService = commentService;
             this.UserAccountService = userAccountService;
         }
-
+        
         [HttpPost]
         public IActionResult AddComment(int articleId, string comment)
         {

@@ -17,6 +17,10 @@ namespace WAG.Services.Interfaces
 
         void Logout();
 
+        void EditUserProfile(WAGUser user, EditUserProfileInputViewModel editUserProfileInputViewModel);
+
+        void ChangePassword(WAGUser user, string currPassword, string newPassword);
+
         void DeleteUser(string id);
 
         IEnumerable<WAGUser> GetAllUsers();

@@ -16,13 +16,13 @@
     <div class="row">
         <div class="col-12">
             <div class="center-block text-center" style="width:30%; border:solid">
-                <p>Username: @Model.User.UserName</p>
-                <p>First name: @Model.User.FirstName</p>
-                <p>Last name: @Model.User.LastName</p>
-                <p>City: @Model.User.City</p>
-                <p>Address: @Model.User.Address</p>
-                <p>Phone number: @Model.User.PhoneNumber</p>
-                <p>Email: @Model.User.Email</p>
+                <p>Username: @Model.UserName</p>
+                <p>First name: @Model.FirstName</p>
+                <p>Last name: @Model.LastName</p>
+                <p>City: @Model.City</p>
+                <p>Address: @Model.Address</p>
+                <p>Phone number: @Model.PhoneNumber</p>
+                <p>Email: @Model.Email</p>
                 <p>
                     Identity Roles:
                     @if (Model.IdentityRoles != null)
@@ -31,14 +31,14 @@
                     }
                 </p>
                 <br />
-                <a class="btn btn-primary" asp-area="Administration" asp-controller="UserAccount" asp-action="DeleteUser" asp-route-id="@Model.User.Id">Delete</a>
+                <a class="btn btn-primary" asp-area="Administration" asp-controller="UserAccount" asp-action="DeleteUser" asp-route-id="@Model.UserId">Delete</a>
                 @if (!Model.IdentityRoles.Contains("Admin"))
                 {
-                    <a class="btn btn-primary" asp-area="Administration" asp-controller="UserAccount" asp-action="MakeUserAdmin" asp-route-userId="@Model.User.Id">Make Administrator</a>
+                    <a class="btn btn-primary" asp-area="Administration" asp-controller="UserAccount" asp-action="MakeUserAdmin" asp-route-userId="@Model.UserId">Make Administrator</a>
                 }
                 else
                 {
-                    <a class="btn btn-primary" asp-area="Administration" asp-controller="UserAccount" asp-action="RemoveUserFromAdminRole" asp-route-userId="@Model.User.Id">Drop Admin Role</a>
+                    <a class="btn btn-primary" asp-area="Administration" asp-controller="UserAccount" asp-action="RemoveUserFromAdminRole" asp-route-userId="@Model.UserId">Drop Admin Role</a>
                 }
 
 

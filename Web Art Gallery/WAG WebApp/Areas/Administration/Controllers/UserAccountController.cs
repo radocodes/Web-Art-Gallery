@@ -37,7 +37,14 @@ namespace WAG.WebApp.Areas.Administration.Controllers
 
             var userRoles = this.UserAccountService.GetUserRolesNameById(id).ToList();
 
-            userDetailsViewModel.User = currUser;
+            userDetailsViewModel.UserId = currUser.Id;
+            userDetailsViewModel.UserName = currUser.UserName;
+            userDetailsViewModel.FirstName = currUser.FirstName;
+            userDetailsViewModel.LastName = currUser.LastName;
+            userDetailsViewModel.Email = currUser.Email;
+            userDetailsViewModel.PhoneNumber = currUser.PhoneNumber;
+            userDetailsViewModel.City = currUser.City;
+            userDetailsViewModel.Address = currUser.Address;
 
             userDetailsViewModel.IdentityRoles = userRoles;
 
@@ -46,7 +53,16 @@ namespace WAG.WebApp.Areas.Administration.Controllers
 
         public IActionResult DeleteUser(string id, UserDetailsViewModel userDetailsViewModel)
         {
-            userDetailsViewModel.User = this.UserAccountService.GetUserById(id);
+            var UserToDelete = this.UserAccountService.GetUserById(id);
+
+            userDetailsViewModel.UserId = UserToDelete.Id;
+            userDetailsViewModel.UserName = UserToDelete.UserName;
+            userDetailsViewModel.FirstName = UserToDelete.FirstName;
+            userDetailsViewModel.LastName = UserToDelete.LastName;
+            userDetailsViewModel.Email = UserToDelete.Email;
+            userDetailsViewModel.PhoneNumber = UserToDelete.PhoneNumber;
+            userDetailsViewModel.City = UserToDelete.City;
+            userDetailsViewModel.Address = UserToDelete.Address;
 
             return View(userDetailsViewModel);
         }

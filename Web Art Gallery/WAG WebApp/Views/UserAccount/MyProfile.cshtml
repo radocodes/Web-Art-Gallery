@@ -1,0 +1,17 @@
+﻿@model WAG.ViewModels.UserAccount.UserDetailsViewModel
+@{
+    ViewData["Title"] = "MyProfile";
+}
+
+<h2>My Profile</h2>
+
+<p>UserName: @Model.UserName</p>
+<p>First Name: @Model.FirstName</p>
+<p>Last Name: @Model.LastName</p>
+<p>Email: @Model.Email</p>
+<p>Phone Number: @Model.PhoneNumber</p>
+<p>City: @Model.City</p>
+<p>Address: @Model.Address</p>
+
+<a class="btn btn-primary" asp-area="" asp-controller="UserAccount" asp-action="EditUserProfile">Edit Your Profile Details</a>
+<a class="btn btn-primary" asp-area="" asp-controller="UserAccount" asp-action="ChangePassword">Change Password</a>

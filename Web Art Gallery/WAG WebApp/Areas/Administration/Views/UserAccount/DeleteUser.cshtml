@@ -19,13 +19,13 @@
                 <h2 class="text-center">Are you sure you want to delete permanently this user?</h2>
                 <br />
                 <div class="text-center center-block" style="border:dotted; width:30%">
-                    <p>UserName: @Model.User.UserName</p>
-                    <p>First Name: @Model.User.FirstName</p>
-                    <p>Last Name: @Model.User.LastName</p>
+                    <p>UserName: @Model.UserName</p>
+                    <p>First Name: @Model.FirstName</p>
+                    <p>Last Name: @Model.LastName</p>
                 </div>
                 <br />
                 <div class="text-center">
-                    <form method="post" asp-area="Administration" asp-controller="UserAccount" asp-action="DeleteUser" asp-route-id="@Model.User.Id">
+                    <form method="post" asp-area="Administration" asp-controller="UserAccount" asp-action="DeleteUser" asp-route-id="@Model.UserId">
                         <button type="submit" class="btn btn-warning">Delete</button>
                     </form>
                 </div>

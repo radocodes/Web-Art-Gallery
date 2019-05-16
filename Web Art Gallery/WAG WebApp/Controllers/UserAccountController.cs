@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -69,11 +71,70 @@ namespace WAG.WebApp.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [Authorize]
         public IActionResult Logout()
         {
             this.UserAccountService.Logout();
 
             return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
+        public IActionResult MyProfile(UserDetailsViewModel userDetailsViewModel)
+        {
+            var currUser = this.UserAccountService.GetCurrentUser(HttpContext);
+
+            userDetailsViewModel.UserName = currUser.UserName;
+            userDetailsViewModel.FirstName = currUser.FirstName;
+            userDetailsViewModel.LastName = currUser.LastName;
+            userDetailsViewModel.City = currUser.City;
+            userDetailsViewModel.Address = currUser.Address;
+            userDetailsViewModel.Email = currUser.Email;
+            userDetailsViewModel.PhoneNumber = currUser.PhoneNumber;
+            userDetailsViewModel.IdentityRoles = this.UserAccountService.GetUserRolesNameById(currUser.Id).ToList();
+
+            return this.View(userDetailsViewModel);
+        }
+
+        [Authorize]
+        public IActionResult EditUserProfile(EditUserProfileViewModel editUserProfileViewModel)
+        {
+            var currUser = this.UserAccountService.GetCurrentUser(HttpContext);
+
+            editUserProfileViewModel.FirstName = currUser.FirstName;
+            editUserProfileViewModel.LastName = currUser.LastName;
+            editUserProfileViewModel.City = currUser.City;
+            editUserProfileViewModel.Address = currUser.Address;
+            editUserProfileViewModel.Email = currUser.Email;
+            editUserProfileViewModel.PhoneNumber = currUser.PhoneNumber;
+
+            return this.View(editUserProfileViewModel);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult EditUserProfile(EditUserProfileInputViewModel editUserProfileInputViewModel)
+        {
+            var currUser = this.UserAccountService.GetCurrentUser(HttpContext);
+
+            this.UserAccountService.EditUserProfile(currUser, editUserProfileInputViewModel);
+
+            return RedirectToAction("Success", "Home", new { area = "" });
+        }
+
+        public IActionResult ChangePassword()
+        {
+            return this.View();
+        }
+
+        [HttpPost]
+        public IActionResult ChangePassword(ChangePasswordViewModel changePasswordViewModel)
+        {
+            var currUser = this.UserAccountService.GetCurrentUser(HttpContext);
+
+            this.UserAccountService.ChangePassword(currUser, changePasswordViewModel.CurrPassword, changePasswordViewModel.NewPassword);
+            
+            return RedirectToAction("Success", "Home", new { area = "" });
         }
     }
 }

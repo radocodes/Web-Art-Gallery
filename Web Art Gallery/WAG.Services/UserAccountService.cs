@@ -72,6 +72,23 @@ namespace WAG.Services
             await this.SignInManager.SignOutAsync();
         }
 
+        public void EditUserProfile(WAGUser user, EditUserProfileInputViewModel editUserProfileInputViewModel)
+        {
+            this.DbContext.Users.First(u => u == user).FirstName = editUserProfileInputViewModel.FirstName;
+            this.DbContext.Users.First(u => u == user).LastName = editUserProfileInputViewModel.LastName;
+            this.DbContext.Users.First(u => u == user).Email = editUserProfileInputViewModel.Email;
+            this.DbContext.Users.First(u => u == user).PhoneNumber = editUserProfileInputViewModel.PhoneNumber;
+            this.DbContext.Users.First(u => u == user).City = editUserProfileInputViewModel.City;
+            this.DbContext.Users.First(u => u == user).Address = editUserProfileInputViewModel.Address;
+
+            this.DbContext.SaveChanges();
+        }
+
+        public void ChangePassword(WAGUser user, string currPassword, string newPassword)
+        {
+             var result = this.UserManager.ChangePasswordAsync(user, currPassword, newPassword).Result;
+        }
+
         public void DeleteUser(string id)
         {
             var user = GetUserById(id);
