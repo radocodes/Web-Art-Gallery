@@ -1,0 +1,52 @@
+﻿@model WAG.ViewModels.Home.MessagesViewModel
+
+@{
+    ViewData["Title"] = "Messages";
+}
+
+<h2 class="text-center">Messages</h2>
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">From</th>
+                        <th scope="col">Title</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Messages != null)
+                    {
+                        for (int i = 0; i < Model.Messages.Count; i++)
+                        {
+                            var author = Model.Messages[i].WAGUser.UserName;
+
+                            if (Model.Messages[i].WAGUser.FirstName != null && Model.Messages[i].WAGUser.LastName != null)
+                            {
+                                author = $"{Model.Messages[i].WAGUser.FirstName} {Model.Messages[i].WAGUser.LastName}";
+                            }
+
+                            <tr>
+                                <th scope="row">@(i + 1)</th>
+                                <td>@author</td>
+                                <td>
+                                    <a asp-area="Administration" asp-controller="Home" asp-action="MessageDetails" asp-route-id="@Model.Messages[i].Id">
+                                        @Model.Messages[i].Title
+                                    </a>
+                                </td>
+                                <td>
+                                    <form method="post" asp-area="Administration" asp-controller="Home" asp-action="DeleteContactMessage" asp-route-id="@Model.Messages[i].Id">
+                                        <button type="submit" class="btn btn-default">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

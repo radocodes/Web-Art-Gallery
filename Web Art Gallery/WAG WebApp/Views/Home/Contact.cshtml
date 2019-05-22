@@ -1,17 +1,49 @@
-﻿@{
+﻿@model WAG.ViewModels.Home.ContactMessageViewModel
+
+@{
     ViewData["Title"] = "Contact";
+    ViewData["Message"] = "Ema Ivanova";
 }
 <h2>@ViewData["Title"]</h2>
 <h3>@ViewData["Message"]</h3>
+<h4>Artist</h4>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
+<address style="font-size:medium">
+    <i class="fas fa-phone"></i> Mobile: +359 889737579<br />
+    <i class="fas fa-envelope"></i> E-mail: emaivanova@gmail.com<br />
+    <i class="fab fa-facebook-square"></i> <a href="http://www.facebook.com/EmaIvanovaArt/">www.facebook.com/EmaIvanovaArt/</a><br />
+    <i class="fab fa-instagram"></i> <a href="https://www.instagram.com/ema.ivanova.art/">www.instagram.com/ema.ivanova.art/</a>
 </address>
 
-<address>
-    <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+<div class="container">
+    <div class="row">
+        <div class="col-12 text-center">
+            <div>
+                <h3>Contact with me!</h3>
+            </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div>
+                    <form method="post" enctype="multipart/form-data" asp-area="" asp-controller="Home" asp-action="Contact">
+                        <div class="form-group">
+                            <label asp-for="Title"></label>
+                            <input asp-for="Title" class="form-control" placeholder="Title..." style="width:70%" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="TextBody">Message</label>
+                            <textarea asp-for="TextBody" class="form-control" placeholder="Write your message here..." style="width:80%; height:100px"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Send</button>
+                        </div>
+                    </form>
+                </div>
+            }
+            else
+            {
+                <p>If you want to leave me a message here in website, please LogIn/SignIn first.</p> 
+                <p>Otherwise you can write me at email address above or feel free to call me by Phone.</p>
+            }
+        </div>
+    </div>
+</div>

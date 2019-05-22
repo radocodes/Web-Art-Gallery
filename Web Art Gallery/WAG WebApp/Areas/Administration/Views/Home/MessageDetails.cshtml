@@ -1,0 +1,39 @@
+﻿@model WAG.ViewModels.Home.MessageDetailsViewModel
+
+@{
+    ViewData["Title"] = "MessageDetails";
+
+    var author = Model.Message.WAGUser.UserName;
+
+    if (Model.Message.WAGUser.FirstName != null && Model.Message.WAGUser.LastName != null)
+    {
+        author = $"{Model.Message.WAGUser.FirstName} {Model.Message.WAGUser.LastName} ({Model.Message.WAGUser.UserName})";
+    }
+}
+
+<h2 class="text-center">MessageDetails</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <form method="post" asp-area="Administration" asp-controller="Home" asp-action="DeleteContactMessage" asp-route-id="@Model.Message.Id">
+                <button type="submit" class="btn btn-default">Delete Message</button>
+            </form>
+            <br />
+            <h3>From</h3>
+            <div>
+                @author
+            </div>
+            <br />
+            <h3>Title:</h3>
+            <div style="max-width:200px">
+                @Model.Message.Title
+            </div>
+            <br />
+            <h3>Message:</h3>
+            <div>
+                @Model.Message.TextBody
+            </div>
+        </div>
+    </div>
+</div>
