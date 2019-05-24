@@ -33,9 +33,25 @@
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                     <li><a asp-area="" asp-action="Categories" asp-controller="ArtisticWork">Gallery</a></li>
                     <li><a asp-area="" asp-action="Index" asp-controller="Blog">Blog</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Order
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="btn dropdown-item" asp-area="" asp-controller="Order" asp-action="Index">Order existing artwork</a>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a class="btn dropdown-item" asp-area="" asp-controller="Order" asp-action="MakeSpecialOrder">Make special order</a>
+                            }
+                            else
+                            {
+                                <a class="btn dropdown-item" asp-area="" asp-controller="UserAccount" asp-action="Login">Make special order</a>
+                            }
+                        </div>
+                    </li>
                 </ul>
                 <partial name="_LoginPartial" />
             </div>

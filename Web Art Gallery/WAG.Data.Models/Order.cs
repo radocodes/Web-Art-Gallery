@@ -6,14 +6,13 @@ namespace WAG.Data.Models
 {
     public class Order : BaseModel<int>
     {
-        public Order()
-        {
-            this.ArtisticWorks = new HashSet<ArtisticWork>();
-        }
-
         public string WAGUserId { get; set; }
 
         public virtual WAGUser WAGUser { get; set; }
+
+        public int? ArtisticWorkId { get; set; }
+
+        public virtual ArtisticWork ArtisticWork { get; set; }
 
         public string OrderInfo { get; set; }
 
@@ -24,7 +23,5 @@ namespace WAG.Data.Models
         public bool IsDeleted { get; set; }
 
         public DateTime CreatedOn { get; set; }
-
-        public virtual ICollection<ArtisticWork> ArtisticWorks { get; set; }
     }
 }

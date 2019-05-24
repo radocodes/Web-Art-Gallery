@@ -39,11 +39,12 @@ namespace WAG.WebApp.Controllers
             return View();
         }
 
-        public IActionResult About()
+        public IActionResult About(AboutViewModel aboutViewModel)
         {
-            ViewData["Message"] = "Your application description page.";
+            
 
-            return View();
+
+            return View(aboutViewModel);
         }
 
         public IActionResult Contact()

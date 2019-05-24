@@ -24,7 +24,7 @@
             @if (User.Identity.IsAuthenticated)
             {
                 <div>
-                    <form method="post" enctype="multipart/form-data" asp-area="" asp-controller="Home" asp-action="Contact">
+                    <form method="post" asp-area="" asp-controller="Home" asp-action="Contact">
                         <div class="form-group">
                             <label asp-for="Title"></label>
                             <input asp-for="Title" class="form-control" placeholder="Title..." style="width:70%" />

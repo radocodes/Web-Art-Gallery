@@ -1,0 +1,33 @@
+﻿@model WAG.ViewModels.Order.MakeOrderViewModel
+
+@{
+    ViewData["Title"] = "MakeOrder";
+}
+
+<h2>Make order</h2>
+
+<h3>Are you sure you want to make this order?</h3>
+
+<form method="post" asp-area="" asp-controller="Order" asp-action="MakeOrder">
+    <div class="form-group">
+        <input asp-for="ArtWorkId" type="hidden" class="form-control" value="@Model.ArtWorkId" style="width:70%; height:100px"/>
+    </div>
+    <div class="form-group">
+        <p>Type here some additional info about your order if is needed</p>
+        <label asp-for="OrderInfo">Order info</label>
+        <textarea asp-for="OrderInfo" class="form-control" placeholder="Order info..." style="width:70%; height:100px"></textarea>
+    </div>
+    <div class="form-group">
+        <p>Type here Phone Number for contact with you, if it's different than phone number from your profile</p>
+        <label asp-for="TelephoneNumberForContact">Phone number</label>
+        <input asp-for="TelephoneNumberForContact" type="tel" class="form-control" placeholder="Phone number..." style="width:40%" />
+    </div>
+    <div class="form-group">
+        <p>Type here Delivery Address, if it's different than the Address from your profile</p>
+        <label asp-for="DeliveryAddress">Delivery Address</label>
+        <textarea asp-for="DeliveryAddress" class="form-control" placeholder="Delivery Address..." style="width:40%; height:100px"></textarea>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Finish order</button>
+    </div>
+</form>

@@ -18,7 +18,10 @@
     <form asp-area="" asp-action="Logout" asp-controller="UserAccount" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav">
             <li>
-                <a asp-area="" asp-controller="UserAccount" asp-action="MyProfile">Hello @UserManager.GetUserName(User)</a>
+                <a asp-area="" asp-controller="Order" asp-action="MyOrders">My Orders</a>
+            </li>
+            <li>
+                <a asp-area="" asp-controller="UserAccount" asp-action="MyProfile">My Profile</a>
             </li>
             <li>
                 <button type="submit" class="btn btn-link navbar-btn navbar-link">Logout</button>

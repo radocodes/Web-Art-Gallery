@@ -1,0 +1,20 @@
+﻿@model WAG.ViewModels.Order.OrderDetailsViewModel
+
+@{
+    ViewData["Title"] = "OrderDetails";
+}
+
+<h2>OrderDetails</h2>
+
+<p>Phone number for contact: @Model.Order.TelephoneNumberForContact</p>
+<p>Delivery Address: @Model.Order.DeliveryAddress</p>
+<p>Additional Info: @Model.Order.OrderInfo</p>
+
+@if (Model.Order.ArtisticWork != null)
+{
+    <p>Artwork serial number: @Model.Order.ArtisticWork.Id</p>
+    <p>Price: @Model.Order.ArtisticWork.Price</p>
+    <img src="~/images/@Model.Order.ArtisticWork.Picture"/>
+}
+
+

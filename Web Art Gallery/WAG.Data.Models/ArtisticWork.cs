@@ -27,8 +27,6 @@ namespace WAG.Data.Models
 
         public string Technique { get; set; }
 
-        public virtual Order Order { get; set; }
-
         public DateTime CreatedOn { get; set; }
 
         public DateTime EditedOn { get; set; }

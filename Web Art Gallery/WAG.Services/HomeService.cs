@@ -88,6 +88,18 @@ namespace WAG.Services
                 this.DbContext.SaveChanges();
             }
         }
+
+        public string GetBiography()
+        {
+
+
+            return string.Empty;
+        }
+
+        public void EditBiography()
+        {
+            
+        }
        
     }
 }

@@ -83,6 +83,36 @@ namespace WAG.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ArtisticWorks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Year = table.Column<int>(nullable: false),
+                    Height = table.Column<double>(nullable: false),
+                    Width = table.Column<double>(nullable: false),
+                    Price = table.Column<decimal>(nullable: false),
+                    Availability = table.Column<bool>(nullable: false),
+                    HasFrame = table.Column<bool>(nullable: false),
+                    Picture = table.Column<string>(nullable: true),
+                    ArtisticWorkCategoryId = table.Column<int>(nullable: false),
+                    Technique = table.Column<string>(nullable: true),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    EditedOn = table.Column<DateTime>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArtisticWorks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ArtisticWorks_ArtisticWorkCategories_ArtisticWorkCategoryId",
+                        column: x => x.ArtisticWorkCategoryId,
+                        principalTable: "ArtisticWorkCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -251,6 +281,7 @@ namespace WAG.Data.Migrations
                     Title = table.Column<string>(nullable: true),
                     TextBody = table.Column<string>(nullable: true),
                     Date = table.Column<DateTime>(nullable: false),
+                    Read = table.Column<bool>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -271,6 +302,7 @@ namespace WAG.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     WAGUserId = table.Column<string>(nullable: true),
+                    ArtisticWorkId = table.Column<int>(nullable: true),
                     OrderInfo = table.Column<string>(nullable: true),
                     TelephoneNumberForContact = table.Column<string>(nullable: true),
                     DeliveryAddress = table.Column<string>(nullable: true),
@@ -280,6 +312,12 @@ namespace WAG.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_ArtisticWorks_ArtisticWorkId",
+                        column: x => x.ArtisticWorkId,
+                        principalTable: "ArtisticWorks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Orders_AspNetUsers_WAGUserId",
                         column: x => x.WAGUserId,
@@ -317,43 +355,6 @@ namespace WAG.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "ArtisticWorks",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Year = table.Column<int>(nullable: false),
-                    Height = table.Column<double>(nullable: false),
-                    Width = table.Column<double>(nullable: false),
-                    Price = table.Column<decimal>(nullable: false),
-                    Availability = table.Column<bool>(nullable: false),
-                    HasFrame = table.Column<bool>(nullable: false),
-                    Picture = table.Column<string>(nullable: true),
-                    ArtisticWorkCategoryId = table.Column<int>(nullable: false),
-                    Technique = table.Column<string>(nullable: true),
-                    OrderId = table.Column<int>(nullable: true),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    EditedOn = table.Column<DateTime>(nullable: false),
-                    IsDeleted = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ArtisticWorks", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ArtisticWorks_ArtisticWorkCategories_ArtisticWorkCategoryId",
-                        column: x => x.ArtisticWorkCategoryId,
-                        principalTable: "ArtisticWorkCategories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ArtisticWorks_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_ArtEvents_WAGUserId",
                 table: "ArtEvents",
@@ -368,11 +369,6 @@ namespace WAG.Data.Migrations
                 name: "IX_ArtisticWorks_ArtisticWorkCategoryId",
                 table: "ArtisticWorks",
                 column: "ArtisticWorkCategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ArtisticWorks_OrderId",
-                table: "ArtisticWorks",
-                column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -429,6 +425,11 @@ namespace WAG.Data.Migrations
                 column: "WAGUserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Orders_ArtisticWorkId",
+                table: "Orders",
+                column: "ArtisticWorkId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_WAGUserId",
                 table: "Orders",
                 column: "WAGUserId");
@@ -438,9 +439,6 @@ namespace WAG.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "ArtEvents");
-
-            migrationBuilder.DropTable(
-                name: "ArtisticWorks");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -464,13 +462,10 @@ namespace WAG.Data.Migrations
                 name: "ContactMessages");
 
             migrationBuilder.DropTable(
-                name: "WAGLogs");
-
-            migrationBuilder.DropTable(
-                name: "ArtisticWorkCategories");
-
-            migrationBuilder.DropTable(
                 name: "Orders");
+
+            migrationBuilder.DropTable(
+                name: "WAGLogs");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -479,7 +474,13 @@ namespace WAG.Data.Migrations
                 name: "Articles");
 
             migrationBuilder.DropTable(
+                name: "ArtisticWorks");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "ArtisticWorkCategories");
         }
     }
 }

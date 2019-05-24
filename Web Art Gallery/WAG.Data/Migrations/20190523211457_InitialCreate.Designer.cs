@@ -10,7 +10,7 @@ using WAG.Data;
 namespace WAG.Data.Migrations
 {
     [DbContext(typeof(WAGDbContext))]
-    [Migration("20190513094157_InitialCreate")]
+    [Migration("20190523211457_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -211,8 +211,6 @@ namespace WAG.Data.Migrations
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<int?>("OrderId");
-
                     b.Property<string>("Picture");
 
                     b.Property<decimal>("Price");
@@ -226,8 +224,6 @@ namespace WAG.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ArtisticWorkCategoryId");
-
-                    b.HasIndex("OrderId");
 
                     b.ToTable("ArtisticWorks");
                 });
@@ -284,6 +280,8 @@ namespace WAG.Data.Migrations
 
                     b.Property<bool>("IsDeleted");
 
+                    b.Property<bool>("Read");
+
                     b.Property<string>("TextBody");
 
                     b.Property<string>("Title");
@@ -303,6 +301,8 @@ namespace WAG.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("ArtisticWorkId");
+
                     b.Property<DateTime>("CreatedOn");
 
                     b.Property<string>("DeliveryAddress");
@@ -316,6 +316,8 @@ namespace WAG.Data.Migrations
                     b.Property<string>("WAGUserId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ArtisticWorkId");
 
                     b.HasIndex("WAGUserId");
 
@@ -465,10 +467,6 @@ namespace WAG.Data.Migrations
                         .WithMany("ArtisticWorks")
                         .HasForeignKey("ArtisticWorkCategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("WAG.Data.Models.Order", "Order")
-                        .WithMany("ArtisticWorks")
-                        .HasForeignKey("OrderId");
                 });
 
             modelBuilder.Entity("WAG.Data.Models.Comment", b =>
@@ -492,6 +490,10 @@ namespace WAG.Data.Migrations
 
             modelBuilder.Entity("WAG.Data.Models.Order", b =>
                 {
+                    b.HasOne("WAG.Data.Models.ArtisticWork", "ArtisticWork")
+                        .WithMany()
+                        .HasForeignKey("ArtisticWorkId");
+
                     b.HasOne("WAG.Data.Models.WAGUser", "WAGUser")
                         .WithMany("Orders")
                         .HasForeignKey("WAGUserId");
