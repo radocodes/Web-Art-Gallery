@@ -9,7 +9,7 @@ namespace WAG.Data.Models
     {
         public ArtEvent()
         {
-            this.Pictures = new HashSet<string>();
+            this.PicturesFileNames = new HashSet<string>();
         }
 
         public string Title { get; set; }
@@ -24,15 +24,13 @@ namespace WAG.Data.Models
 
         public virtual WAGUser WAGUser { get; set; }
 
-        public bool IsDeleted { get; set; }
-
         public DateTime CreatedOn { get; set; }
 
         public DateTime EditedOn { get; set; }
 
-        public string MainPicture { get; set; }
+        public string MainPictureFileName { get; set; }
 
         [NotMapped]
-        public ICollection<string> Pictures { get; set; }
+        public ICollection<string> PicturesFileNames { get; set; }
     }
 }

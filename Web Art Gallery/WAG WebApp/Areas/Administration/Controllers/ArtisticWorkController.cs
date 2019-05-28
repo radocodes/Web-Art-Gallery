@@ -99,7 +99,7 @@ namespace WAG.WebApp.Areas.Administration.Controllers
 
             editCategoryViewModel.CategoryName = currCategory.Name;
 
-            editCategoryViewModel.PictureOld = currCategory.MainPicture;
+            editCategoryViewModel.PictureOld = currCategory.MainPictureFileName;
 
             return this.View(editCategoryViewModel);
         }

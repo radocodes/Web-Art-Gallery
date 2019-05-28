@@ -28,8 +28,6 @@ namespace WAG.Data
 
         public DbSet<Order> Orders { get; set; }
 
-        public DbSet<WAGLog> WAGLogs { get; set; }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<WAGUser>()

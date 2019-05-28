@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using WAG.Data;
 using WAG.Data.Models;
+using WAG.Services.Constants;
 using WAG.Services.Interfaces;
 using WAG.ViewModels.Blog;
 
@@ -22,14 +24,20 @@ namespace WAG.Services
         
         public void CreateArticle(CreateArticleViewModel createArticleViewModel)
         {
-            var articleNew = new Article()
+            var articleNew = new Article();
+
+            articleNew.Title = createArticleViewModel.Title;
+            articleNew.ShortDescription = createArticleViewModel.ShortDescription;
+            articleNew.ArticleContentFileName = this.UploadArticleContent(createArticleViewModel.ArticleContent);
+
+            if (createArticleViewModel.MainPicture != null)
             {
-                Title = createArticleViewModel.Title,
-                ShortDescription = createArticleViewModel.ShortDescription,
-                Description = this.UploadArticleContent(createArticleViewModel.Description),
-                MainPicture = this.CommonService.UploadPictureAsync(createArticleViewModel.MainPicture).Result,
-                CreatedOn = DateTime.UtcNow,
-            };
+                var imgFileName = $"{Guid.NewGuid()}{GlobalConstants.jpegFileExtension}";
+
+                articleNew.MainPictureFileName = this.CommonService.UploadImageAsync(GlobalConstants.articlesImageDirectoryPath, imgFileName, createArticleViewModel.MainPicture).Result;
+            }
+            
+            articleNew.CreatedOn = DateTime.UtcNow;
 
             this.DbContext.Articles.Add(articleNew);
 
@@ -42,11 +50,21 @@ namespace WAG.Services
             {
                 this.DbContext.Articles.First(a => a.Id == id).Title = editArticleInputViewModel.Title;
                 this.DbContext.Articles.First(a => a.Id == id).ShortDescription = editArticleInputViewModel.ShortDescription;
-                this.DbContext.Articles.First(a => a.Id == id).Description = this.UploadArticleContent(editArticleInputViewModel.Description);
+                var articleContentFileName = this.DbContext.Articles.First(a => a.Id == id).ArticleContentFileName;
+                this.UploadArticleContent(editArticleInputViewModel.ArticleContent, articleContentFileName);
 
                 if (editArticleInputViewModel.MainPicture != null)
                 {
-                    this.DbContext.Articles.First(a => a.Id == id).MainPicture = this.CommonService.UploadPictureAsync(editArticleInputViewModel.MainPicture).Result;
+                    var oldImgFileName = this.DbContext.Articles.First(a => a.Id == id).MainPictureFileName;
+
+                    if (File.Exists($"{GlobalConstants.articlesImageDirectoryPath}{oldImgFileName}"))
+                    {
+                        File.Delete($"{GlobalConstants.articlesImageDirectoryPath}{oldImgFileName}");
+                    }
+
+                    var newImgFileName = $"{Guid.NewGuid()}{GlobalConstants.jpegFileExtension}";
+
+                    this.DbContext.Articles.First(a => a.Id == id).MainPictureFileName = this.CommonService.UploadImageAsync(Constants.GlobalConstants.articlesImageDirectoryPath, newImgFileName, editArticleInputViewModel.MainPicture).Result;
                 }
                 
                 this.DbContext.Articles.First(a => a.Id == id).EditedOn = DateTime.UtcNow;
@@ -63,6 +81,31 @@ namespace WAG.Services
 
             if (article != null)
             {
+                var articleContentFileName = article.ArticleContentFileName;
+
+                if (File.Exists($"{GlobalConstants.articlesContentDirectoryPath}{articleContentFileName}"))
+                {
+                    File.Delete($"{GlobalConstants.articlesContentDirectoryPath}{articleContentFileName}");
+                }
+
+                var articleImgFileName = article.MainPictureFileName;
+
+                if (File.Exists($"{GlobalConstants.articlesImageDirectoryPath}{articleImgFileName}"))
+                {
+                    File.Delete($"{GlobalConstants.articlesImageDirectoryPath}{articleImgFileName}");
+                }
+
+                if (article.PicturesFileNames != null && article.PicturesFileNames.Count > 0)
+                {
+                    foreach (var picture in article.PicturesFileNames)
+                    {
+                        if (File.Exists($"{GlobalConstants.articlesImageDirectoryPath}{picture}"))
+                        {
+                            File.Delete($"{GlobalConstants.articlesImageDirectoryPath}{picture}");
+                        }
+                    }
+                }
+
                 this.DbContext.Articles.Remove(article);
                 this.DbContext.SaveChanges();
             }
@@ -82,20 +125,23 @@ namespace WAG.Services
             return article;
         }
 
-        public string UploadArticleContent(string articleContentent)
+        private string UploadArticleContent(string articleContent)
         {
-            var directoryPath = @"D:\RADO\IT\Projects\Web Art Gallery\Web Art Gallery\WAG WebApp\wwwroot\articles\";
+            var fileName = $"{Guid.NewGuid()}{GlobalConstants.textFileExtension}";
 
-            var textFileName = this.CommonService.UploadTextToFileAsync(articleContentent, directoryPath).Result;
+            var textFileName = this.CommonService.UploadTextToFileAsync(GlobalConstants.articlesContentDirectoryPath, fileName, articleContent).Result;
 
             return textFileName;
         }
 
+        private void UploadArticleContent(string articleContent, string fileName)
+        {
+            var textFileName = this.CommonService.UploadTextToFileAsync(GlobalConstants.articlesContentDirectoryPath, fileName, articleContent).Result;
+        }
+
         public string DownloadArticleContent(string fileName)
         {
-            var directoryPath = @"D:\RADO\IT\Projects\Web Art Gallery\Web Art Gallery\WAG WebApp\wwwroot\articles\";
-
-            var articleContent = this.CommonService.DownloadTextFromFile(fileName, directoryPath);
+            var articleContent = this.CommonService.DownloadTextFromFile(GlobalConstants.articlesContentDirectoryPath, fileName);
 
             return articleContent;
         }

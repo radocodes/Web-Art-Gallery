@@ -36,6 +36,9 @@
     <Folder Include="Areas\Administration\Data\" />
     <Folder Include="Areas\Administration\Models\" />
     <Folder Include="wwwroot\articles\" />
+    <Folder Include="wwwroot\images\artWorks\" />
+    <Folder Include="wwwroot\images\articles\" />
+    <Folder Include="wwwroot\images\artCategories\" />
   </ItemGroup>
 
 </Project>

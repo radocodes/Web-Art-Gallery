@@ -10,14 +10,14 @@ namespace WAG.Data.Models
         public Article()
         {
             this.Comments = new HashSet<Comment>();
-            this.Pictures = new HashSet<string>();
+            this.PicturesFileNames = new HashSet<string>();
         }
 
         public string Title { get; set; }
 
         public string ShortDescription { get; set; }
 
-        public string Description { get; set; }
+        public string ArticleContentFileName { get; set; }
 
         public string WAGUserId { get; set; }
 
@@ -27,13 +27,11 @@ namespace WAG.Data.Models
 
         public DateTime EditedOn { get; set; }
 
-        public bool IsDeleted { get; set; }
-
         public virtual ICollection<Comment> Comments { get; set; }
 
-        public string MainPicture { get; set; }
+        public string MainPictureFileName { get; set; }
 
         [NotMapped]
-        public ICollection<string> Pictures { get; set; }
+        public ICollection<string> PicturesFileNames { get; set; }
     }
 }

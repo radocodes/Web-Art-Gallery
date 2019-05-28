@@ -11,7 +11,7 @@ namespace WAG.ViewModels.Blog
 
         public string ShortDescription { get; set; }
 
-        public string Description { get; set; }
+        public string ArticleContent { get; set; }
 
         public IFormFile MainPicture { get; set; }
 

@@ -36,7 +36,7 @@ namespace WAG.WebApp.Areas.Administration.Controllers
 
             editArticleViewModel.Title = articleToEdit.Title;
             editArticleViewModel.ShortDescription = articleToEdit.ShortDescription;
-            editArticleViewModel.Description = this.BlogService.DownloadArticleContent(articleToEdit.Description);
+            editArticleViewModel.ArticleContent = this.BlogService.DownloadArticleContent(articleToEdit.ArticleContentFileName);
 
             return this.View(editArticleViewModel);
         }

@@ -18,8 +18,6 @@ namespace WAG.Services.Interfaces
 
         Article GetArticle(int id);
 
-        string UploadArticleContent(string articleContentent);
-
         string DownloadArticleContent(string fileName);
 
 

@@ -11,7 +11,6 @@ namespace WAG.Data.Models
             this.Comments = new HashSet<Comment>();
             this.Articles = new HashSet<Article>();
             this.ContactMessages = new HashSet<ContactMessage>();
-
         }
 
         public string FirstName { get; set; }
@@ -21,8 +20,6 @@ namespace WAG.Data.Models
         public string City { get; set; }
 
         public string Address { get; set; }
-
-        public bool IsDeleted { get; set; }
 
         public virtual ICollection<Order> Orders { get; set; }
 

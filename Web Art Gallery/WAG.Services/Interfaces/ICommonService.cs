@@ -8,10 +8,10 @@ namespace WAG.Services.Interfaces
 {
     public interface ICommonService
     {
-        Task<string> UploadPictureAsync(IFormFile picture);
+        Task<string> UploadImageAsync(string directoryPath, string fileName, IFormFile imgFile);
 
-        Task<string> UploadTextToFileAsync(string text, string DirectoryPath);
+        Task<string> UploadTextToFileAsync(string directoryPath, string fileName, string text);
 
-        string DownloadTextFromFile(string fileName, string directoryPath);
+        string DownloadTextFromFile(string directoryPath, string fileName);
     }
 }

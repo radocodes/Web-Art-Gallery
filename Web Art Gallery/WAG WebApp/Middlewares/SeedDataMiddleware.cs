@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WAG.Data;
 using WAG.Data.Models;
+using WAG.Services.Constants;
 
 namespace WAG.WebApp.Middlewares
 {
@@ -21,7 +22,7 @@ namespace WAG.WebApp.Middlewares
         public async Task InvokeAsync(HttpContext context, UserManager<WAGUser> userManager,
                                       RoleManager<IdentityRole> roleManager, WAGDbContext db)
         {
-            SeedRole(roleManager, "Admin").GetAwaiter().GetResult();
+            SeedRole(roleManager, GlobalConstants.AdminRole).GetAwaiter().GetResult();
 
             SeedUserInRoles(userManager).GetAwaiter().GetResult();
 
@@ -54,7 +55,7 @@ namespace WAG.WebApp.Middlewares
 
                 if (userCreated.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(user, "Admin");
+                    await userManager.AddToRoleAsync(user, GlobalConstants.AdminRole);
                 }
             }
         }

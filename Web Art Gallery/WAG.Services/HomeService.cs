@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using WAG.Data;
 using WAG.Data.Models;
+using WAG.Services.Constants;
 using WAG.Services.Interfaces;
 using WAG.ViewModels.Home;
 
@@ -50,7 +51,7 @@ namespace WAG.Services
                 }
                 else
                 {
-                    message.WAGUser.UserName = "Anonymous";
+                    message.WAGUser.UserName = GlobalConstants.AnonymousUser;
                 }
             }
 
@@ -71,7 +72,7 @@ namespace WAG.Services
             }
             else
             {
-                message.WAGUser.UserName = "Anonymous";
+                message.WAGUser.UserName = GlobalConstants.AnonymousUser;
             }
 
             return message;

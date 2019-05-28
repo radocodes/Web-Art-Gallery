@@ -143,9 +143,7 @@ namespace WAG.Data.Migrations
 
                     b.Property<DateTime>("EventDate");
 
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<string>("MainPicture");
+                    b.Property<string>("MainPictureFileName");
 
                     b.Property<string>("ShortDescription");
 
@@ -166,15 +164,13 @@ namespace WAG.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatedOn");
+                    b.Property<string>("ArticleContentFileName");
 
-                    b.Property<string>("Description");
+                    b.Property<DateTime>("CreatedOn");
 
                     b.Property<DateTime>("EditedOn");
 
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<string>("MainPicture");
+                    b.Property<string>("MainPictureFileName");
 
                     b.Property<string>("ShortDescription");
 
@@ -207,9 +203,7 @@ namespace WAG.Data.Migrations
 
                     b.Property<double>("Height");
 
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<string>("Picture");
+                    b.Property<string>("PictureFileName");
 
                     b.Property<decimal>("Price");
 
@@ -232,9 +226,7 @@ namespace WAG.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<string>("MainPicture");
+                    b.Property<string>("MainPictureFileName");
 
                     b.Property<string>("Name");
 
@@ -252,8 +244,6 @@ namespace WAG.Data.Migrations
                     b.Property<int>("ArticleId");
 
                     b.Property<DateTime>("Date");
-
-                    b.Property<bool>("IsDeleted");
 
                     b.Property<string>("TextBody");
 
@@ -275,8 +265,6 @@ namespace WAG.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Date");
-
-                    b.Property<bool>("IsDeleted");
 
                     b.Property<bool>("Read");
 
@@ -305,8 +293,6 @@ namespace WAG.Data.Migrations
 
                     b.Property<string>("DeliveryAddress");
 
-                    b.Property<bool>("IsDeleted");
-
                     b.Property<string>("OrderInfo");
 
                     b.Property<string>("TelephoneNumberForContact");
@@ -320,23 +306,6 @@ namespace WAG.Data.Migrations
                     b.HasIndex("WAGUserId");
 
                     b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("WAG.Data.Models.WAGLog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedOn");
-
-                    b.Property<string>("LogLevel");
-
-                    b.Property<string>("Message");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("WAGLogs");
                 });
 
             modelBuilder.Entity("WAG.Data.Models.WAGUser", b =>
@@ -359,8 +328,6 @@ namespace WAG.Data.Migrations
                     b.Property<bool>("EmailConfirmed");
 
                     b.Property<string>("FirstName");
-
-                    b.Property<bool>("IsDeleted");
 
                     b.Property<string>("LastName");
 

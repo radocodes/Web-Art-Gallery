@@ -15,8 +15,7 @@ namespace WAG.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    MainPicture = table.Column<string>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false)
+                    MainPictureFileName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -59,27 +58,11 @@ namespace WAG.Data.Migrations
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     City = table.Column<string>(nullable: true),
-                    Address = table.Column<string>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false)
+                    Address = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "WAGLogs",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Message = table.Column<string>(nullable: true),
-                    LogLevel = table.Column<string>(nullable: true),
-                    CreatedOn = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_WAGLogs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -94,12 +77,11 @@ namespace WAG.Data.Migrations
                     Price = table.Column<decimal>(nullable: false),
                     Availability = table.Column<bool>(nullable: false),
                     HasFrame = table.Column<bool>(nullable: false),
-                    Picture = table.Column<string>(nullable: true),
+                    PictureFileName = table.Column<string>(nullable: true),
                     ArtisticWorkCategoryId = table.Column<int>(nullable: false),
                     Technique = table.Column<string>(nullable: true),
                     CreatedOn = table.Column<DateTime>(nullable: false),
-                    EditedOn = table.Column<DateTime>(nullable: false),
-                    IsDeleted = table.Column<bool>(nullable: false)
+                    EditedOn = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -144,10 +126,9 @@ namespace WAG.Data.Migrations
                     Description = table.Column<string>(nullable: true),
                     EventDate = table.Column<DateTime>(nullable: false),
                     WAGUserId = table.Column<string>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     EditedOn = table.Column<DateTime>(nullable: false),
-                    MainPicture = table.Column<string>(nullable: true)
+                    MainPictureFileName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -168,12 +149,11 @@ namespace WAG.Data.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Title = table.Column<string>(nullable: true),
                     ShortDescription = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
+                    ArticleContentFileName = table.Column<string>(nullable: true),
                     WAGUserId = table.Column<string>(nullable: true),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     EditedOn = table.Column<DateTime>(nullable: false),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    MainPicture = table.Column<string>(nullable: true)
+                    MainPictureFileName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -281,8 +261,7 @@ namespace WAG.Data.Migrations
                     Title = table.Column<string>(nullable: true),
                     TextBody = table.Column<string>(nullable: true),
                     Date = table.Column<DateTime>(nullable: false),
-                    Read = table.Column<bool>(nullable: false),
-                    IsDeleted = table.Column<bool>(nullable: false)
+                    Read = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -306,7 +285,6 @@ namespace WAG.Data.Migrations
                     OrderInfo = table.Column<string>(nullable: true),
                     TelephoneNumberForContact = table.Column<string>(nullable: true),
                     DeliveryAddress = table.Column<string>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -335,8 +313,7 @@ namespace WAG.Data.Migrations
                     TextBody = table.Column<string>(nullable: true),
                     Date = table.Column<DateTime>(nullable: false),
                     WAGUserId = table.Column<string>(nullable: true),
-                    ArticleId = table.Column<int>(nullable: false),
-                    IsDeleted = table.Column<bool>(nullable: false)
+                    ArticleId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -463,9 +440,6 @@ namespace WAG.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Orders");
-
-            migrationBuilder.DropTable(
-                name: "WAGLogs");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

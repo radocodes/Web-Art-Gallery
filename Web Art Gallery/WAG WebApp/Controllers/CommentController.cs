@@ -8,6 +8,7 @@ using System.Security.Claims;
 using WAG.ViewModels.Comment;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
+using WAG.Services.Constants;
 
 namespace WAG.WebApp.Controllers
 {
@@ -60,7 +61,7 @@ namespace WAG.WebApp.Controllers
 
             var deleteCommentViewModel = new DeleteCommentViewModel();
 
-            if (currUser.Id == commentOwnerId || User.IsInRole("Admin"))
+            if (currUser.Id == commentOwnerId || User.IsInRole(GlobalConstants.AdminRole))
             {
                 this.CommentService.DeleteComment(commentId);
 

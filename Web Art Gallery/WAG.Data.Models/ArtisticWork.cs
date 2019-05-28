@@ -19,7 +19,7 @@ namespace WAG.Data.Models
 
         public bool HasFrame { get; set; }
 
-        public string Picture { get; set; }
+        public string PictureFileName { get; set; }
 
         public int ArtisticWorkCategoryId { get; set; }
 
@@ -30,8 +30,5 @@ namespace WAG.Data.Models
         public DateTime CreatedOn { get; set; }
 
         public DateTime EditedOn { get; set; }
-
-        public bool IsDeleted { get; set; }
-
     }
 }

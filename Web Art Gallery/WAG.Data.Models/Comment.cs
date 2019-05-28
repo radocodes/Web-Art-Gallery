@@ -17,7 +17,5 @@ namespace WAG.Data.Models
         public int ArticleId { get; set; }
 
         public virtual Article Article { get; set; }
-
-        public bool IsDeleted { get; set; }
     }
 }

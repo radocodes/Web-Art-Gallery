@@ -13,9 +13,7 @@ namespace WAG.Data.Models
 
         public string Name { get; set; }
 
-        public string MainPicture { get; set; }
-
-        public bool IsDeleted { get; set; }
+        public string MainPictureFileName { get; set; }
 
         public virtual ICollection<ArtisticWork> ArtisticWorks { get; set; }
     }

@@ -34,7 +34,7 @@ namespace WAG.WebApp.Controllers
 
             articleDetailsViewModel.Article = article;
 
-            articleDetailsViewModel.ArticleContent = this.BlogService.DownloadArticleContent(article.Description);
+            articleDetailsViewModel.ArticleContent = this.BlogService.DownloadArticleContent(article.ArticleContentFileName);
 
             articleDetailsViewModel.Comments = this.CommentService.GetArticleComments(article.Id);
 

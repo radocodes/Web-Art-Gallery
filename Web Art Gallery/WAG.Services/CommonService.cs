@@ -10,27 +10,23 @@ namespace WAG.Services
 {
     public class CommonService : ICommonService
     {
-        public async Task<string> UploadPictureAsync(IFormFile picture)
+        public async Task<string> UploadImageAsync(string directoryPath, string fileName, IFormFile imgFile)
         {
-            var fileName = $"{Guid.NewGuid()}.jpg";
+            var fileFullPath = $"{directoryPath}{fileName}";
 
-            var filePath = $@"D:\RADO\IT\Projects\Web Art Gallery\Web Art Gallery\WAG WebApp\wwwroot\images\{fileName}";
-
-            using (var stream = new FileStream(filePath, FileMode.Create))
+            using (var stream = new FileStream(fileFullPath, FileMode.Create))
             {
-                await picture.CopyToAsync(stream);
+                await imgFile.CopyToAsync(stream);
             };
 
             return fileName;
         }
 
-        public async Task<string> UploadTextToFileAsync(string text, string directoryPath)
+        public async Task<string> UploadTextToFileAsync(string directoryPath, string fileName, string text)
         {
-            var fileName = $"{Guid.NewGuid()}.txt";
+            var fileFullPath = $"{directoryPath}{fileName}";
 
-            var filePathFull = $@"{directoryPath}{fileName}";
-
-            using (var stream = new StreamWriter(filePathFull))
+            using (var stream = new StreamWriter(fileFullPath, false))
             {
                 await stream.WriteAsync(text);
             };
@@ -38,9 +34,9 @@ namespace WAG.Services
             return fileName;
         }
 
-        public string DownloadTextFromFile(string fileName, string directoryPath)
+        public string DownloadTextFromFile(string directoryPath, string fileName)
         {
-            var filePathFull = $@"{directoryPath}{fileName}";
+            var filePathFull = $"{directoryPath}{fileName}";
 
             string text = null;
 

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WAG.Data;
 using WAG.Data.Models;
+using WAG.Services.Constants;
 using WAG.Services.Interfaces;
 using WAG.ViewModels.ArtisticWorks;
 
@@ -28,11 +29,6 @@ namespace WAG.Services
             var technique = addArtWorkViewModel.Technique;
 
             var category = this.DbContext.ArtisticWorkCategories.FirstOrDefault(c => c.Id == addArtWorkViewModel.CategoryId);
-            
-            var order = new Order()
-            {
-                OrderInfo = "Test"
-            };
 
             var artWork = new ArtisticWork()
             {
@@ -44,9 +40,15 @@ namespace WAG.Services
                 HasFrame = addArtWorkViewModel.HasFrame,
                 ArtisticWorkCategory = category,
                 Technique = technique,
-                Picture = this.CommonService.UploadPictureAsync(addArtWorkViewModel.Picture).Result,
                 CreatedOn = DateTime.UtcNow
             };
+
+            string imgFileName = $"{Guid.NewGuid()}{GlobalConstants.jpegFileExtension}";
+
+            if (addArtWorkViewModel.Picture != null)
+            {
+                artWork.PictureFileName = this.CommonService.UploadImageAsync(Constants.GlobalConstants.artWorksImageDirectoryPath, imgFileName, addArtWorkViewModel.Picture).Result;
+            }
 
             this.DbContext.ArtisticWorks.Add(artWork);
 
@@ -76,11 +78,18 @@ namespace WAG.Services
 
         public void DeleteArtWork(int id)
         {
-            var product = this.DbContext.ArtisticWorks.FirstOrDefault(p => p.Id == id);
+            var artWork = this.DbContext.ArtisticWorks.FirstOrDefault(p => p.Id == id);
 
-            if (product != null)
+            if (artWork != null)
             {
-                this.DbContext.ArtisticWorks.Remove(product);
+                var artWorkImgFileName = artWork.PictureFileName;
+
+                if (File.Exists($"{GlobalConstants.artWorksImageDirectoryPath}{artWorkImgFileName}"))
+                {
+                    File.Delete($"{GlobalConstants.artWorksImageDirectoryPath}{artWorkImgFileName}");
+                }
+
+                this.DbContext.ArtisticWorks.Remove(artWork);
                 this.DbContext.SaveChanges();
             }
         }
@@ -140,7 +149,12 @@ namespace WAG.Services
 
                 category.Name = addCategoryViewModel.CategoryName;
 
-                category.MainPicture = this.CommonService.UploadPictureAsync(addCategoryViewModel.Picture).Result;
+                if (addCategoryViewModel.Picture != null)
+                {
+                    var imgFileName = $"{Guid.NewGuid()}{GlobalConstants.jpegFileExtension}";
+
+                    category.MainPictureFileName = this.CommonService.UploadImageAsync(Constants.GlobalConstants.artCategoriesDirectoryPath, imgFileName, addCategoryViewModel.Picture).Result;
+                }
 
                 this.DbContext.ArtisticWorkCategories.Add(category);
 
@@ -150,13 +164,23 @@ namespace WAG.Services
 
         public void EditCategory(int CategoryId, EditCategoryInputViewModel editCategoryInputViewModel)
         {
-            var PictureNew = this.CommonService.UploadPictureAsync(editCategoryInputViewModel.PictureNew).Result;
-
-            if (this.DbContext.ArtisticWorkCategories.Any(c => c.Id == CategoryId))
+            if (this.DbContext.ArtisticWorkCategories.Any(c => c.Id == CategoryId) && editCategoryInputViewModel.PictureNew != null)
             {
-                DbContext.ArtisticWorkCategories.First(c => c.Id == CategoryId).MainPicture = PictureNew;
+                var imgFileName = $"{Guid.NewGuid()}{GlobalConstants.jpegFileExtension}";
 
-                DbContext.SaveChanges();
+                if (editCategoryInputViewModel.PictureNew != null)
+                {
+                    var oldImageFileName = DbContext.ArtisticWorkCategories.First(c => c.Id == CategoryId).MainPictureFileName;
+
+                    if (File.Exists($"{GlobalConstants.artCategoriesDirectoryPath}{oldImageFileName}"))
+                    {
+                        File.Delete($"{GlobalConstants.artCategoriesDirectoryPath}{oldImageFileName}");
+                    }
+
+                    var newImageFileName = this.CommonService.UploadImageAsync(GlobalConstants.artCategoriesDirectoryPath, imgFileName, editCategoryInputViewModel.PictureNew).Result;
+                    DbContext.ArtisticWorkCategories.First(c => c.Id == CategoryId).MainPictureFileName = newImageFileName;
+                    DbContext.SaveChanges();
+                }
             }
         }
 
@@ -166,8 +190,14 @@ namespace WAG.Services
 
             if (currCategory != null)
             {
-                this.DbContext.ArtisticWorkCategories.Remove(currCategory);
+                var categoryImgFileName = currCategory.MainPictureFileName;
 
+                if (File.Exists($"{GlobalConstants.artCategoriesDirectoryPath}{categoryImgFileName}"))
+                {
+                    File.Delete($"{GlobalConstants.artCategoriesDirectoryPath}{categoryImgFileName}");
+                }
+
+                this.DbContext.ArtisticWorkCategories.Remove(currCategory);
                 this.DbContext.SaveChanges();
             }
         }

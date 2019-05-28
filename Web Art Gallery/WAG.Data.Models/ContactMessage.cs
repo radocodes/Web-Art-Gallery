@@ -17,7 +17,5 @@ namespace WAG.Data.Models
         public DateTime Date { get; set; }
 
         public bool Read { get; set; }
-
-        public bool IsDeleted { get; set; }
     }
 }
