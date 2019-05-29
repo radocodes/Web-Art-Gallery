@@ -14,10 +14,12 @@ namespace WAG.Services
     public class HomeService : IHomeService
     {
         private WAGDbContext DbContext;
+        private ICommonService CommonService;
 
-        public HomeService(WAGDbContext dbContext)
+        public HomeService(WAGDbContext dbContext, ICommonService commonService)
         {
             this.DbContext = dbContext;
+            this.CommonService = commonService;
         }
 
         public void SaveContactMessage(ContactMessageViewModel contactMessageViewModel, string userId)
@@ -60,7 +62,7 @@ namespace WAG.Services
 
         public ContactMessage GetContactMessageById(int messageId)
         {
-            var message =  this.DbContext.ContactMessages.FirstOrDefault(m => m.Id == messageId);
+            var message = this.DbContext.ContactMessages.FirstOrDefault(m => m.Id == messageId);
 
             message.WAGUser = new WAGUser();
 
@@ -92,15 +94,13 @@ namespace WAG.Services
 
         public string GetBiography()
         {
-
-
-            return string.Empty;
+            return this.CommonService.DownloadTextFromFile(GlobalConstants.BioDirectoryPath, GlobalConstants.BioFileName);
         }
 
-        public void EditBiography()
+        public void EditBiography(string editedText)
         {
-            
+            this.CommonService.UploadTextToFileAsync(GlobalConstants.BioDirectoryPath, GlobalConstants.BioFileName, editedText);
         }
-       
+
     }
 }

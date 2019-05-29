@@ -1,7 +1,11 @@
-﻿@{
+﻿@model WAG.ViewModels.Home.AboutViewModel
+@{
     ViewData["Title"] = "About";
 }
 <h2>@ViewData["Title"]</h2>
-<h3>@ViewData["Message"]</h3>
 
-<p>Use this area to provide additional information.</p>
+<h3>Ema Ivanova - Artist</h3>
+<br />
+<h4>Biography:</h4>
+<pre style="background-color:white; font-size:large; border:hidden">@Model.Biography</pre>
+

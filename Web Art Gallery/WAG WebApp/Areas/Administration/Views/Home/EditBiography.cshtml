@@ -1,0 +1,17 @@
+﻿@model WAG.ViewModels.Home.EditBiographyViewModel
+
+@{
+    ViewData["Title"] = "EditBiography";
+}
+
+<h2>EditBiography</h2>
+
+<form method="post" asp-area="Administration" asp-controller="Home" asp-action="UpdateBiography">
+    <div class="form-group">
+        <label asp-for="Biography">Edit Biography:</label>
+        <textarea asp-for="Biography" class="form-control" style="height:400px"></textarea>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit">Save</button>
+    </div>
+</form>

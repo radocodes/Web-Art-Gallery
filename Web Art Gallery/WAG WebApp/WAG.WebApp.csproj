@@ -39,6 +39,7 @@
     <Folder Include="wwwroot\images\artWorks\" />
     <Folder Include="wwwroot\images\articles\" />
     <Folder Include="wwwroot\images\artCategories\" />
+    <Folder Include="wwwroot\Bio\" />
   </ItemGroup>
 
 </Project>

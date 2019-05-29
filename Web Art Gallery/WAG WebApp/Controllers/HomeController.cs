@@ -41,8 +41,7 @@ namespace WAG.WebApp.Controllers
 
         public IActionResult About(AboutViewModel aboutViewModel)
         {
-            
-
+            aboutViewModel.Biography = this.HomeService.GetBiography();
 
             return View(aboutViewModel);
         }

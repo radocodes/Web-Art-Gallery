@@ -40,11 +40,27 @@ namespace WAG.WebApp.Areas.Administration.Controllers
             return this.View(messageDetailsViewModel);
         }
         
+        [HttpPost]
         public IActionResult DeleteContactMessage(int id)
         {
             this.HomeService.DeleteContactMessage(id);
 
             return RedirectToAction("Messages", "Home", new { area = "Administration" });
+        }
+
+        public IActionResult EditBiography(EditBiographyViewModel editBiographyViewModel)
+        {
+            editBiographyViewModel.Biography = this.HomeService.GetBiography();
+
+            return this.View(editBiographyViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateBiography(EditBiographyViewModel editBiographyViewModel)
+        {
+            this.HomeService.EditBiography(editBiographyViewModel.Biography);
+
+            return RedirectToAction("Success", "Home", new { area = "" });
         }
     }
 }
