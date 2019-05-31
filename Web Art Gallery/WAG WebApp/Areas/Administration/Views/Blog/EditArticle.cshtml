@@ -13,14 +13,17 @@
                 <div class="form-group">
                     <label asp-for="Title"></label>
                     <input asp-for="Title" class="form-control" placeholder="Title..." style="width:70%" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="ShortDescription"></label>
                     <textarea asp-for="ShortDescription" class="form-control" style="width:80%; height:100px"></textarea>
+                    <span asp-validation-for="ShortDescription" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="ArticleContent"></label>
                     <textarea asp-for="ArticleContent" class="form-control" style="width:100%;height:300px"></textarea>
+                    <span asp-validation-for="ArticleContent" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="MainPicture"></label>

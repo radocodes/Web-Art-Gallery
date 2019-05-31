@@ -4,10 +4,13 @@
 }
 
 <h2>Register</h2>
-
+@if(Model != null && Model.UnsuccessfulRegistrationMessage != null)
+{
+    <h3>@Model.UnsuccessfulRegistrationMessage</h3>
+}
 <form method="post" class="center-block">
     <hr style="height: 3px; background-color: black" />
-    <div asp-validation-summary="All" class="text-danger"></div>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="row">
         <div class="col-xs-6">
             <div class="form-group">
@@ -17,42 +20,47 @@
             </div>
             <div class="form-group">
                 <label asp-for="Email"></label>
-                <input asp-for="Email" class="form-control" placeholder="Имейл..." />
+                <input asp-for="Email" class="form-control" placeholder="Email..." />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Password"></label>
-                <input asp-for="Password" class="form-control" placeholder="Парола..." />
+                <input asp-for="Password" type="password" class="form-control" placeholder="Password..." />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="ConfirmPassword"></label>
+                <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Repeat Password..." />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="FirstName"></label>
-                <input asp-for="FirstName" class="form-control" placeholder="Име..." />
+                <input asp-for="FirstName" class="form-control" placeholder="First Name..." />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="LastName"></label>
-                <input asp-for="LastName" class="form-control" placeholder="Фамилия..." />
+                <input asp-for="LastName" class="form-control" placeholder="Family Name..." />
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="City"></label>
-                <input asp-for="City" class="form-control" placeholder="Град..." />
+                <input asp-for="City" class="form-control" placeholder="City..." />
                 <span asp-validation-for="City" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Address"></label>
-                <input asp-for="Address" class="form-control" placeholder="Адрес..." />
+                <input asp-for="Address" class="form-control" placeholder="Address..." />
                 <span asp-validation-for="Address" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PhoneNumber"></label>
-                <input asp-for="PhoneNumber" class="form-control" placeholder="Телефон..." />
+                <input asp-for="PhoneNumber" class="form-control" placeholder="Phone..." />
                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
             </div>
         </div>
     </div>
     <div class="form-group">
-        <button type="submit" class="btn btn-default" style="background-color: black; color: white">Регистрирай ме</button>
+        <button type="submit" class="btn btn-default" style="background-color: black; color: white">Create Profile</button>
     </div>
 </form>

@@ -14,9 +14,9 @@ namespace WAG.Services
     public class BlogService : IBlogService
     {
         private WAGDbContext DbContext;
-        private ICommonService CommonService;
+        private IFileService CommonService;
 
-        public BlogService(WAGDbContext dbContext, ICommonService commonService)
+        public BlogService(WAGDbContext dbContext, IFileService commonService)
         {
             this.DbContext = dbContext;
             this.CommonService = commonService;
@@ -44,16 +44,16 @@ namespace WAG.Services
             this.DbContext.SaveChanges();
         }
 
-        public void EditArticle(int id, EditArticleInputViewModel editArticleInputViewModel)
+        public void EditArticle(int id, EditArticleViewModel editArticleViewModel)
         {
             if (this.DbContext.Articles.Any(a => a.Id == id))
             {
-                this.DbContext.Articles.First(a => a.Id == id).Title = editArticleInputViewModel.Title;
-                this.DbContext.Articles.First(a => a.Id == id).ShortDescription = editArticleInputViewModel.ShortDescription;
+                this.DbContext.Articles.First(a => a.Id == id).Title = editArticleViewModel.Title;
+                this.DbContext.Articles.First(a => a.Id == id).ShortDescription = editArticleViewModel.ShortDescription;
                 var articleContentFileName = this.DbContext.Articles.First(a => a.Id == id).ArticleContentFileName;
-                this.UploadArticleContent(editArticleInputViewModel.ArticleContent, articleContentFileName);
+                this.UploadArticleContent(editArticleViewModel.ArticleContent, articleContentFileName);
 
-                if (editArticleInputViewModel.MainPicture != null)
+                if (editArticleViewModel.MainPicture != null)
                 {
                     var oldImgFileName = this.DbContext.Articles.First(a => a.Id == id).MainPictureFileName;
 
@@ -64,7 +64,7 @@ namespace WAG.Services
 
                     var newImgFileName = $"{Guid.NewGuid()}{GlobalConstants.jpegFileExtension}";
 
-                    this.DbContext.Articles.First(a => a.Id == id).MainPictureFileName = this.CommonService.UploadImageAsync(Constants.GlobalConstants.articlesImageDirectoryPath, newImgFileName, editArticleInputViewModel.MainPicture).Result;
+                    this.DbContext.Articles.First(a => a.Id == id).MainPictureFileName = this.CommonService.UploadImageAsync(Constants.GlobalConstants.articlesImageDirectoryPath, newImgFileName, editArticleViewModel.MainPicture).Result;
                 }
                 
                 this.DbContext.Articles.First(a => a.Id == id).EditedOn = DateTime.UtcNow;

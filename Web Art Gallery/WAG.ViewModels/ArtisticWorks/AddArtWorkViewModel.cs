@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using WAG.Data.Models;
 
@@ -18,12 +19,16 @@ namespace WAG.ViewModels.ArtisticWorks
 
         public bool Availability { get; set; }
 
+        [Display(Name = "Has Frame")]
         public bool HasFrame { get; set; }
 
+        [Display(Name = "Category")]
+        [Required]
         public int CategoryId { get; set; }
 
         public string Technique { get; set; }
 
+        [Required]
         public IFormFile Picture { get; set; }
 
         public string PictureUrl { get; set; }

@@ -16,9 +16,9 @@ namespace WAG.Services
     public class ArtisticWorkService : IArtisticWorkService
     {
         private WAGDbContext DbContext;
-        private ICommonService CommonService;
+        private IFileService CommonService;
 
-        public ArtisticWorkService(WAGDbContext dbContext, ICommonService commonService)
+        public ArtisticWorkService(WAGDbContext dbContext, IFileService commonService)
         {
             this.DbContext = dbContext;
             this.CommonService = commonService;

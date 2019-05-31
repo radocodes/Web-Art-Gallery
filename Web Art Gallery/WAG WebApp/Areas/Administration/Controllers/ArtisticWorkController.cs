@@ -36,6 +36,13 @@ namespace WAG.WebApp.Areas.Administration.Controllers
         [HttpPost]
         public IActionResult AddArtWork(AddArtWorkViewModel addArtWorkViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                addArtWorkViewModel.ExistingCategories = this.ArtisticWorkService.GetArtisticWorkCategories();
+
+                return this.View(addArtWorkViewModel);
+            }
+
             this.ArtisticWorkService.AddArtWork(addArtWorkViewModel);
 
             return RedirectToAction("Success", "Home", new { area = "" });
@@ -79,6 +86,11 @@ namespace WAG.WebApp.Areas.Administration.Controllers
         [HttpPost]
         public IActionResult AddCategory(AddCategoryViewModel addCategoryViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return this.View(addCategoryViewModel);
+            }
+
             this.ArtisticWorkService.AddCategory(addCategoryViewModel);
 
             return RedirectToAction("Success", "Home", new { area = "" });

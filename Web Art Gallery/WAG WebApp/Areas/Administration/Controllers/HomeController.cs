@@ -17,14 +17,13 @@ namespace WAG.WebApp.Areas.Administration.Controllers
             this.HomeService = homeService;
         }
 
-
         public IActionResult Messages(MessagesViewModel messagesViewModel)
         {
             messagesViewModel.Messages = this.HomeService.GetAllMessages();
 
             foreach (var message in messagesViewModel.Messages)
             {
-                if (message.Title.Length > 50)
+                if (message.Title != null && message.Title.Length > 50)
                 {
                     message.Title = message.Title.Substring(0, 100);
                 }

@@ -13,7 +13,7 @@ namespace WAG.Services.Interfaces
     {
         SignInResult LoginUserSuccessfully(LoginInputViewModel loginInputViewModel);
 
-        Task<SignInResult> RegisterUserSuccessfullyAsync(RegisterInputViewModel registerInputViewModel);
+        Task<IdentityResult> RegisterUserSuccessfullyAsync(RegisterInputViewModel registerInputViewModel);
 
         void Logout();
 

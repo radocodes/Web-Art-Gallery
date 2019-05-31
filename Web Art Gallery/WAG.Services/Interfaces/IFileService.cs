@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WAG.Services.Interfaces
 {
-    public interface ICommonService
+    public interface IFileService
     {
         Task<string> UploadImageAsync(string directoryPath, string fileName, IFormFile imgFile);
 

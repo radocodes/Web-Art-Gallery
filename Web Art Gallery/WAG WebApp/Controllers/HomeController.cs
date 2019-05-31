@@ -48,8 +48,6 @@ namespace WAG.WebApp.Controllers
 
         public IActionResult Contact()
         {
-            //ViewData["Message"] = "Your contact page.";
-
             return View();
         }
 
@@ -57,6 +55,10 @@ namespace WAG.WebApp.Controllers
         [HttpPost]
         public IActionResult Contact(ContactMessageViewModel contactMessageViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return this.View(contactMessageViewModel);
+            }
             string userId = null; 
 
             if (User.Identity.IsAuthenticated)

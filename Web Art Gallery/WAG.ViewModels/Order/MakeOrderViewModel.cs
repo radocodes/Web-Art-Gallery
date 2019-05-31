@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace WAG.ViewModels.Order
@@ -8,10 +9,13 @@ namespace WAG.ViewModels.Order
     {
         public int ArtWorkId { get; set; }
 
+        [Display(Name = "Order Info")]
         public string OrderInfo { get; set; }
 
+        [Display(Name = "Telephone Number for Contact")]
         public string TelephoneNumberForContact { get; set; }
 
+        [Display(Name = "Delivery Address")]
         public string DeliveryAddress { get; set; }
     }
 }

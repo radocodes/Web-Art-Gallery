@@ -14,9 +14,9 @@ namespace WAG.Services
     public class HomeService : IHomeService
     {
         private WAGDbContext DbContext;
-        private ICommonService CommonService;
+        private IFileService CommonService;
 
-        public HomeService(WAGDbContext dbContext, ICommonService commonService)
+        public HomeService(WAGDbContext dbContext, IFileService commonService)
         {
             this.DbContext = dbContext;
             this.CommonService = commonService;

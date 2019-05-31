@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using WAG.Data.Models;
 
@@ -17,6 +18,7 @@ namespace WAG.ViewModels.ArtisticWorks
 
         public bool Availability { get; set; }
 
+        [Display(Name = "Has Frame")]
         public bool HasFrame { get; set; }
 
         public int CategoryId { get; set; }

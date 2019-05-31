@@ -11,10 +11,10 @@ namespace WAG.WebApp.Controllers
     public class BlogController : Controller
     {
         private IBlogService BlogService;
-        private ICommonService CommonService;
+        private IFileService CommonService;
         private ICommentService CommentService;
 
-        public BlogController(IBlogService blogService, ICommonService commonService, ICommentService commentService)
+        public BlogController(IBlogService blogService, IFileService commonService, ICommentService commentService)
         {
             this.BlogService = blogService;
             this.CommonService = commonService;

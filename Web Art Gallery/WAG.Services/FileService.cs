@@ -8,7 +8,7 @@ using WAG.Services.Interfaces;
 
 namespace WAG.Services
 {
-    public class CommonService : ICommonService
+    public class FileService : IFileService
     {
         public async Task<string> UploadImageAsync(string directoryPath, string fileName, IFormFile imgFile)
         {

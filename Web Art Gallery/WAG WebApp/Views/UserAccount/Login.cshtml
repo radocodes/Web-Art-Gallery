@@ -4,7 +4,10 @@
 }
 
 <h2>Login</h2>
-
+@if (Model != null && Model.UnsuccessfulLogInMessage != null)
+{
+    <h3>@Model.UnsuccessfulLogInMessage</h3>
+}
 <form method="post" class="center-block">
     <hr style="height: 3px; background-color: black" />
     <div asp-validation-summary="All" class="text-danger"></div>
@@ -17,12 +20,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Password"></label>
-                <input asp-for="Password" type="password" class="form-control" placeholder="Парола..." />
+                <input asp-for="Password" type="password" class="form-control" placeholder="Password..." />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
         </div>
     </div>
     <div class="form-group">
-        <button type="submit" class="btn btn-default" style="background-color: black; color: white">Вход</button>
+        <button type="submit" class="btn btn-default" style="background-color: black; color: white">Log in</button>
     </div>
 </form>

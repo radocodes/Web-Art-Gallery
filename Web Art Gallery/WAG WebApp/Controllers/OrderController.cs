@@ -79,6 +79,11 @@ namespace WAG.WebApp.Controllers
         [HttpPost]
         public IActionResult MakeSpecialOrder(MakeSpecialOrderViewModel makeSpecialOrderViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return this.View(makeSpecialOrderViewModel);
+            }
+
             var currUser = this.UserAccountService.GetCurrentUser(HttpContext);
 
             this.OrderService.SaveSpecialOrder(currUser, makeSpecialOrderViewModel);

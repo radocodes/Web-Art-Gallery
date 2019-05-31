@@ -25,27 +25,40 @@ namespace WAG.WebApp.Areas.Administration.Controllers
         [HttpPost]
         public IActionResult CreateArticle(CreateArticleViewModel createArticleViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return this.View(createArticleViewModel);
+            }
+
             this.BlogService.CreateArticle(createArticleViewModel);
 
             return RedirectToAction("Success", "Home", new { area = "" });
         }
 
-        public IActionResult EditArticle(int id, EditArticleViewModel editArticleViewModel)
+        public IActionResult EditArticle(int id)
         {
             var articleToEdit = this.BlogService.GetArticle(id);
 
-            editArticleViewModel.Title = articleToEdit.Title;
-            editArticleViewModel.ShortDescription = articleToEdit.ShortDescription;
-            editArticleViewModel.ArticleContent = this.BlogService.DownloadArticleContent(articleToEdit.ArticleContentFileName);
+            var editArticleViewModel = new EditArticleViewModel
+            {
+                Title = articleToEdit.Title,
+                ShortDescription = articleToEdit.ShortDescription,
+                ArticleContent = this.BlogService.DownloadArticleContent(articleToEdit.ArticleContentFileName),
+            };
 
             return this.View(editArticleViewModel);
         }
 
         [HttpPost]
-        public IActionResult EditArticle(int id, EditArticleInputViewModel editArticleInputViewModel)
+        public IActionResult EditArticle(int id, EditArticleViewModel editArticleViewModel)
         {
-            this.BlogService.EditArticle(id, editArticleInputViewModel);
-            
+            if (!ModelState.IsValid)
+            {
+                return this.View(editArticleViewModel);
+            }
+
+            this.BlogService.EditArticle(id, editArticleViewModel);
+
             return RedirectToAction("Success", "Home", new { area = "" });
         }
 

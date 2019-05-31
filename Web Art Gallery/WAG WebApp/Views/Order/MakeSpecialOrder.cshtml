@@ -12,6 +12,7 @@
         <p>Type here some additional info about your order if is needed</p>
         <label asp-for="OrderInfo">Order info</label>
         <textarea asp-for="OrderInfo" class="form-control" placeholder="Order info..." style="width:70%; height:100px"></textarea>
+        <span asp-validation-for="OrderInfo" class="text-danger"></span>
     </div>
     <div class="form-group">
         <p>Type here Phone Number for contact with you, if it's different than phone number from your profile</p>

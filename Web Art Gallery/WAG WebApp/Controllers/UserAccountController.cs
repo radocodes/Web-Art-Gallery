@@ -16,6 +16,9 @@ namespace WAG.WebApp.Controllers
 {
     public class UserAccountController : Controller
     {
+        private const string UnsuccessfulRegistrationMessage = "This Username already exist! Please choose another one";
+        private const string UnsuccessfulLogInMessage = "Username or password is incorrect!";
+
         private IUserAccountService UserAccountService;
 
         public UserAccountController(IUserAccountService userAccountService)
@@ -36,11 +39,17 @@ namespace WAG.WebApp.Controllers
         [HttpPost]
         public IActionResult Login(LoginInputViewModel loginInputModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return this.View(loginInputModel);
+            }
+
             var loginResult = this.UserAccountService.LoginUserSuccessfully(loginInputModel);
 
             if (loginResult != SignInResult.Success)
             {
-                //TODO: error message
+                loginInputModel.UnsuccessfulLogInMessage = UnsuccessfulLogInMessage;
+
                 return this.View(loginInputModel);
             }
 
@@ -60,15 +69,21 @@ namespace WAG.WebApp.Controllers
         [HttpPost]
         public IActionResult Register(RegisterInputViewModel registerInputViewModel)
         {
-            var registerResult = this.UserAccountService.RegisterUserSuccessfullyAsync(registerInputViewModel).Result;
-
-            if (registerResult != SignInResult.Success)
+            if (!ModelState.IsValid)
             {
-                //TODO: error message
                 return this.View(registerInputViewModel);
             }
 
-            return RedirectToAction("Index", "Home");
+            var registerResult = this.UserAccountService.RegisterUserSuccessfullyAsync(registerInputViewModel).Result;
+
+            if (registerResult != IdentityResult.Success)
+            {
+                registerInputViewModel.UnsuccessfulRegistrationMessage = UnsuccessfulRegistrationMessage;
+
+                return this.View(registerInputViewModel);
+            }
+
+            return RedirectToAction("Login", "UserAccount");
         }
 
         [Authorize]
@@ -130,6 +145,11 @@ namespace WAG.WebApp.Controllers
         [HttpPost]
         public IActionResult ChangePassword(ChangePasswordViewModel changePasswordViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return this.View(changePasswordViewModel);
+            }
+
             var currUser = this.UserAccountService.GetCurrentUser(HttpContext);
 
             this.UserAccountService.ChangePassword(currUser, changePasswordViewModel.CurrPassword, changePasswordViewModel.NewPassword);
