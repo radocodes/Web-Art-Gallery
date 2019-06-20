@@ -3,11 +3,24 @@
     ViewData["Title"] = "Success";
 }
 
-<h2>Success</h2>
-<div style="width:50%">
-        <p>DONE</p>
-        <p>Your request has been successfully completed</p>
-
-        <a asp-area="" asp-controller="Home" asp-action="Index" class="button btn">Back to homepage</a>
+<header class="container text-center text-success" id="success-header">
+    <div class="row">
+        <div class="col-12">
+            <h2 id="success-header-text">Success</h2>
+        </div>
     </div>
-</div>
+</header>
+
+<main class="container text-center text-success" id="success-main">
+    <div class="row">
+        <div class="col-12">
+            <div id="success-message">
+                <p>DONE</p>
+                <p>Your request has been successfully completed</p>
+            </div>
+            <a asp-area="" asp-controller="Home" asp-action="Index" class="button btn">Back to homepage</a>
+        </div>
+    </div>
+</main>
+
+

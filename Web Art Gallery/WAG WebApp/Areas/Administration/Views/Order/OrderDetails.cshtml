@@ -4,23 +4,37 @@
     ViewData["Title"] = "OrderDetails";
 }
 
-<h2>OrderDetails</h2>
+<header class="container header-default">
+    <div class="row">
+        <div class="col-12">
+            <h2>Order Details</h2>
+        </div>
+    </div>
+</header>
 
-<button class="btn btn-warning" type="button" data-toggle="modal" data-target="#exampleModal">Delete Order</button>
+<main class="container main-default">
+    <div class="row">
+        <section class="col-12 text-center">
+            <button class="btn btn-warning" type="button" data-toggle="modal" data-target="#exampleModal">Delete Order</button>
+        </section>
 
-<p>Username: @Model.Order.WAGUser.UserName</p>
-<p>First Name: @Model.Order.WAGUser.FirstName</p>
-<p>Last Name: @Model.Order.WAGUser.LastName</p>
-<p>Phone number for contact: @Model.Order.TelephoneNumberForContact</p>
-<p>Delivery Address: @Model.Order.DeliveryAddress</p>
-<p>Additional Info: @Model.Order.OrderInfo</p>
+        <section class="col-12 text-center" id="order-details">
+            <p>Username: <strong>@Model.Order.WAGUser.UserName</strong></p>
+            <p>First Name: <strong>@Model.Order.WAGUser.FirstName</strong></p>
+            <p>Last Name: <strong>@Model.Order.WAGUser.LastName</strong></p>
+            <p>Phone number for contact: <strong>@Model.Order.TelephoneNumberForContact</strong></p>
+            <p>Delivery Address: <strong>@Model.Order.DeliveryAddress</strong></p>
+            <p>Additional Info: <strong>@Model.Order.OrderInfo</strong></p>
 
-@if (Model.Order.ArtisticWorkId != null)
-{
-    <p>Artwork serial number: @Model.Order.ArtisticWork.Id</p>
-    <p>Price: @Model.Order.ArtisticWork.Price</p>
-    <img src="~/images/artWorks/@Model.Order.ArtisticWork.PictureFileName" />
-}
+            @if (Model.Order.ArtisticWorkId != null)
+            {
+                <p>Artwork serial number: <strong>@Model.Order.ArtisticWork.Id</strong></p>
+                <p>Price: <strong>@Model.Order.ArtisticWork.Price</strong></p>
+                <img src="~/images/artWorks/@Model.Order.ArtisticWork.PictureFileName"/>
+            }
+        </section>
+    </div>
+</main>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -25,6 +25,11 @@ namespace WAG.WebApp.Controllers
         {
             blogIndexViewModel.AllArticles = this.BlogService.GetAllArticles();
 
+            foreach (var article in blogIndexViewModel.AllArticles)
+            {
+                article.Comments = this.CommentService.GetArticleComments(article.Id);
+            }
+
             return this.View(blogIndexViewModel);
         }
 

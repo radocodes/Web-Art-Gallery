@@ -3,9 +3,32 @@
     ViewData["Title"] = "IndexLogged";
 }
 
-<h2>Index (Logged)</h2>
-<h3>Добре дошли! Вие сте логнат в системата успешно!</h3>
-<h3>За поръчки изберете продукт от менюто</h3>
+<main class="container">
+    <div class="row" style="text-align:center">
+        <div class="col-12 index-body">
 
+            @*Title*@
+            <div id="index-title">
+                Ema Ivanova Art
+            </div>
 
-
+            @*buttons*@
+            <div class="index-btns">
+                <div class="index-btn-wrapper-logged-1 index-btn-hover">
+                    <a asp-controller="ArtisticWork" asp-action="Categories">
+                        <div class="index-btn index-btn-1">
+                            Visit Gallery
+                        </div>
+                    </a>
+                </div>
+                <div class="index-btn-wrapper-logged-2 index-btn-hover">
+                    <a asp-area="" asp-controller="Home" asp-action="Contact">
+                        <div class="index-btn index-btn-2">
+                            You have a question? <br /> Contact us here
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

@@ -44,10 +44,9 @@ namespace WAG.WebApp.Controllers
 
         public IActionResult ArtWorkDetails(int id)
         {
-            var viewModel = new ArtWorkDetailsViewModel()
-            {
-                ArtisticWork = ArtisticWorkService.GetArtisticWorkById(id),
-            };
+            var viewModel = new ArtWorkDetailsViewModel();
+            viewModel.ArtisticWork = this.ArtisticWorkService.GetArtisticWorkById(id);
+            viewModel.ArtisticWork.ArtisticWorkCategory = this.ArtisticWorkService.GetCategoryById(viewModel.ArtisticWork.ArtisticWorkCategoryId);
 
             return View(viewModel);
         }

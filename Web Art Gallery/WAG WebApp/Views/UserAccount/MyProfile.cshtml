@@ -3,15 +3,29 @@
     ViewData["Title"] = "MyProfile";
 }
 
-<h2>My Profile</h2>
+<header class="container text-center" id="my-profile-header">
+    <div class="row">
+        <div class="col-12">
+            <h2>My Profile</h2>
+        </div>
+    </div>
+</header>
 
-<p>UserName: @Model.UserName</p>
-<p>First Name: @Model.FirstName</p>
-<p>Last Name: @Model.LastName</p>
-<p>Email: @Model.Email</p>
-<p>Phone Number: @Model.PhoneNumber</p>
-<p>City: @Model.City</p>
-<p>Address: @Model.Address</p>
+<main class="container text-center " id="my-profile-main">
+    <div class="row">
+        <div class="col-12">
+            <p>UserName: <strong>@Model.UserName</strong></p>
+            <p>First Name: <strong>@Model.FirstName</strong></p>
+            <p>Last Name:<strong>@Model.LastName</strong> </p>
+            <p>Email: <strong>@Model.Email</strong></p>
+            <p>Phone Number: <strong>@Model.PhoneNumber</strong></p>
+            <p>City: <strong>@Model.City</strong></p>
+            <p>Address: <strong>@Model.Address</strong></p>
 
-<a class="btn btn-primary" asp-area="" asp-controller="UserAccount" asp-action="EditUserProfile">Edit Your Profile Details</a>
-<a class="btn btn-primary" asp-area="" asp-controller="UserAccount" asp-action="ChangePassword">Change Password</a>
+            <a class="btn btn-primary" asp-area="" asp-controller="UserAccount" asp-action="EditUserProfile">Edit Your Profile Details</a>
+            <a class="btn btn-primary" asp-area="" asp-controller="UserAccount" asp-action="ChangePassword">Change Password</a>
+        </div>
+    </div>
+</main>
+
+

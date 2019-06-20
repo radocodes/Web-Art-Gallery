@@ -4,46 +4,42 @@
     ViewData["Title"] = "ArticleDetails";
 }
 
-<div class="container">
+<header class="container header-default">
     <div class="row">
         <div class="col-12">
-            <header>
-                <h1>Welcome to Ema Ivanovas Artistic Blog</h1>
-            </header>
+            <h1>Welcome to Ema Ivanova's Artistic Blog</h1>
         </div>
     </div>
-</div>
-<div class="container">
+</header>
+
+<main class="container main-default">
     <div class="row">
         <div class="col-12">
-            <main>
-                <div>
-                    <article>
-                        <div>
-                            <h2>@Model.Article.Title</h2>
-                        </div>
-                        <div>
-                            <p>@Model.Article.CreatedOn.ToShortDateString()</p>
-                        </div>
-                        <div>
-                            <pre style="background-color:white; border:none; font-size:medium">@Model.Article.ShortDescription</pre>
-                        </div>
-                        <div>
-                            <pre style="background-color:white; border:none; font-size:medium">@Model.ArticleContent</pre>
-                        </div>
-                        <br />
-                    </article>
-                </div>
-                @if (User.IsInRole("Admin"))
+            <article>
+                <header class="header-default">
+                    <h2>@Model.Article.Title</h2>
+                </header>
+
+                <p class="blog-index-info-icons"><i class="far fa-calendar-alt"></i> @Model.Article.CreatedOn.ToShortDateString() &ensp; <i class="fas fa-comment-dots"></i> @Model.Article.Comments.Count() Comments</p>
+                @if (Model.Article.MainPictureFileName != null)
                 {
-                    <div>
-                        <a class="btn btn-primary" asp-area="Administration" asp-controller="Blog" asp-action="EditArticle" asp-route-id="@Model.Article.Id">Edit</a>
-                        <a class="btn btn-primary" asp-area="Administration" asp-controller="Blog" asp-action="DeleteArticle" asp-route-id="@Model.Article.Id">Delete</a>
-                    </div>
+                    <img src="~/images/articles/@Model.Article.MainPictureFileName" id="blog-details-img-main"/>
                 }
+                    <pre id="blog-details-srt-desc">@Model.Article.ShortDescription</pre>
+                    <pre id="blog-details-article-content">@Model.ArticleContent</pre>
                 <br />
-                <div id="AllComments">
-                    <p>Comments:</p>
+            </article>
+            @if (User.IsInRole("Admin"))
+            {
+                <div>
+                    <a class="btn btn-primary" asp-area="Administration" asp-controller="Blog" asp-action="EditArticle" asp-route-id="@Model.Article.Id">Edit</a>
+                    <a class="btn btn-primary" asp-area="Administration" asp-controller="Blog" asp-action="DeleteArticle" asp-route-id="@Model.Article.Id">Delete</a>
+                </div>
+            }
+            <br />
+            <div id="comment-area">
+                <div id="all-comments">
+                    <p style="font-weight:bold">Comments:</p>
                     @if (Model.Comments != null)
                     {
                         foreach (var comment in Model.Comments)
@@ -65,7 +61,7 @@
                             }
 
                             <div id="comment-id-@comment.Id">
-                                <p class="comment" style="display:inline-block">@user: @comment.TextBody<button type="button" value="@comment.Id" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button></p>
+                                <p class="comment">@user: @comment.TextBody<button type="button" value="@comment.Id" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button></p>
                             </div>
                         }
                     }
@@ -74,8 +70,8 @@
                 {
                     <div>
                         <div class="form-group">
-                            <label>Comment</label>
-                            <input id="content" placeholder="Comment..." style="width:70%" />
+                            <label id="your-comment-label">Your comment:</label>
+                            <input id="your-comment-input" placeholder="Comment..."/>
                         </div>
                         <div class="form-group">
                             <button type="submit" id="post" class="btn btn-primary">Post</button>
@@ -89,11 +85,10 @@
                         <p>Please Sign Up or Sign In to make comments</p>
                     </div>
                 }
-
-            </main>
+            </div>
         </div>
     </div>
-</div>
+</main>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
@@ -101,8 +96,8 @@
     <script>
         //Add Comment
         $("#post").on("click", function () {
-            var comment = $("#content").val();
-            $("#content").val("");
+            var comment = $("#your-comment-input").val();
+            $("#your-comment-input").val("");
     $.ajax({
         type: "POST",
         url: "/Comment/AddComment",
@@ -122,7 +117,7 @@
                 userName = json.UserName;
             }
             if (json.Comment != null) {
-                $("#AllComments").append(`<div id="comment-id-${json.CommentId}"><p class="comment" style="display:inline-block">${userName}: ${json.Comment} <button type="button" value="${json.CommentId}" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button></p></div>`);
+                $("#all-comments").append(`<div id="comment-id-${json.CommentId}"><p class="comment" style="display:inline-block">${userName}: ${json.Comment} <button type="button" value="${json.CommentId}" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button></p></div>`);
             }
 
         }

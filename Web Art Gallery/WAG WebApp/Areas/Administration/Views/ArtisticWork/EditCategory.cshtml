@@ -18,7 +18,7 @@
         <aside class="col-sm-3 col-12 left-panel">
             <img src="~/images/artCategories/@Model.PictureOld" style="width:200px; padding-bottom:25px" />
             <div>
-                <p>Category Name: @Model.CategoryName</p>
+                <p>Category Name: <strong>@Model.CategoryName</strong></p>
             </div>
         </aside>
 
@@ -26,15 +26,11 @@
             <div class="container">
                 <form method="post" enctype="multipart/form-data" asp-controller="ArtisticWork" asp-action="EditCategory">
                     <div class="form-group">
-                        <div class="col-md-10">
-                            <p>Upload new picture to replace old one, using this form:</p>
-                            <input type="file" name="PictureNew">
-                        </div>
+                        <label for="PictureNew">Upload new picture to replace old one, using this form:</label>
+                        <input type="file" name="PictureNew">
                     </div>
                     <div class="form-group">
-                        <div class="col-md-10">
-                            <input type="submit" value="Upload">
-                        </div>
+                        <button type="submit" class="btn btn-primary">Update</button>
                     </div>
                 </form>
             </div>

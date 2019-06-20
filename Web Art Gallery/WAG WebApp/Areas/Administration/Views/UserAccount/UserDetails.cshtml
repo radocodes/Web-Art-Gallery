@@ -4,7 +4,7 @@
     ViewData["Title"] = "UserDetails";
 }
 
-<header class="container-fluid">
+<header class="container header-default">
     <div class="row">
         <div class="col-12">
             <h2 class="text-center">User details</h2>
@@ -12,22 +12,22 @@
     </div>
 </header>
 
-<main class="container-fluid">
+<main class="container main-default">
     <div class="row">
         <div class="col-12">
-            <div class="center-block text-center" style="width:30%; border:solid">
-                <p>Username: @Model.UserName</p>
-                <p>First name: @Model.FirstName</p>
-                <p>Last name: @Model.LastName</p>
-                <p>City: @Model.City</p>
-                <p>Address: @Model.Address</p>
-                <p>Phone number: @Model.PhoneNumber</p>
-                <p>Email: @Model.Email</p>
+            <div id="user-details-wrap" class="center-block text-center">
+                <p>Username: <strong>@Model.UserName</strong></p>
+                <p>First name: <strong>@Model.FirstName</strong></p>
+                <p>Last name: <strong>@Model.LastName</strong></p>
+                <p>City: <strong>@Model.City</strong></p>
+                <p>Address: <strong>@Model.Address</strong></p>
+                <p>Phone number: <strong>@Model.PhoneNumber</strong></p>
+                <p>Email: <strong>@Model.Email</strong></p>
                 <p>
                     Identity Roles:
                     @if (Model.IdentityRoles != null)
                     {
-                        @String.Join(", ", Model.IdentityRoles);
+                    <strong>@String.Join(", ", Model.IdentityRoles)</strong>
                     }
                 </p>
                 <br />

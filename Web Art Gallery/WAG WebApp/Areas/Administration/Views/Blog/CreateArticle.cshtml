@@ -4,25 +4,31 @@
     ViewData["Title"] = "CreateArticle";
 }
 
-<h2 class="text-center">Create Article</h2>
-
-<div class="container">
+<header class="container header-default">
     <div class="row">
         <div class="col-12">
-            <form method="post" enctype="multipart/form-data" asp-area="Administration" asp-controller="Blog" asp-action="CreateArticle">
+            <h2 class="text-center">Create Article</h2>
+        </div>
+    </div>
+</header>
+
+<main class="container main-default">
+    <div class="row">
+        <div class="col-12" id="edit-article-form-wrap">
+            <form method="post" enctype="multipart/form-data" asp-area="Administration" asp-controller="Blog" asp-action="EditArticle">
                 <div class="form-group">
                     <label asp-for="Title"></label>
-                    <input asp-for="Title" class="form-control" placeholder="Title..." style="width:70%" />
+                    <input asp-for="Title" class="form-control" id="edit-article-title-form" placeholder="Title..." />
                     <span asp-validation-for="Title" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="ShortDescription"></label>
-                    <textarea asp-for="ShortDescription" class="form-control" style="width:80%; height:100px"></textarea>
+                    <textarea asp-for="ShortDescription" class="form-control" id="edit-article-srt-desc"></textarea>
                     <span asp-validation-for="ShortDescription" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="ArticleContent"></label>
-                    <textarea asp-for="ArticleContent" class="form-control" style="width:100%;height:300px"></textarea>
+                    <textarea asp-for="ArticleContent" class="form-control" id="edit-article-content"></textarea>
                     <span asp-validation-for="ArticleContent" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -35,4 +41,4 @@
             </form>
         </div>
     </div>
-</div>
+</main>
