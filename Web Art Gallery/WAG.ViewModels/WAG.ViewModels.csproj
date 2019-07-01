@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.DataAnnotations" Version="2.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\WAG.Common\WAG.Common.csproj" />
     <ProjectReference Include="..\WAG.Data.Models\WAG.Data.Models.csproj" />
   </ItemGroup>

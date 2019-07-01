@@ -16,7 +16,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WAG.ViewModels", "WAG.ViewM
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WAG.Services", "WAG.Services\WAG.Services.csproj", "{C39C4E59-20E4-45DD-8B87-CF18032A7A9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WAG.Common", "WAG.Common\WAG.Common.csproj", "{CC5A77AC-BE88-42C5-92F2-E940DAFD8E62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WAG.Common", "WAG.Common\WAG.Common.csproj", "{CC5A77AC-BE88-42C5-92F2-E940DAFD8E62}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8159E62D-C708-4104-9468-FCE38035F919}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
