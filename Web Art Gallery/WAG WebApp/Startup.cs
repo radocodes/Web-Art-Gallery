@@ -62,7 +62,12 @@ namespace WAG.WebApp
             services.AddScoped<IOrderService, OrderService>();
 
             services
-                .AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+                .AddMvc(
+                options =>
+                {
+                    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
