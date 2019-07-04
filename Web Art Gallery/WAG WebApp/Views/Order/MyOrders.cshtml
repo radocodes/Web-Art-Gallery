@@ -7,7 +7,7 @@
     ViewData["SpecialOrder"] = "Special";
 }
 
-<header class="container text-center" id="my-orders-header">
+<header class="container header-default">
     <div class="row">
         <div class="col-12">
             <h2>My Orders</h2>
@@ -15,7 +15,7 @@
     </div>
 </header>
 
-<main class="container" id="my-orders-main">
+<main class="container main-default">
     <div class="row">
         <div class="col-12">
             @if (Model.UserOrders == null || Model.UserOrders.Count == 0)

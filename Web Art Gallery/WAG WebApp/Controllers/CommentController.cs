@@ -24,6 +24,7 @@ namespace WAG.WebApp.Controllers
             this.UserAccountService = userAccountService;
         }
         
+        [IgnoreAntiforgeryToken]
         [HttpPost]
         public IActionResult AddComment(int articleId, string comment)
         {
@@ -50,6 +51,7 @@ namespace WAG.WebApp.Controllers
             return Json(json);
         }
 
+        [IgnoreAntiforgeryToken]
         [HttpPost]
         public IActionResult DeleteComment(int commentId)
         {

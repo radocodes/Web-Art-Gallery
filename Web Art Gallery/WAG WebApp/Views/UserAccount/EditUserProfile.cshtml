@@ -4,7 +4,7 @@
     ViewData["Title"] = "EditUserAccount";
 }
 
-<header class="container text-center" id="edit-profile-header">
+<header class="container header-default">
     <div class="row">
         <div class="col-12">
             <h2>Edit your Profile Details</h2>
@@ -12,11 +12,10 @@
     </div>
 </header>
 
-<main class="container text-center" id="edit-profile-main">
+<main class="container main-default">
     <div class="row">
         <div class="col-12">
             <form method="post" asp-area="" asp-controller="UserAccount" asp-action="EditUserProfile" class="center-block">
-                <hr style="height: 3px; background-color: black" />
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="FirstName"></label>

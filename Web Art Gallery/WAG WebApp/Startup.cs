@@ -66,7 +66,8 @@ namespace WAG.WebApp
                 options =>
                 {
                     options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-                })
+                }
+                )
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
