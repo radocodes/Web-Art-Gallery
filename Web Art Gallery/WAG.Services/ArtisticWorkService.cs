@@ -51,7 +51,6 @@ namespace WAG.Services
             }
 
             this.DbContext.ArtisticWorks.Add(artWork);
-
             this.DbContext.SaveChanges();
         }
 
@@ -72,6 +71,7 @@ namespace WAG.Services
                 this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).ArtisticWorkCategory = categoryNew;
                 this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).Technique = editArtWorkViewModel.Technique;
                 this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).EditedOn = DateTime.UtcNow;
+
                 DbContext.SaveChanges();
             }
         }
@@ -157,7 +157,6 @@ namespace WAG.Services
                 }
 
                 this.DbContext.ArtisticWorkCategories.Add(category);
-
                 this.DbContext.SaveChanges();
             }
         }
@@ -178,6 +177,7 @@ namespace WAG.Services
                     }
 
                     var newImageFileName = this.CommonService.UploadImageAsync(GlobalConstants.artCategoriesDirectoryPath, imgFileName, editCategoryInputViewModel.PictureNew).Result;
+
                     DbContext.ArtisticWorkCategories.First(c => c.Id == CategoryId).MainPictureFileName = newImageFileName;
                     DbContext.SaveChanges();
                 }

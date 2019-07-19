@@ -40,7 +40,6 @@ namespace WAG.Services
             articleNew.CreatedOn = DateTime.UtcNow;
 
             this.DbContext.Articles.Add(articleNew);
-
             this.DbContext.SaveChanges();
         }
 

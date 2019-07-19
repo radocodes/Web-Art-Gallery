@@ -19,7 +19,7 @@ namespace WAG.Services
 
         public int AddComment(string userId, int articleId, string commentContent)
         {
-            var user = this.DbContext.Users.First(u => u.Id == userId);
+            var user = this.DbContext.Users.FirstOrDefault(u => u.Id == userId);
 
             var comment = new Comment()
             {
@@ -55,12 +55,17 @@ namespace WAG.Services
 
             foreach (var comment in comments)
             {
-                comment.WAGUser = new WAGUser()
+                var commentAuthor = this.DbContext.Users.FirstOrDefault(u => u.Id == comment.WAGUserId);
+
+                if (commentAuthor != null)
                 {
-                    UserName = this.DbContext.Users.First(u => u.Id == comment.WAGUserId).UserName,
-                    FirstName = this.DbContext.Users.First(u => u.Id == comment.WAGUserId).FirstName,
-                    LastName = this.DbContext.Users.First(u => u.Id == comment.WAGUserId).LastName
-                };
+                    comment.WAGUser = new WAGUser()
+                    {
+                        UserName = commentAuthor.UserName,
+                        FirstName = commentAuthor.FirstName,
+                        LastName = commentAuthor.LastName
+                    };
+                }
             }
 
             return comments;
