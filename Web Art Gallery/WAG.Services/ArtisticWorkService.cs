@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WAG.Data;
 using WAG.Data.Models;
 using WAG.Services.Constants;
@@ -43,11 +40,11 @@ namespace WAG.Services
                 CreatedOn = DateTime.UtcNow
             };
 
-            string imgFileName = $"{Guid.NewGuid()}{GlobalConstants.jpegFileExtension}";
+            string imgFileName = $"{Guid.NewGuid()}{GlobalConstants.JpegFileExtension}";
 
             if (addArtWorkViewModel.Picture != null)
             {
-                artWork.PictureFileName = this.CommonService.UploadImageAsync(Constants.GlobalConstants.artWorksImageDirectoryPath, imgFileName, addArtWorkViewModel.Picture).Result;
+                artWork.PictureFileName = this.CommonService.UploadImageAsync(Constants.GlobalConstants.ArtWorksImageDirectoryPath, imgFileName, addArtWorkViewModel.Picture).Result;
             }
 
             this.DbContext.ArtisticWorks.Add(artWork);
@@ -84,9 +81,9 @@ namespace WAG.Services
             {
                 var artWorkImgFileName = artWork.PictureFileName;
 
-                if (File.Exists($"{GlobalConstants.artWorksImageDirectoryPath}{artWorkImgFileName}"))
+                if (File.Exists($"{GlobalConstants.ArtWorksImageDirectoryPath}{artWorkImgFileName}"))
                 {
-                    File.Delete($"{GlobalConstants.artWorksImageDirectoryPath}{artWorkImgFileName}");
+                    File.Delete($"{GlobalConstants.ArtWorksImageDirectoryPath}{artWorkImgFileName}");
                 }
 
                 this.DbContext.ArtisticWorks.Remove(artWork);
@@ -151,9 +148,9 @@ namespace WAG.Services
 
                 if (addCategoryViewModel.Picture != null)
                 {
-                    var imgFileName = $"{Guid.NewGuid()}{GlobalConstants.jpegFileExtension}";
+                    var imgFileName = $"{Guid.NewGuid()}{GlobalConstants.JpegFileExtension}";
 
-                    category.MainPictureFileName = this.CommonService.UploadImageAsync(Constants.GlobalConstants.artCategoriesDirectoryPath, imgFileName, addCategoryViewModel.Picture).Result;
+                    category.MainPictureFileName = this.CommonService.UploadImageAsync(Constants.GlobalConstants.ArtCategoriesDirectoryPath, imgFileName, addCategoryViewModel.Picture).Result;
                 }
 
                 this.DbContext.ArtisticWorkCategories.Add(category);
@@ -165,18 +162,18 @@ namespace WAG.Services
         {
             if (this.DbContext.ArtisticWorkCategories.Any(c => c.Id == CategoryId) && editCategoryInputViewModel.PictureNew != null)
             {
-                var imgFileName = $"{Guid.NewGuid()}{GlobalConstants.jpegFileExtension}";
+                var imgFileName = $"{Guid.NewGuid()}{GlobalConstants.JpegFileExtension}";
 
                 if (editCategoryInputViewModel.PictureNew != null)
                 {
                     var oldImageFileName = DbContext.ArtisticWorkCategories.First(c => c.Id == CategoryId).MainPictureFileName;
 
-                    if (File.Exists($"{GlobalConstants.artCategoriesDirectoryPath}{oldImageFileName}"))
+                    if (File.Exists($"{GlobalConstants.ArtCategoriesDirectoryPath}{oldImageFileName}"))
                     {
-                        File.Delete($"{GlobalConstants.artCategoriesDirectoryPath}{oldImageFileName}");
+                        File.Delete($"{GlobalConstants.ArtCategoriesDirectoryPath}{oldImageFileName}");
                     }
 
-                    var newImageFileName = this.CommonService.UploadImageAsync(GlobalConstants.artCategoriesDirectoryPath, imgFileName, editCategoryInputViewModel.PictureNew).Result;
+                    var newImageFileName = this.CommonService.UploadImageAsync(GlobalConstants.ArtCategoriesDirectoryPath, imgFileName, editCategoryInputViewModel.PictureNew).Result;
 
                     DbContext.ArtisticWorkCategories.First(c => c.Id == CategoryId).MainPictureFileName = newImageFileName;
                     DbContext.SaveChanges();
@@ -192,9 +189,9 @@ namespace WAG.Services
             {
                 var categoryImgFileName = currCategory.MainPictureFileName;
 
-                if (File.Exists($"{GlobalConstants.artCategoriesDirectoryPath}{categoryImgFileName}"))
+                if (File.Exists($"{GlobalConstants.ArtCategoriesDirectoryPath}{categoryImgFileName}"))
                 {
-                    File.Delete($"{GlobalConstants.artCategoriesDirectoryPath}{categoryImgFileName}");
+                    File.Delete($"{GlobalConstants.ArtCategoriesDirectoryPath}{categoryImgFileName}");
                 }
 
                 this.DbContext.ArtisticWorkCategories.Remove(currCategory);

@@ -1,30 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace WAG.Services.Constants
 {
     public static class GlobalConstants
     {
-        public const string articlesContentDirectoryPath = @"wwwroot\articles\";
-        public const string articlesImageDirectoryPath = @"wwwroot\images\articles\";
-        public const string artWorksImageDirectoryPath = @"wwwroot\images\artWorks\";
-        public const string artCategoriesDirectoryPath = @"wwwroot\images\artCategories\";
-        public const string jpegFileExtension = ".jpg";
-        public const string textFileExtension = ".txt";
+        public const string ArticlesContentDirectoryPath = @"wwwroot\articles\";
+        public const string ArticlesImageDirectoryPath = @"wwwroot\images\articles\";
+        public const string ArtWorksImageDirectoryPath = @"wwwroot\images\artWorks\";
+        public const string ArtCategoriesDirectoryPath = @"wwwroot\images\artCategories\";
+        public const string JpegFileExtension = ".jpg";
+        public const string TextFileExtension = ".txt";
         public const string AnonymousUser = "Anonymous";
         public const string AdminRole = "Admin";
         public const string AdminArea = "Administration";
         public const string BioDirectoryPath = @"wwwroot\Bio\";
         public const string BioFileName = "Biography.txt";
-
-
-
-
-
-
-
-
-
     }
 }

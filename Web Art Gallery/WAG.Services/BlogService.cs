@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using WAG.Data;
 using WAG.Data.Models;
 using WAG.Services.Constants;
@@ -32,9 +31,9 @@ namespace WAG.Services
 
             if (createArticleViewModel.MainPicture != null)
             {
-                var imgFileName = $"{Guid.NewGuid()}{GlobalConstants.jpegFileExtension}";
+                var imgFileName = $"{Guid.NewGuid()}{GlobalConstants.JpegFileExtension}";
 
-                articleNew.MainPictureFileName = this.CommonService.UploadImageAsync(GlobalConstants.articlesImageDirectoryPath, imgFileName, createArticleViewModel.MainPicture).Result;
+                articleNew.MainPictureFileName = this.CommonService.UploadImageAsync(GlobalConstants.ArticlesImageDirectoryPath, imgFileName, createArticleViewModel.MainPicture).Result;
             }
             
             articleNew.CreatedOn = DateTime.UtcNow;
@@ -56,14 +55,14 @@ namespace WAG.Services
                 {
                     var oldImgFileName = this.DbContext.Articles.First(a => a.Id == id).MainPictureFileName;
 
-                    if (File.Exists($"{GlobalConstants.articlesImageDirectoryPath}{oldImgFileName}"))
+                    if (File.Exists($"{GlobalConstants.ArticlesImageDirectoryPath}{oldImgFileName}"))
                     {
-                        File.Delete($"{GlobalConstants.articlesImageDirectoryPath}{oldImgFileName}");
+                        File.Delete($"{GlobalConstants.ArticlesImageDirectoryPath}{oldImgFileName}");
                     }
 
-                    var newImgFileName = $"{Guid.NewGuid()}{GlobalConstants.jpegFileExtension}";
+                    var newImgFileName = $"{Guid.NewGuid()}{GlobalConstants.JpegFileExtension}";
 
-                    this.DbContext.Articles.First(a => a.Id == id).MainPictureFileName = this.CommonService.UploadImageAsync(Constants.GlobalConstants.articlesImageDirectoryPath, newImgFileName, editArticleViewModel.MainPicture).Result;
+                    this.DbContext.Articles.First(a => a.Id == id).MainPictureFileName = this.CommonService.UploadImageAsync(Constants.GlobalConstants.ArticlesImageDirectoryPath, newImgFileName, editArticleViewModel.MainPicture).Result;
                 }
                 
                 this.DbContext.Articles.First(a => a.Id == id).EditedOn = DateTime.UtcNow;
@@ -82,25 +81,25 @@ namespace WAG.Services
             {
                 var articleContentFileName = article.ArticleContentFileName;
 
-                if (File.Exists($"{GlobalConstants.articlesContentDirectoryPath}{articleContentFileName}"))
+                if (File.Exists($"{GlobalConstants.ArticlesContentDirectoryPath}{articleContentFileName}"))
                 {
-                    File.Delete($"{GlobalConstants.articlesContentDirectoryPath}{articleContentFileName}");
+                    File.Delete($"{GlobalConstants.ArticlesContentDirectoryPath}{articleContentFileName}");
                 }
 
                 var articleImgFileName = article.MainPictureFileName;
 
-                if (File.Exists($"{GlobalConstants.articlesImageDirectoryPath}{articleImgFileName}"))
+                if (File.Exists($"{GlobalConstants.ArticlesImageDirectoryPath}{articleImgFileName}"))
                 {
-                    File.Delete($"{GlobalConstants.articlesImageDirectoryPath}{articleImgFileName}");
+                    File.Delete($"{GlobalConstants.ArticlesImageDirectoryPath}{articleImgFileName}");
                 }
 
                 if (article.PicturesFileNames != null && article.PicturesFileNames.Count > 0)
                 {
                     foreach (var picture in article.PicturesFileNames)
                     {
-                        if (File.Exists($"{GlobalConstants.articlesImageDirectoryPath}{picture}"))
+                        if (File.Exists($"{GlobalConstants.ArticlesImageDirectoryPath}{picture}"))
                         {
-                            File.Delete($"{GlobalConstants.articlesImageDirectoryPath}{picture}");
+                            File.Delete($"{GlobalConstants.ArticlesImageDirectoryPath}{picture}");
                         }
                     }
                 }
@@ -126,21 +125,21 @@ namespace WAG.Services
 
         private string UploadArticleContent(string articleContent)
         {
-            var fileName = $"{Guid.NewGuid()}{GlobalConstants.textFileExtension}";
+            var fileName = $"{Guid.NewGuid()}{GlobalConstants.TextFileExtension}";
 
-            var textFileName = this.CommonService.UploadTextToFileAsync(GlobalConstants.articlesContentDirectoryPath, fileName, articleContent).Result;
+            var textFileName = this.CommonService.UploadTextToFileAsync(GlobalConstants.ArticlesContentDirectoryPath, fileName, articleContent).Result;
 
             return textFileName;
         }
 
         private void UploadArticleContent(string articleContent, string fileName)
         {
-            var textFileName = this.CommonService.UploadTextToFileAsync(GlobalConstants.articlesContentDirectoryPath, fileName, articleContent).Result;
+            var textFileName = this.CommonService.UploadTextToFileAsync(GlobalConstants.ArticlesContentDirectoryPath, fileName, articleContent).Result;
         }
 
         public string DownloadArticleContent(string fileName)
         {
-            var articleContent = this.CommonService.DownloadTextFromFile(GlobalConstants.articlesContentDirectoryPath, fileName);
+            var articleContent = this.CommonService.DownloadTextFromFile(GlobalConstants.ArticlesContentDirectoryPath, fileName);
 
             return articleContent;
         }

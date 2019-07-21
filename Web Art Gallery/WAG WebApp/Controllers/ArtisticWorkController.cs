@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WAG.Services.Interfaces;
 using WAG.ViewModels.ArtisticWorks;
-
 
 namespace WAG.WebApp.Controllers
 {
@@ -45,6 +39,7 @@ namespace WAG.WebApp.Controllers
         public IActionResult ArtWorkDetails(int id)
         {
             var viewModel = new ArtWorkDetailsViewModel();
+
             viewModel.ArtisticWork = this.ArtisticWorkService.GetArtisticWorkById(id);
             viewModel.ArtisticWork.ArtisticWorkCategory = this.ArtisticWorkService.GetCategoryById(viewModel.ArtisticWork.ArtisticWorkCategoryId);
 

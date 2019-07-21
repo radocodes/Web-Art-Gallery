@@ -1,8 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using WAG.Data;
 using WAG.Data.Models;
 using WAG.Services.Interfaces;
@@ -46,7 +44,6 @@ namespace WAG.Services
             };
 
             this.DbContext.Orders.Add(order);
-
             this.DbContext.SaveChanges();
         }
 
@@ -72,7 +69,6 @@ namespace WAG.Services
             };
 
             this.DbContext.Orders.Add(order);
-
             this.DbContext.SaveChanges();
         }
 
@@ -83,7 +79,6 @@ namespace WAG.Services
             if (order != null)
             {
                 this.DbContext.Orders.Remove(order);
-
                 this.DbContext.SaveChanges();
             }
         }

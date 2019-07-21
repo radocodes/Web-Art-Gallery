@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using WAG.Data.Models;
+﻿using System.Collections.Generic;
 
 namespace WAG.ViewModels.UserAccount
 {

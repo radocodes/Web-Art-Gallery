@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WAG.Services.Interfaces;
 using WAG.ViewModels.Home;
 
@@ -21,11 +17,13 @@ namespace WAG.WebApp.Areas.Administration.Controllers
         {
             messagesViewModel.Messages = this.HomeService.GetAllMessages();
 
+            var MessageMaxLengthInTable = 100;
+
             foreach (var message in messagesViewModel.Messages)
             {
-                if (message.Title != null && message.Title.Length > 50)
+                if (message.Title != null && message.Title.Length > MessageMaxLengthInTable)
                 {
-                    message.Title = message.Title.Substring(0, 100);
+                    message.Title = message.Title.Substring(0, MessageMaxLengthInTable);
                 }
             }
 

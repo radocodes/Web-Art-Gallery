@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using WAG.Data;
 using WAG.Data.Models;
 using WAG.Services.Constants;
@@ -33,7 +31,6 @@ namespace WAG.Services
             };
 
             this.DbContext.ContactMessages.Add(contactMessage);
-
             this.DbContext.SaveChanges();
         }
 
@@ -51,6 +48,7 @@ namespace WAG.Services
                     message.WAGUser.LastName = this.DbContext.Users.First(u => u.Id == message.WAGUserId).LastName;
                     message.WAGUser.UserName = this.DbContext.Users.First(u => u.Id == message.WAGUserId).UserName;
                 }
+
                 else
                 {
                     message.WAGUser.UserName = GlobalConstants.AnonymousUser;
@@ -72,6 +70,7 @@ namespace WAG.Services
                 message.WAGUser.LastName = this.DbContext.Users.First(u => u.Id == message.WAGUserId).LastName;
                 message.WAGUser.UserName = this.DbContext.Users.First(u => u.Id == message.WAGUserId).UserName;
             }
+
             else
             {
                 message.WAGUser.UserName = GlobalConstants.AnonymousUser;
@@ -87,7 +86,6 @@ namespace WAG.Services
             if (message != null)
             {
                 this.DbContext.ContactMessages.Remove(message);
-
                 this.DbContext.SaveChanges();
             }
         }
@@ -101,6 +99,5 @@ namespace WAG.Services
         {
             this.CommonService.UploadTextToFileAsync(GlobalConstants.BioDirectoryPath, GlobalConstants.BioFileName, editedText);
         }
-
     }
 }

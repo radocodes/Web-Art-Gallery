@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using WAG.Data.Models;
 using WAG.ViewModels.Blog;
 
@@ -19,7 +17,5 @@ namespace WAG.Services.Interfaces
         Article GetArticle(int id);
 
         string DownloadArticleContent(string fileName);
-
-
     }
 }

@@ -18,6 +18,7 @@
 
 <main class="container" id="artwork-details-main">
     <div class="row">
+
         <section class="col-sm-9 col-12">
             <img src="~/images/artWorks/@Model.ArtisticWork.PictureFileName" id="artwork-details-img" alt="Picture of the artwork" />
         </section>
@@ -49,5 +50,6 @@
                 <a class="btn btn-primary" asp-area="Administration" asp-controller="ArtisticWork" asp-action="DeleteArtWork" asp-route-id="@Model.ArtisticWork.Id">Delete</a>
             }
         </aside>
+
     </div>
 </main>

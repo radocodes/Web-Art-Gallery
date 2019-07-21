@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "ArtWorksByCategory";
 }
+
 <header class="container header-default">
     <div class="row">
         <div class="col-12">
@@ -12,6 +13,7 @@
 
 <main class="container main-default">
     <div class="row">
+
         <section>
             @foreach (var artWork in Model.ArtWorkCollection)
             {
@@ -26,5 +28,6 @@
                 </div>
             }
         </section>
+
     </div>
 </main>

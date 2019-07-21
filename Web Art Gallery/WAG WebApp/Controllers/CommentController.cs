@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WAG.Services.Interfaces;
-using System.Security.Claims;
 using WAG.ViewModels.Comment;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
@@ -29,13 +24,13 @@ namespace WAG.WebApp.Controllers
         public IActionResult AddComment(int articleId, string comment)
         {
             var currentUser = this.UserAccountService.GetCurrentUser(HttpContext);
+
             int commentId = 0;
 
             if (comment!= null)
             {
                 commentId = this.CommentService.AddComment(currentUser.Id, articleId, comment);
             }
-            
 
             var addCommentViewModel = new AddCommentViewModel()
             {

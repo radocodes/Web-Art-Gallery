@@ -14,21 +14,21 @@
 
 <main class="container main-default">
     <div class="row">
+
         <section>
             @foreach (var category in Model.Categories)
             {
                 <div class="col-sm-4">
-                    
                     <div class="category-banner">
                         <a asp-action="ArtWorksByCategory" asp-controller="ArtisticWork" asp-route-id="@category.Id">
                             <img class="card-img-top" id="category-banner-img" src="~/images/artCategories/@category.MainPictureFileName" alt="Card image cap">
                             <div id="category-banner-name"><b>@category.Name</b></div>
                         </a>
                     </div>
-                    
                 </div>
             }
         </section>
+
     </div>
 </main>
 

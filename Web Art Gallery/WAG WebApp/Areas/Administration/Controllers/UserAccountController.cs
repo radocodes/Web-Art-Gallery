@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using WAG.Common.User;
-using WAG.Data.Models;
 using WAG.Services.Interfaces;
 using WAG.ViewModels.UserAccount;
 

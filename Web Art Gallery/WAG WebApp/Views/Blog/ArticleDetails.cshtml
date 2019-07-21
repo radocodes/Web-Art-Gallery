@@ -15,7 +15,9 @@
 <main class="container main-default">
     <div class="row">
         <div class="col-12">
+
             <article>
+
                 <header class="header-default">
                     <h2>@Model.Article.Title</h2>
                 </header>
@@ -29,6 +31,7 @@
                 <pre id="blog-details-article-content">@Model.ArticleContent</pre>
                 <br />
             </article>
+
             @if (User.IsInRole("Admin"))
             {
                 <div id="blog-details-admins-buttons">

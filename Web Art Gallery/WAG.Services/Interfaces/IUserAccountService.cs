@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using WAG.Data.Models;
 using WAG.ViewModels.UserAccount;
@@ -36,6 +34,5 @@ namespace WAG.Services.Interfaces
         List<string> GetRolesList();
 
         WAGUser GetCurrentUser(HttpContext httpContext);
-
     }
 }
