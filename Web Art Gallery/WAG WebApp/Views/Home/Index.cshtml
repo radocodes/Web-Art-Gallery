@@ -2,41 +2,43 @@
     ViewData["Title"] = "Home Page";
 }
 
-<main class="container">
-    <div class="row" style="text-align:center">
-        <div class="col-12 ">
-            <div class="index-body">
+<div class="container">
+    <div class="index-body">
 
-                @*Title*@
+        @*Title*@
+        <header class="row" style="text-align:center">
+            <div class="col-12">
                 <div id="index-title">
                     Ema Ivanova Art
                 </div>
+            </div>
+        </header>
 
-                @*buttons*@
-                <div class="index-btns">
-                    <div class="index-btn-wrapper-1 index-btn-hover">
-                        <a asp-controller="UserAccount" asp-action="Register">
-                            <div class="index-btn index-btn-1">
-                                Sign Up - it's easy!
-                            </div>
-                        </a>
-                    </div>
-                    <div class="index-btn-wrapper-2 index-btn-hover">
-                        <a asp-controller="ArtisticWork" asp-action="Categories">
-                            <div class="index-btn index-btn-1">
-                                Visit Gallery
-                            </div>
-                        </a>
-                    </div>
-                    <div class="index-btn-wrapper-3 index-btn-hover">
-                        <a asp-area="" asp-controller="Home" asp-action="Contact">
-                            <div class="index-btn index-btn-2">
-                                You have a question? <br /> Contact us here
-                            </div>
-                        </a>
-                    </div>
+        @*buttons*@
+        <nav class="row index-btns text-center">
+                <div class="col-12 col-sm-4 index-btn-hover index-btn-wrapper">
+                    <a asp-controller="UserAccount" asp-action="Register">
+                        <div class="index-btn">
+                            Sign Up - it's easy!
+                        </div>
+                    </a>
+                </div>
+                <div class="col-12 col-sm-4 index-btn-hover index-btn-wrapper">
+                    <a asp-controller="ArtisticWork" asp-action="Categories">
+                        <div class="index-btn">
+                            Visit Gallery
+                        </div>
+                    </a>
+                </div>
+                <div class="col-12 col-sm-4 index-btn-hover index-btn-wrapper">
+                    <a asp-area="" asp-controller="Home" asp-action="Contact">
+                        <div class="index-btn">
+                            You have a question? <br /> Contact us here
+                        </div>
+                    </a>
                 </div>
             </div>
-        </div>
+        </nav>
+
     </div>
-</main>
+</div>
