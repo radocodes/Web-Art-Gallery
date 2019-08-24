@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container">
+    <div class="index-body">
+
+        @*Title*@
+        <header class="row text-center">
+            <div class="col-12">
+                <div id="index-title">
+                    Ema Ivanova Art
+                </div>
+            </div>
+        </header>
+
+        @*buttons*@
+        <nav class="row index-btns text-center">
+                <div class="col-12 col-sm-4 index-btn-hover index-btn-wrapper">
+                    <a asp-controller="UserAccount" asp-action="Register">
+                        <div class="index-btn">
+                            Регистрация
+                        </div>
+                    </a>
+                </div>
+                <div class="col-12 col-sm-4 index-btn-hover index-btn-wrapper">
+                    <a asp-controller="ArtisticWork" asp-action="Categories">
+                        <div class="index-btn">
+                            Към Галерията
+                        </div>
+                    </a>
+                </div>
+                <div class="col-12 col-sm-4 index-btn-hover index-btn-wrapper">
+                    <a asp-area="" asp-controller="Home" asp-action="Contact">
+                        <div class="index-btn">
+                            Имате въпроси? <br /> Свържете се с нас тук
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+    </div>
+</div>

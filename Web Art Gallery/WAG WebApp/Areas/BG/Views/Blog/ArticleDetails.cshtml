@@ -1,0 +1,153 @@
+﻿@model WAG.ViewModels.Blog.ArticleDetailsViewModel
+
+@{
+    ViewData["Title"] = "ArticleDetails";
+}
+
+<header class="container header-default">
+    <div class="row">
+        <div class="col-12">
+            <h1>Добре дошли в артистичният блог на Ема Иванова</h1>
+        </div>
+    </div>
+</header>
+
+<main class="container main-default">
+    <div class="row">
+        <div class="col-12">
+
+            <article>
+
+                <header class="header-default">
+                    <h2>@Model.Article.Title</h2>
+                </header>
+
+                <p class="blog-index-info-icons"><i class="far fa-calendar-alt"></i> @Model.Article.CreatedOn.ToShortDateString() &ensp; <i class="fas fa-comment-dots"></i> @Model.Article.Comments.Count() Коментари</p>
+                @if (Model.Article.MainPictureFileName != null)
+                {
+                    <img src="~/images/articles/@Model.Article.MainPictureFileName" id="blog-details-img-main" />
+                }
+                <pre id="blog-details-srt-desc">@Model.Article.ShortDescription</pre>
+                <pre id="blog-details-article-content">@Model.ArticleContent</pre>
+                <br />
+            </article>
+
+            @if (User.IsInRole("Admin"))
+            {
+                <div id="blog-details-admins-buttons">
+                    <h3>Manage the article:</h3>
+                    <a class="btn btn-primary" asp-area="Administration" asp-controller="Blog" asp-action="EditArticle" asp-route-id="@Model.Article.Id">Edit</a>
+                    <a class="btn btn-primary" asp-area="Administration" asp-controller="Blog" asp-action="DeleteArticle" asp-route-id="@Model.Article.Id">Delete</a>
+                </div>
+            }
+            <br />
+            <div id="comment-area">
+                <div id="all-comments">
+                    <p style="font-weight:bold">Коментари:</p>
+                    @if (Model.Comments != null)
+                    {
+                        foreach (var comment in Model.Comments)
+                        {
+                            string user = null;
+
+                            if (comment.WAGUser.FirstName != null && comment.WAGUser.LastName != null)
+                            {
+                                user = $"{comment.WAGUser.FirstName} {comment.WAGUser.LastName}";
+
+                                if (User.IsInRole("Admin"))
+                                {
+                                    user = $"{comment.WAGUser.FirstName} {comment.WAGUser.LastName} ({comment.WAGUser.UserName})";
+                                }
+                            }
+                            else
+                            {
+                                user = $"{comment.WAGUser.UserName}";
+                            }
+
+                            <div id="comment-id-@comment.Id">
+                                <p class="comment">@user: @comment.TextBody<button type="button" value="@comment.Id" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button></p>
+                            </div>
+                        }
+                    }
+                </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <form>
+                        <div @*class="form-group" *@>
+                            <label id="your-comment-label">Твоят коментар:</label>
+                            <br />
+                            <textarea id="your-comment-input" class="form-control" placeholder="Коментирай..."></textarea>
+                            <br />
+                            <div id="post" class="btn btn-primary">Публикувай</div>
+                        </div>
+                    </form>
+                }
+                else
+                {
+                    <br />
+                    <div>
+                        <p>Please Sign Up or Sign In to make comments</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</main>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        //Add Comment
+        $("#post").on("click", () => {
+            let comment = $("#your-comment-input").val();
+            $("#your-comment-input").val("");
+    $.ajax({
+        type: "POST",
+        url: "/Comment/AddComment",
+        dataType: 'Json',
+        data: {
+            comment: comment,
+            articleId: @Model.Article.Id,
+            },
+        success: data => {
+            let json = JSON.parse(data);
+            let userName = "";
+
+            if (json.UserFirstName != null && json.UserLastName != null) {
+                userName = `${json.UserFirstName} ${json.UserLastName}`
+            }
+            else {
+                userName = json.UserName;
+            }
+            if (json.Comment != null) {
+                $("#all-comments").append(`<div id="comment-id-${json.CommentId}"><p class="comment" style="display:inline-block">${userName}: ${json.Comment} <button type="button" value="${json.CommentId}" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button></p></div>`);
+            }
+
+        }
+    });
+        });
+
+        //Delete Comment
+        $(".close").click(function () {
+            let commentId = $(this).val();
+            $.ajax({
+        type: "POST",
+        url: "/Comment/DeleteComment",
+        dataType: 'Json',
+        data: {
+            commentId: commentId
+        },
+        success: data => {
+            let json = JSON.parse(data);
+
+            if (json != null) {
+                if (json.CommentId != null && json.CommentId != 0) {
+                    $(`#comment-id-${json.CommentId}`).hide();
+                }
+            }
+        }
+            });
+        });
+    </script>
+}
