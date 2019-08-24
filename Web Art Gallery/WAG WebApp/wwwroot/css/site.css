@@ -13,6 +13,10 @@ body {
     /*#1d1435;*/
 }
 
+.navbar-button {
+    cursor: pointer;
+}
+
 .dropdown-menu {
     background-color: #333;
 }
