@@ -40,8 +40,8 @@ namespace WAG.WebApp.Controllers
         {
             var viewModel = new ArtWorkDetailsViewModel();
 
-            viewModel.ArtisticWork = this.ArtisticWorkService.GetArtisticWorkById(id);
-            viewModel.ArtisticWork.ArtisticWorkCategory = this.ArtisticWorkService.GetCategoryById(viewModel.ArtisticWork.ArtisticWorkCategoryId);
+            viewModel.ArtisticWork = ArtisticWorkService.GetArtisticWorkById(id);
+            viewModel.ArtisticWork.ArtisticWorkCategory = ArtisticWorkService.GetCategoryById(viewModel.ArtisticWork.ArtisticWorkCategoryId);
 
             return View(viewModel);
         }

@@ -12,12 +12,12 @@ namespace WAG.Services
     public class HomeService : IHomeService
     {
         private WAGDbContext DbContext;
-        private IFileService CommonService;
+        private IFileService FileService;
 
-        public HomeService(WAGDbContext dbContext, IFileService commonService)
+        public HomeService(WAGDbContext dbContext, IFileService fileService)
         {
             this.DbContext = dbContext;
-            this.CommonService = commonService;
+            this.FileService = fileService;
         }
 
         public void SaveContactMessage(ContactMessageViewModel contactMessageViewModel, string userId)
@@ -44,9 +44,14 @@ namespace WAG.Services
 
                 if (message.WAGUserId != null)
                 {
-                    message.WAGUser.FirstName = this.DbContext.Users.First(u => u.Id == message.WAGUserId).FirstName;
-                    message.WAGUser.LastName = this.DbContext.Users.First(u => u.Id == message.WAGUserId).LastName;
-                    message.WAGUser.UserName = this.DbContext.Users.First(u => u.Id == message.WAGUserId).UserName;
+                    var messageAuthor = this.DbContext.Users.FirstOrDefault(u => u.Id == message.WAGUserId);
+
+                    if (messageAuthor != null)
+                    {
+                        message.WAGUser.FirstName = messageAuthor.FirstName;
+                        message.WAGUser.LastName = messageAuthor.LastName;
+                        message.WAGUser.UserName = messageAuthor.UserName;
+                    }
                 }
 
                 else
@@ -66,9 +71,14 @@ namespace WAG.Services
 
             if (message.WAGUserId != null)
             {
-                message.WAGUser.FirstName = this.DbContext.Users.First(u => u.Id == message.WAGUserId).FirstName;
-                message.WAGUser.LastName = this.DbContext.Users.First(u => u.Id == message.WAGUserId).LastName;
-                message.WAGUser.UserName = this.DbContext.Users.First(u => u.Id == message.WAGUserId).UserName;
+                var messageAuthor = this.DbContext.Users.FirstOrDefault(u => u.Id == message.WAGUserId);
+
+                if (messageAuthor != null)
+                {
+                    message.WAGUser.FirstName =messageAuthor.FirstName;
+                    message.WAGUser.LastName = messageAuthor.LastName;
+                    message.WAGUser.UserName = messageAuthor.UserName;
+                }
             }
 
             else
@@ -92,12 +102,12 @@ namespace WAG.Services
 
         public string GetBiography()
         {
-            return this.CommonService.DownloadTextFromFile(GlobalConstants.BioDirectoryPath, GlobalConstants.BioFileName);
+            return this.FileService.DownloadTextFromFile(GlobalConstants.BioDirectoryPath, GlobalConstants.BioFileName);
         }
 
         public void EditBiography(string editedText)
         {
-            this.CommonService.UploadTextToFileAsync(GlobalConstants.BioDirectoryPath, GlobalConstants.BioFileName, editedText);
+            this.FileService.UploadTextToFileAsync(GlobalConstants.BioDirectoryPath, GlobalConstants.BioFileName, editedText);
         }
     }
 }

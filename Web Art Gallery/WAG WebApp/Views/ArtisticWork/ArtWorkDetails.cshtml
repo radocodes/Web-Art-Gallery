@@ -31,7 +31,7 @@
                 @Model.ArtisticWork.Technique<br />
                 @hasFrame<br />
                 @availability<br />
-                <span style="color:green;">@(Model.ArtisticWork.Price / 2) &#x20AC;</span>
+                <span style="color:green;">@(Model.ArtisticWork.Price) &#x20AC;</span>
                 <br />
             </p>
             @if (User.Identity.IsAuthenticated && !User.IsInRole("Admin"))

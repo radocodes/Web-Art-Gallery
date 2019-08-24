@@ -13,12 +13,12 @@ namespace WAG.Services
     public class BlogService : IBlogService
     {
         private WAGDbContext DbContext;
-        private IFileService CommonService;
+        private IFileService FileService;
 
-        public BlogService(WAGDbContext dbContext, IFileService commonService)
+        public BlogService(WAGDbContext dbContext, IFileService fileService)
         {
             this.DbContext = dbContext;
-            this.CommonService = commonService;
+            this.FileService = fileService;
         }
         
         public void CreateArticle(CreateArticleViewModel createArticleViewModel)
@@ -33,7 +33,7 @@ namespace WAG.Services
             {
                 var imgFileName = $"{Guid.NewGuid()}{GlobalConstants.JpegFileExtension}";
 
-                articleNew.MainPictureFileName = this.CommonService.UploadImageAsync(GlobalConstants.ArticlesImageDirectoryPath, imgFileName, createArticleViewModel.MainPicture).Result;
+                articleNew.MainPictureFileName = this.FileService.UploadImageAsync(GlobalConstants.ArticlesImageDirectoryPath, imgFileName, createArticleViewModel.MainPicture).Result;
             }
             
             articleNew.CreatedOn = DateTime.UtcNow;
@@ -44,12 +44,13 @@ namespace WAG.Services
 
         public void EditArticle(int id, EditArticleViewModel editArticleViewModel)
         {
-            if (this.DbContext.Articles.Any(a => a.Id == id))
+            var articleToUpdate = this.DbContext.Articles.FirstOrDefault(a => a.Id == id);
+
+            if (articleToUpdate != null)
             {
-                this.DbContext.Articles.First(a => a.Id == id).Title = editArticleViewModel.Title;
-                this.DbContext.Articles.First(a => a.Id == id).ShortDescription = editArticleViewModel.ShortDescription;
-                var articleContentFileName = this.DbContext.Articles.First(a => a.Id == id).ArticleContentFileName;
-                this.UploadArticleContent(editArticleViewModel.ArticleContent, articleContentFileName);
+                articleToUpdate.Title = editArticleViewModel.Title;
+                articleToUpdate.ShortDescription = editArticleViewModel.ShortDescription;
+                this.UploadArticleContent(editArticleViewModel.ArticleContent, articleToUpdate.ArticleContentFileName);
 
                 if (editArticleViewModel.MainPicture != null)
                 {
@@ -62,7 +63,7 @@ namespace WAG.Services
 
                     var newImgFileName = $"{Guid.NewGuid()}{GlobalConstants.JpegFileExtension}";
 
-                    this.DbContext.Articles.First(a => a.Id == id).MainPictureFileName = this.CommonService.UploadImageAsync(Constants.GlobalConstants.ArticlesImageDirectoryPath, newImgFileName, editArticleViewModel.MainPicture).Result;
+                    this.DbContext.Articles.First(a => a.Id == id).MainPictureFileName = this.FileService.UploadImageAsync(Constants.GlobalConstants.ArticlesImageDirectoryPath, newImgFileName, editArticleViewModel.MainPicture).Result;
                 }
                 
                 this.DbContext.Articles.First(a => a.Id == id).EditedOn = DateTime.UtcNow;
@@ -127,19 +128,19 @@ namespace WAG.Services
         {
             var fileName = $"{Guid.NewGuid()}{GlobalConstants.TextFileExtension}";
 
-            var textFileName = this.CommonService.UploadTextToFileAsync(GlobalConstants.ArticlesContentDirectoryPath, fileName, articleContent).Result;
+            var textFileName = this.FileService.UploadTextToFileAsync(GlobalConstants.ArticlesContentDirectoryPath, fileName, articleContent).Result;
 
             return textFileName;
         }
 
         private void UploadArticleContent(string articleContent, string fileName)
         {
-            var textFileName = this.CommonService.UploadTextToFileAsync(GlobalConstants.ArticlesContentDirectoryPath, fileName, articleContent).Result;
+            var textFileName = this.FileService.UploadTextToFileAsync(GlobalConstants.ArticlesContentDirectoryPath, fileName, articleContent).Result;
         }
 
         public string DownloadArticleContent(string fileName)
         {
-            var articleContent = this.CommonService.DownloadTextFromFile(GlobalConstants.ArticlesContentDirectoryPath, fileName);
+            var articleContent = this.FileService.DownloadTextFromFile(GlobalConstants.ArticlesContentDirectoryPath, fileName);
 
             return articleContent;
         }

@@ -64,12 +64,17 @@ namespace WAG.Services
 
         public void EditUserProfile(WAGUser user, EditUserProfileInputViewModel editUserProfileInputViewModel)
         {
-            this.DbContext.Users.First(u => u == user).FirstName = editUserProfileInputViewModel.FirstName;
-            this.DbContext.Users.First(u => u == user).LastName = editUserProfileInputViewModel.LastName;
-            this.DbContext.Users.First(u => u == user).Email = editUserProfileInputViewModel.Email;
-            this.DbContext.Users.First(u => u == user).PhoneNumber = editUserProfileInputViewModel.PhoneNumber;
-            this.DbContext.Users.First(u => u == user).City = editUserProfileInputViewModel.City;
-            this.DbContext.Users.First(u => u == user).Address = editUserProfileInputViewModel.Address;
+            var userToUpdate = this.DbContext.Users.FirstOrDefault(u => u == user);
+
+            if (userToUpdate != null)
+            {
+                userToUpdate.FirstName = editUserProfileInputViewModel.FirstName;
+                userToUpdate.LastName = editUserProfileInputViewModel.LastName;
+                userToUpdate.Email = editUserProfileInputViewModel.Email;
+                userToUpdate.PhoneNumber = editUserProfileInputViewModel.PhoneNumber;
+                userToUpdate.City = editUserProfileInputViewModel.City;
+                userToUpdate.Address = editUserProfileInputViewModel.Address;
+            }
 
             this.DbContext.SaveChanges();
         }

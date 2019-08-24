@@ -13,12 +13,12 @@ namespace WAG.Services
     public class ArtisticWorkService : IArtisticWorkService
     {
         private WAGDbContext DbContext;
-        private IFileService CommonService;
+        private IFileService FileService;
 
-        public ArtisticWorkService(WAGDbContext dbContext, IFileService commonService)
+        public ArtisticWorkService(WAGDbContext dbContext, IFileService fileService)
         {
             this.DbContext = dbContext;
-            this.CommonService = commonService;
+            this.FileService = fileService;
         }
 
         public void AddArtWork(AddArtWorkViewModel addArtWorkViewModel)
@@ -44,7 +44,7 @@ namespace WAG.Services
 
             if (addArtWorkViewModel.Picture != null)
             {
-                artWork.PictureFileName = this.CommonService.UploadImageAsync(Constants.GlobalConstants.ArtWorksImageDirectoryPath, imgFileName, addArtWorkViewModel.Picture).Result;
+                artWork.PictureFileName = this.FileService.UploadImageAsync(Constants.GlobalConstants.ArtWorksImageDirectoryPath, imgFileName, addArtWorkViewModel.Picture).Result;
             }
 
             this.DbContext.ArtisticWorks.Add(artWork);
@@ -55,19 +55,19 @@ namespace WAG.Services
         {
             var categoryNew = DbContext.ArtisticWorkCategories.FirstOrDefault(c => c.Id == editArtWorkViewModel.CategoryId);
 
-            var currArtwork = this.DbContext.ArtisticWorks.FirstOrDefault(artwork => artwork.Id == id);
+            var artworkToUpdate = this.DbContext.ArtisticWorks.FirstOrDefault(artwork => artwork.Id == id);
 
-            if (currArtwork != null)
+            if (artworkToUpdate != null)
             {
-                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).Year = editArtWorkViewModel.Year;
-                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).Height = editArtWorkViewModel.Height;
-                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).Width = editArtWorkViewModel.Width;
-                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).Price = editArtWorkViewModel.Price;
-                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).Availability = editArtWorkViewModel.Availability;
-                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).HasFrame = editArtWorkViewModel.HasFrame;
-                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).ArtisticWorkCategory = categoryNew;
-                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).Technique = editArtWorkViewModel.Technique;
-                this.DbContext.ArtisticWorks.First(artwork => artwork.Id == id).EditedOn = DateTime.UtcNow;
+                artworkToUpdate.Year = editArtWorkViewModel.Year;
+                artworkToUpdate.Height = editArtWorkViewModel.Height;
+                artworkToUpdate.Width = editArtWorkViewModel.Width;
+                artworkToUpdate.Price = editArtWorkViewModel.Price;
+                artworkToUpdate.Availability = editArtWorkViewModel.Availability;
+                artworkToUpdate.HasFrame = editArtWorkViewModel.HasFrame;
+                artworkToUpdate.ArtisticWorkCategory = categoryNew;
+                artworkToUpdate.Technique = editArtWorkViewModel.Technique;
+                artworkToUpdate.EditedOn = DateTime.UtcNow;
 
                 DbContext.SaveChanges();
             }
@@ -150,7 +150,7 @@ namespace WAG.Services
                 {
                     var imgFileName = $"{Guid.NewGuid()}{GlobalConstants.JpegFileExtension}";
 
-                    category.MainPictureFileName = this.CommonService.UploadImageAsync(Constants.GlobalConstants.ArtCategoriesDirectoryPath, imgFileName, addCategoryViewModel.Picture).Result;
+                    category.MainPictureFileName = this.FileService.UploadImageAsync(Constants.GlobalConstants.ArtCategoriesDirectoryPath, imgFileName, addCategoryViewModel.Picture).Result;
                 }
 
                 this.DbContext.ArtisticWorkCategories.Add(category);
@@ -173,7 +173,7 @@ namespace WAG.Services
                         File.Delete($"{GlobalConstants.ArtCategoriesDirectoryPath}{oldImageFileName}");
                     }
 
-                    var newImageFileName = this.CommonService.UploadImageAsync(GlobalConstants.ArtCategoriesDirectoryPath, imgFileName, editCategoryInputViewModel.PictureNew).Result;
+                    var newImageFileName = this.FileService.UploadImageAsync(GlobalConstants.ArtCategoriesDirectoryPath, imgFileName, editCategoryInputViewModel.PictureNew).Result;
 
                     DbContext.ArtisticWorkCategories.First(c => c.Id == CategoryId).MainPictureFileName = newImageFileName;
                     DbContext.SaveChanges();
