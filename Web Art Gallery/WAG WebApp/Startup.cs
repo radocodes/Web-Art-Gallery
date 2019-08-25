@@ -35,7 +35,7 @@ namespace WAG.WebApp
 
             services.AddDbContext<WAGDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("HomeConnection")));
+                    Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<WAGUser, IdentityRole>(options =>
             {
                 options.Password.RequireDigit = false;
