@@ -41,7 +41,7 @@ namespace WAG.Services
             return this.SignInManager.PasswordSignInAsync(user, inputPassword, true, false).Result;
         }
 
-        public async Task<IdentityResult> RegisterUserSuccessfullyAsync(RegisterInputViewModel registerInputViewModel)
+        public async Task<IdentityResult> CreateUserAsync(RegisterInputViewModel registerInputViewModel)
         {
             var user = new WAGUser()
             {
@@ -105,9 +105,16 @@ namespace WAG.Services
 
         public WAGUser GetUserById(string id)
         {
-            var currUser = DbContext.Users.FirstOrDefault(user => user.Id == id);
+            var user = DbContext.Users.FirstOrDefault(u => u.Id == id);
 
-            return currUser;
+            return user;
+        }
+
+        public WAGUser GetUserByUserName(string userName)
+        {
+            var user = DbContext.Users.FirstOrDefault(u => u.UserName == userName);
+
+            return user;
         }
 
         public IList<string> GetUserRolesNameById(string id)
@@ -119,10 +126,8 @@ namespace WAG.Services
             return roles;
         }
 
-        public async Task<IdentityResult> AddUserInRoleAsync(string userId, string role)
+        public async Task<IdentityResult> AddUserInRoleAsync(WAGUser user, string role)
         {
-            var user = GetUserById(userId);
-
             var result = new IdentityResult();
 
             if (user != null)
@@ -139,10 +144,8 @@ namespace WAG.Services
             return result;
         }
 
-        public async Task<IdentityResult> RemoveUserFromRoleAsync(string userId, string role)
+        public async Task<IdentityResult> RemoveUserFromRoleAsync(WAGUser user, string role)
         {
-            var user = GetUserById(userId);
-
             var result = new IdentityResult();
 
             if (user != null)

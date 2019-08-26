@@ -19,14 +19,14 @@
     <div class="row">
         <div class="col-12">
             <i class="fas fa-phone"></i> Mobile: +359 889737579<br />
-            <i class="fas fa-envelope"></i> E-mail: emaivanova@gmail.com<br />
+            <i class="fas fa-envelope"></i> E-mail: emaeivanova@gmail.com<br />
             <i class="fab fa-facebook-square"></i> <a href="http://www.facebook.com/EmaIvanovaArt/">www.facebook.com/EmaIvanovaArt/</a><br />
             <i class="fab fa-instagram"></i> <a href="https://www.instagram.com/ema.ivanova.art/">www.instagram.com/ema.ivanova.art/</a>
         </div>
     </div>
 </address>
 
-<article class="container">
+<article class="container" id="contact-article">
     <div class="row">
         <div class="col-12 text-center">
             <div>
@@ -38,7 +38,7 @@
                     <form method="post" asp-area="" asp-controller="Home" asp-action="Contact">
                         <div class="form-group">
                             <label asp-for="Title"></label>
-                            <input asp-for="Title" class="form-control" placeholder="Title..." id="contact-message-title-field"/>
+                            <input asp-for="Title" class="form-control" placeholder="Title..." id="contact-message-title-field" />
                             <span asp-validation-for="Title" class="text-danger"></span>
                         </div>
                         <div class="form-group">
@@ -54,8 +54,10 @@
             }
             else
             {
-                <p>If you want to leave me a message here in website, please Login/Sign Up first.</p> 
-                <p>Otherwise you can write me at email address above or feel free to call me by Phone.</p>
+                <div>
+                    <p>If you want to leave me a message here in website, please Login/Sign Up first.</p>
+                    <p>Otherwise you can write me at email address above or feel free to call me by Phone.</p>
+                </div>
             }
         </div>
     </div>

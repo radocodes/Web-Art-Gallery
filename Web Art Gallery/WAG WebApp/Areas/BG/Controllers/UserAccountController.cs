@@ -68,7 +68,7 @@ namespace WAG.WebApp.Areas.BG.Controllers
                 return this.View(registerInputViewModel);
             }
 
-            var registerResult = this.UserAccountService.RegisterUserSuccessfullyAsync(registerInputViewModel).Result;
+            var registerResult = this.UserAccountService.CreateUserAsync(registerInputViewModel).Result;
 
             if (registerResult != IdentityResult.Success)
             {

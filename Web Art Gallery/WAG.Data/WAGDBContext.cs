@@ -33,17 +33,20 @@ namespace WAG.Data
             builder.Entity<WAGUser>()
                 .HasMany(u => u.Comments)
                 .WithOne(c => c.WAGUser)
-                .HasForeignKey(c => c.WAGUserId);
+                .HasForeignKey(c => c.WAGUserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<WAGUser>()
                 .HasMany(u => u.Orders)
                 .WithOne(o => o.WAGUser)
-                .HasForeignKey(c => c.WAGUserId);
+                .HasForeignKey(c => c.WAGUserId)
+            .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<WAGUser>()
                 .HasMany(u => u.ContactMessages)
                 .WithOne(cm => cm.WAGUser)
-                .HasForeignKey(c => c.WAGUserId);
+                .HasForeignKey(c => c.WAGUserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(builder);
         }

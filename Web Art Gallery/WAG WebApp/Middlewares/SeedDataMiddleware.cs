@@ -21,6 +21,7 @@ namespace WAG.WebApp.Middlewares
                                       RoleManager<IdentityRole> roleManager, WAGDbContext db)
         {
             SeedRole(roleManager, GlobalConstants.AdminRole).GetAwaiter().GetResult();
+            SeedRole(roleManager, GlobalConstants.UserRole).GetAwaiter().GetResult();
 
             SeedUserInRoles(userManager).GetAwaiter().GetResult();
 
@@ -54,6 +55,7 @@ namespace WAG.WebApp.Middlewares
                 if (userCreated.Succeeded)
                 {
                     await userManager.AddToRoleAsync(user, GlobalConstants.AdminRole);
+                    await userManager.AddToRoleAsync(user, GlobalConstants.UserRole);
                 }
             }
         }

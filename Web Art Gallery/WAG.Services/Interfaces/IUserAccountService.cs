@@ -11,7 +11,7 @@ namespace WAG.Services.Interfaces
     {
         SignInResult LoginUserSuccessfully(LoginInputViewModel loginInputViewModel);
 
-        Task<IdentityResult> RegisterUserSuccessfullyAsync(RegisterInputViewModel registerInputViewModel);
+        Task<IdentityResult> CreateUserAsync(RegisterInputViewModel registerInputViewModel);
 
         void Logout();
 
@@ -25,11 +25,13 @@ namespace WAG.Services.Interfaces
 
         WAGUser GetUserById(string id);
 
+        WAGUser GetUserByUserName(string userName);
+
         IList<string> GetUserRolesNameById(string id);
 
-        Task<IdentityResult> AddUserInRoleAsync(string userId, string role);
+        Task<IdentityResult> AddUserInRoleAsync(WAGUser user, string role);
 
-        Task<IdentityResult> RemoveUserFromRoleAsync(string userId, string role);
+        Task<IdentityResult> RemoveUserFromRoleAsync(WAGUser user, string role);
 
         List<string> GetRolesList();
 

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using WAG.Services.Constants;
 using WAG.Services.Interfaces;
 using WAG.ViewModels.UserAccount;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
@@ -68,7 +69,7 @@ namespace WAG.WebApp.Controllers
                 return this.View(registerInputViewModel);
             }
 
-            var registerResult = this.UserAccountService.RegisterUserSuccessfullyAsync(registerInputViewModel).Result;
+            var registerResult = this.UserAccountService.CreateUserAsync(registerInputViewModel).Result;
 
             if (registerResult != IdentityResult.Success)
             {
@@ -76,6 +77,10 @@ namespace WAG.WebApp.Controllers
 
                 return this.View(registerInputViewModel);
             }
+
+            var currUser = this.UserAccountService.GetUserByUserName(registerInputViewModel.UserName);
+
+            this.UserAccountService.AddUserInRoleAsync(currUser, GlobalConstants.UserRole).GetAwaiter().GetResult();
 
             return RedirectToAction("Login", "UserAccount");
         }

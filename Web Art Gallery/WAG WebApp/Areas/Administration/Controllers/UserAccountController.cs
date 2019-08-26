@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using WAG.Common.User;
+using WAG.Services.Constants;
 using WAG.Services.Interfaces;
 using WAG.ViewModels.UserAccount;
 
@@ -81,9 +82,11 @@ namespace WAG.WebApp.Areas.Administration.Controllers
         [HttpPost]
         public IActionResult MakeUserAdmin(string userId)
         {
-            var adminRoleName = nameof(UserRoles.Admin);
+            var adminRoleName = GlobalConstants.AdminRole;
 
-            var addingResult = this.UserAccountService.AddUserInRoleAsync(userId, adminRoleName).Result;
+            var user = this.UserAccountService.GetUserById(userId);
+
+            var addingResult = this.UserAccountService.AddUserInRoleAsync(user, adminRoleName).Result;
 
             if (addingResult.Succeeded)
             {
@@ -103,9 +106,11 @@ namespace WAG.WebApp.Areas.Administration.Controllers
         [HttpPost]
         public IActionResult RemoveUserFromAdminRole(string id)
         {
-            var adminRoleName = nameof(UserRoles.Admin);
+            var adminRoleName = GlobalConstants.AdminRole;
 
-            var removingResult = this.UserAccountService.RemoveUserFromRoleAsync(id, adminRoleName).Result;
+            var user = this.UserAccountService.GetUserById(id);
+
+            var removingResult = this.UserAccountService.RemoveUserFromRoleAsync(user, adminRoleName).Result;
 
             if (removingResult.Succeeded)
             {

@@ -145,8 +145,8 @@ footer {
     color: white;
     position: relative;
     top: 50px;
-    margin:auto;
-    width:auto;
+    margin: auto;
+    width: auto;
     /*overflow-wrap:break-word;*/
 }
 
@@ -160,9 +160,9 @@ footer {
     text-decoration: none;
     color: #333;
     font-weight: bold;
-    vertical-align:middle;
-    margin:auto;
-    display:table-cell;
+    vertical-align: middle;
+    margin: auto;
+    display: table-cell;
 }
 
 .index-btn-hover :hover {
@@ -178,16 +178,16 @@ footer {
     margin-top: 300px;
 }
 
-.index-btns :hover {
-    text-decoration: none;
-}
+    .index-btns :hover {
+        text-decoration: none;
+    }
 
 .category-banner {
-    max-width:300px;
-    margin-left:auto;
-    margin-right:auto;
-    margin-bottom:25px;
-    margin-top:25px;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 25px;
+    margin-top: 25px;
 }
 
 #category-banner-img {
@@ -200,9 +200,9 @@ footer {
     max-width: 300px;
     font-size: medium;
     color: black;
-    width:auto;
-    margin-left:auto;
-    margin-right:auto;
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .artwork-banner {
@@ -259,6 +259,12 @@ footer {
 
 #contact-address {
     font-size: medium;
+}
+
+#contact-article {
+    margin-bottom: 47.6px;
+    height: auto;
+    padding-bottom: 25px;
 }
 
 #contact-message-title-field {

@@ -11,6 +11,7 @@ namespace WAG.Services.Constants
         public const string TextFileExtension = ".txt";
         public const string AnonymousUser = "Anonymous";
         public const string AdminRole = "Admin";
+        public const string UserRole = "User";
         public const string AdminArea = "Administration";
         public const string BGArea = "BG";
         public const string BioDirectoryPath = @"wwwroot\Bio\";
