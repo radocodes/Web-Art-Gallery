@@ -95,6 +95,11 @@ namespace WAG.Services
         {
             var artWork = GetArtisticWorkById(id);
 
+            if (artWork == null)
+            {
+                return null;
+            }
+
             var viewModel = new EditArtWorkViewModel()
             {
                 Year = artWork.Year,

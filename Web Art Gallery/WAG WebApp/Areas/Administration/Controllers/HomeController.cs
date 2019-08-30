@@ -34,12 +34,22 @@ namespace WAG.WebApp.Areas.Administration.Controllers
         {
             messageDetailsViewModel.Message = this.HomeService.GetContactMessageById(id);
 
+            if (messageDetailsViewModel.Message == null)
+            {
+                return RedirectToAction("Messages", "Home", new { area = "Administration" });
+            }
+
             return this.View(messageDetailsViewModel);
         }
         
         [HttpPost]
         public IActionResult DeleteContactMessage(int id)
         {
+            if (this.HomeService.GetContactMessageById(id) == null)
+            {
+                return RedirectToAction("Messages", "Home", new { area = "Administration" });
+            }
+
             this.HomeService.DeleteContactMessage(id);
 
             return RedirectToAction("Messages", "Home", new { area = "Administration" });

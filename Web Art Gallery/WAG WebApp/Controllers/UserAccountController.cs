@@ -133,7 +133,7 @@ namespace WAG.WebApp.Controllers
 
             this.UserAccountService.EditUserProfile(currUser, editUserProfileInputViewModel);
 
-            return RedirectToAction("Success", "Home", new { area = "" });
+            return RedirectToAction("Success", "Home");
         }
 
         public IActionResult ChangePassword()
@@ -153,7 +153,7 @@ namespace WAG.WebApp.Controllers
 
             this.UserAccountService.ChangePassword(currUser, changePasswordViewModel.CurrPassword, changePasswordViewModel.NewPassword);
             
-            return RedirectToAction("Success", "Home", new { area = "" });
+            return RedirectToAction("Success", "Home");
         }
     }
 }

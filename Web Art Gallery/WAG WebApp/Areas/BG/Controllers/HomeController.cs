@@ -64,7 +64,7 @@ namespace WAG.WebApp.Areas.BG.Controllers
 
             this.HomeService.SaveContactMessage(contactMessageViewModel, userId);
 
-            return RedirectToAction("Success", "Home", new { area = "BG" });
+            return RedirectToAction("Success", "Home");
         }
 
         public IActionResult Privacy()

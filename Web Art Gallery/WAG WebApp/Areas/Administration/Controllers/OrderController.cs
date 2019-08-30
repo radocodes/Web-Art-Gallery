@@ -37,6 +37,11 @@ namespace WAG.WebApp.Areas.Administration.Controllers
         [HttpPost]
         public IActionResult DeleteOrder(int id)
         {
+            if (this.OrderService.GetOrderById(id) == null)
+            {
+                return RedirectToAction("AllOrders", "Order", new { area = "Administration" });
+            }
+
             this.OrderService.DeleteOrder(id);
 
             return RedirectToAction("Success", "Home", new { area = "" });
@@ -45,6 +50,11 @@ namespace WAG.WebApp.Areas.Administration.Controllers
         public IActionResult OrderDetails(int id, OrderDetailsViewModel orderDetailsViewModel)
         {
             orderDetailsViewModel.Order = this.OrderService.GetOrderById(id);
+
+            if (orderDetailsViewModel.Order == null)
+            {
+                return RedirectToAction("AllOrders", "Order", new { area = "Administration" });
+            }
 
             if (orderDetailsViewModel.Order.ArtisticWorkId != null)
             {

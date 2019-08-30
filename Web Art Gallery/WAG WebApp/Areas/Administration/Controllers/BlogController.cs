@@ -35,6 +35,11 @@ namespace WAG.WebApp.Areas.Administration.Controllers
         {
             var articleToEdit = this.BlogService.GetArticle(id);
 
+            if (articleToEdit == null)
+            {
+                return RedirectToAction("Index", "Blog", new { area = "" });
+            }
+
             var editArticleViewModel = new EditArticleViewModel
             {
                 Title = articleToEdit.Title,
@@ -52,6 +57,11 @@ namespace WAG.WebApp.Areas.Administration.Controllers
             {
                 return this.View(editArticleViewModel);
             }
+            
+            if (this.BlogService.GetArticle(id) == null)
+            {
+                return RedirectToAction("Index", "Blog", new { area = "" });
+            }
 
             this.BlogService.EditArticle(id, editArticleViewModel);
 
@@ -62,12 +72,22 @@ namespace WAG.WebApp.Areas.Administration.Controllers
         {
             deleteArticleViewModel.Article = this.BlogService.GetArticle(id);
 
+            if (deleteArticleViewModel.Article == null)
+            {
+                return RedirectToAction("Index", "Blog", new { area = "" });
+            }
+
             return this.View(deleteArticleViewModel);
         }
 
         [HttpPost]
         public IActionResult DeleteArticle(int id)
         {
+            if (this.BlogService.GetArticle(id) == null)
+            {
+                return RedirectToAction("Index", "Blog", new { area = "" });
+            }
+            
             this.BlogService.DeleteArticle(id);
 
             return RedirectToAction("Success", "Home", new { area = "" });

@@ -24,16 +24,16 @@ namespace WAG.WebApp.Controllers
         {
             var artWorkViewModel = new ArtWorkCollectionViewModel()
             {
-                ArtWorkCollection = ArtisticWorkService.GetArtWorksByCategoryId(id),
-                ArtWorkCategory = ArtisticWorkService.GetCategoryById(id)
+                ArtWorkCollection = this.ArtisticWorkService.GetArtWorksByCategoryId(id),
+                ArtWorkCategory = this.ArtisticWorkService.GetCategoryById(id),
             };
 
-            return View(artWorkViewModel);
-        }
+            if (artWorkViewModel.ArtWorkCollection == null || artWorkViewModel.ArtWorkCategory == null)
+            {
+                return RedirectToAction("Categories", "ArtisticWork");
+            }
 
-        public IActionResult CatalogAll()
-        {
-            return View();
+            return View(artWorkViewModel);
         }
 
         public IActionResult ArtWorkDetails(int id)
@@ -41,6 +41,12 @@ namespace WAG.WebApp.Controllers
             var viewModel = new ArtWorkDetailsViewModel();
 
             viewModel.ArtisticWork = ArtisticWorkService.GetArtisticWorkById(id);
+
+            if (viewModel.ArtisticWork == null)
+            {
+                return RedirectToAction("Categories", "ArtisticWork");
+            }
+
             viewModel.ArtisticWork.ArtisticWorkCategory = ArtisticWorkService.GetCategoryById(viewModel.ArtisticWork.ArtisticWorkCategoryId);
 
             return View(viewModel);

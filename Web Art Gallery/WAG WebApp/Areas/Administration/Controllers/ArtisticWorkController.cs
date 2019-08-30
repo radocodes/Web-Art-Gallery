@@ -47,12 +47,22 @@ namespace WAG.WebApp.Areas.Administration.Controllers
         {
             var editArtWorkViewModel = ArtisticWorkService.GetEditArtWorkViewModel(id);
 
+            if (editArtWorkViewModel == null)
+            {
+               return RedirectToAction("Categories", "ArtisticWork", new { area = "" });
+            }
+
             return View(editArtWorkViewModel);
         }
 
         [HttpPost]
         public IActionResult EditArtWork(int id, EditArtWorkViewModel editArtWorkViewModel)
         {
+            if (this.ArtisticWorkService.GetArtisticWorkById(id) == null)
+            {
+                return RedirectToAction("Categories", "ArtisticWork", new { area = "" });
+            };
+
             this.ArtisticWorkService.EditArtWork(id, editArtWorkViewModel);
 
             return RedirectToAction("Categories", "ArtisticWork", new { area = "" });
@@ -62,12 +72,22 @@ namespace WAG.WebApp.Areas.Administration.Controllers
         {
             artWorkDetailsViewModel.ArtisticWork = ArtisticWorkService.GetArtisticWorkById(id);
 
+            if (artWorkDetailsViewModel == null)
+            {
+                return RedirectToAction("Categories", "ArtisticWork", new { area = "" });
+            }
+
             return View(artWorkDetailsViewModel);
         }
 
         [HttpPost]
         public IActionResult DeleteArtWork(int id)
         {
+            if (this.ArtisticWorkService.GetArtisticWorkById(id) == null)
+            {
+                return RedirectToAction("Categories", "ArtisticWork", new { area = "" });
+            };
+
             this.ArtisticWorkService.DeleteArtWork(id);
 
             return RedirectToAction("Index", "Home", new { area = "" });
@@ -102,6 +122,11 @@ namespace WAG.WebApp.Areas.Administration.Controllers
         {
             var currCategory = this.ArtisticWorkService.GetCategoryById(id);
 
+            if (currCategory == null)
+            {
+                return RedirectToAction("Categories", "ArtisticWork", new { area = "" });
+            }
+
             editCategoryViewModel.CategoryId = id;
 
             editCategoryViewModel.CategoryName = currCategory.Name;
@@ -114,6 +139,13 @@ namespace WAG.WebApp.Areas.Administration.Controllers
         [HttpPost]
         public IActionResult EditCategory(int id, EditCategoryInputViewModel editCategoryInputViewModel)
         {
+            var currCategory = this.ArtisticWorkService.GetCategoryById(id);
+
+            if (currCategory == null)
+            {
+                return RedirectToAction("Categories", "ArtisticWork", new { area = "" });
+            }
+
             this.ArtisticWorkService.EditCategory(id, editCategoryInputViewModel);
 
             return RedirectToAction("Success", "Home", new { area = "" });
@@ -121,6 +153,13 @@ namespace WAG.WebApp.Areas.Administration.Controllers
 
         public IActionResult DeleteCategory(int id, DeleteCategoryViewModel deleteCategoryViewModel)
         {
+            var currCategory = this.ArtisticWorkService.GetCategoryById(id);
+
+            if (currCategory == null)
+            {
+                return RedirectToAction("Categories", "ArtisticWork", new { area = "" });
+            }
+
             deleteCategoryViewModel.ArtWorkCategory = this.ArtisticWorkService.GetCategoryById(id);
 
             return this.View(deleteCategoryViewModel);
@@ -129,6 +168,11 @@ namespace WAG.WebApp.Areas.Administration.Controllers
         [HttpPost]
         public IActionResult DeleteCategory(int id)
         {
+            if (this.ArtisticWorkService.GetCategoryById(id) == null)
+            {
+                return RedirectToAction("Categories", "ArtisticWork", new { area = "" });
+            };
+
             this.ArtisticWorkService.DeleteCategory(id);
 
             return RedirectToAction("Success", "Home", new { area = "" });

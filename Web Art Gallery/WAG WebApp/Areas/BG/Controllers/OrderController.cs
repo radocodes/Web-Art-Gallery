@@ -27,6 +27,11 @@ namespace WAG.WebApp.Areas.BG.Controllers
 
         public IActionResult MakeOrder(int id, MakeOrderViewModel makeOrderViewModel)
         {
+            if (this.ArtisticWorkService.GetArtisticWorkById(id) == null)
+            {
+                return RedirectToAction("Categories", "ArtisticWork");
+            }
+
             makeOrderViewModel.ArtWorkId = id;
 
             return this.View(makeOrderViewModel);
@@ -35,11 +40,15 @@ namespace WAG.WebApp.Areas.BG.Controllers
         [HttpPost]
         public IActionResult MakeOrder(MakeOrderViewModel makeOrderViewModel)
         {
+            if (this.ArtisticWorkService.GetArtisticWorkById(makeOrderViewModel.ArtWorkId) == null)
+            {
+                return RedirectToAction("Categories", "ArtisticWork");
+            }
             var currUser = this.UserAccountService.GetCurrentUser(HttpContext);
 
             this.OrderService.SaveOrder(currUser, makeOrderViewModel);
             
-            return RedirectToAction("Success", "Home", new { area = "BG" });
+            return RedirectToAction("Success", "Home");
         }
 
         public IActionResult MyOrders(MyOrdersViewModel myOrdersViewModel)
@@ -58,12 +67,17 @@ namespace WAG.WebApp.Areas.BG.Controllers
 
             var order = this.OrderService.GetOrderById(id);
 
+            if (order == null)
+            {
+                return RedirectToAction("MyOrders", "Order");
+            }
+
             if (order.WAGUserId == currUser.Id)
             {
                 this.OrderService.DeleteOrder(order.Id);
             }
 
-            return RedirectToAction("Success", "Home", new { area = "BG" });
+            return RedirectToAction("Success", "Home");
         }
 
         public IActionResult MakeSpecialOrder()
@@ -83,12 +97,17 @@ namespace WAG.WebApp.Areas.BG.Controllers
 
             this.OrderService.SaveSpecialOrder(currUser, makeSpecialOrderViewModel);
 
-            return RedirectToAction("Success", "Home", new { area = "BG" });
+            return RedirectToAction("Success", "Home");
         }
 
         public IActionResult OrderDetails(int id, OrderDetailsViewModel orderDetailsViewModel)
         {
             orderDetailsViewModel.Order = this.OrderService.GetOrderById(id);
+
+            if (orderDetailsViewModel.Order == null)
+            {
+                return RedirectToAction("MyOrders", "Order");
+            }
 
             if (orderDetailsViewModel.Order.ArtisticWorkId != null )
             {

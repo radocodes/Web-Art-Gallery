@@ -25,22 +25,29 @@ namespace WAG.WebApp.Areas.BG.Controllers
             var artWorkViewModel = new ArtWorkCollectionViewModel()
             {
                 ArtWorkCollection = ArtisticWorkService.GetArtWorksByCategoryId(id),
-                ArtWorkCategory = ArtisticWorkService.GetCategoryById(id)
+                ArtWorkCategory = ArtisticWorkService.GetCategoryById(id),
             };
+
+            if (artWorkViewModel.ArtWorkCollection == null || artWorkViewModel.ArtWorkCategory == null)
+            {
+                return RedirectToAction("Categories", "ArtisticWork");
+            }
 
             return View(artWorkViewModel);
         }
 
-        public IActionResult CatalogAll()
-        {
-            return View();
-        }
-
         public IActionResult ArtWorkDetails(int id)
         {
-            var viewModel = new ArtWorkDetailsViewModel();
+            var viewModel = new ArtWorkDetailsViewModel()
+            {
+                ArtisticWork = ArtisticWorkService.GetArtisticWorkById(id)
+            };
 
-            viewModel.ArtisticWork = ArtisticWorkService.GetArtisticWorkById(id);
+            if (viewModel.ArtisticWork == null)
+            {
+                return RedirectToAction("Categories", "ArtisticWork");
+            }
+
             viewModel.ArtisticWork.ArtisticWorkCategory = ArtisticWorkService.GetCategoryById(viewModel.ArtisticWork.ArtisticWorkCategoryId);
 
             return View(viewModel);

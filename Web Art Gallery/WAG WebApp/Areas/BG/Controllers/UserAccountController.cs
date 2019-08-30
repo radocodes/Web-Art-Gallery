@@ -128,7 +128,7 @@ namespace WAG.WebApp.Areas.BG.Controllers
 
             this.UserAccountService.EditUserProfile(currUser, editUserProfileInputViewModel);
 
-            return RedirectToAction("Success", "Home", new { area = "BG" });
+            return RedirectToAction("Success", "Home");
         }
 
         public IActionResult ChangePassword()
@@ -148,7 +148,7 @@ namespace WAG.WebApp.Areas.BG.Controllers
 
             this.UserAccountService.ChangePassword(currUser, changePasswordViewModel.CurrPassword, changePasswordViewModel.NewPassword);
             
-            return RedirectToAction("Success", "Home", new { area = "BG" });
+            return RedirectToAction("Success", "Home");
         }
     }
 }

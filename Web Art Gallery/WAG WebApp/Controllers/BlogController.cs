@@ -33,6 +33,11 @@ namespace WAG.WebApp.Controllers
         {
             var article = this.BlogService.GetArticle(id);
 
+            if (article == null)
+            {
+                return RedirectToAction("Index", "Blog");
+            }
+
             articleDetailsViewModel.Article = article;
 
             articleDetailsViewModel.ArticleContent = this.BlogService.DownloadArticleContent(article.ArticleContentFileName);
