@@ -72,7 +72,7 @@ namespace WAG.WebApp.Areas.Administration.Controllers
         {
             artWorkDetailsViewModel.ArtisticWork = ArtisticWorkService.GetArtisticWorkById(id);
 
-            if (artWorkDetailsViewModel == null)
+            if (artWorkDetailsViewModel.ArtisticWork == null)
             {
                 return RedirectToAction("Categories", "ArtisticWork", new { area = "" });
             }

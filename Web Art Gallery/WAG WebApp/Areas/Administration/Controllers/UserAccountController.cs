@@ -57,7 +57,7 @@ namespace WAG.WebApp.Areas.Administration.Controllers
         {
             var UserToDelete = this.UserAccountService.GetUserById(id);
 
-            if (User == null)
+            if (UserToDelete == null)
             {
                 return RedirectToAction("AllUsers", "UserAccount");
             }

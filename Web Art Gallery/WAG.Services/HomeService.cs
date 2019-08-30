@@ -67,6 +67,11 @@ namespace WAG.Services
         {
             var message = this.DbContext.ContactMessages.FirstOrDefault(m => m.Id == messageId);
 
+            if (message == null)
+            {
+                return null;
+            }
+
             message.WAGUser = new WAGUser();
 
             if (message.WAGUserId != null)
