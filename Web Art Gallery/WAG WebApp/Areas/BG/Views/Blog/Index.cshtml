@@ -13,41 +13,42 @@
 </header>
 
 <main class="container main-default">
-    <div class="row">
-        @foreach (var article in Model.AllArticles)
-        {
-        <aside class="col-sm-5">
-            @if (article.MainPictureFileName != null)
-            {
-                <img src="~/images/articles/@article.MainPictureFileName" class="blog-index-img">
-            }
-        </aside>
+
+    @foreach (var article in Model.AllArticles)
+    {
+        <div class="row">
+            <aside class="col-sm-5">
+                @if (article.MainPictureFileName != null)
+                {
+                    <img src="~/images/articles/@article.MainPictureFileName" class="blog-index-img">
+                }
+            </aside>
 
             <section class="col-sm-7">
                 <article class="blog-index-article">
                     <div>
-                        <h2>@article.Title</h2>
+                        <h2 style="word-wrap:break-word">@article.Title</h2>
                     </div>
                     <div>
                         <p class="blog-index-info-icons"><i class="far fa-calendar-alt"></i> @article.CreatedOn.ToShortDateString() &ensp; <i class="fas fa-comment-dots"></i> @article.Comments.Count() Коментари</p>
                     </div>
                     <div class="blog-index-article-text-body">
-                            @if (article.ShortDescription.Length < 400)
-                            {
+                        @if (article.ShortDescription.Length < 400)
+                        {
 
-                                @article.ShortDescription
-                            }
-                            else
-                            {
-                                @article.ShortDescription.Substring(0, 400)
-                            }
-                            ...
+                            @article.ShortDescription
+                        }
+                        else
+                        {
+                            @article.ShortDescription.Substring(0, 400)
+                        }
+                        ...
                     </div>
                     <a class="btn btn-default" asp-area="BG" asp-controller="Blog" asp-action="ArticleDetails" asp-route-id="@article.Id">ВИЖ ПОВЕЧЕ</a>
                 </article>
 
             </section>
-        }
-    </div>
+        </div>
+    }
 </main>
 
