@@ -1,4 +1,6 @@
 # Web-Art-Gallery
+[Branch: owner-choice-version]
+
 Web Art Gallery - Web application, personal website of a professional artist for the presentation and sale of his own artworks and customer orders, such as paintings, illustrations and caricatures to order.
 
 http://emaivanova.com
@@ -20,4 +22,3 @@ The web app has administration area, where administrator has the following funct
 When you start the web app, it auto seeds one basic admin user, where you can start to administering:
 - Username: admin
 - Pasword: 123456
-
