@@ -35,7 +35,7 @@ namespace WAG.WebApp
 
             services.AddDbContext<WAGDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("HomeConnection")));
+                    Configuration.GetConnectionString("MasterHomeConnection")));
             services.AddIdentity<WAGUser, IdentityRole>(options =>
             {
                 options.Password.RequireDigit = false;
@@ -55,7 +55,7 @@ namespace WAG.WebApp
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<IHomeService, HomeService>();
             services.AddScoped<IOrderService, OrderService>();
-
+            
             services
                 .AddMvc(
                 options =>
