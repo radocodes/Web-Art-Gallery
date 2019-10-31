@@ -12,6 +12,11 @@ namespace WAG.Services
 {
     public class ArtisticWorkService : IArtisticWorkService
     {
+        private const string AvailableFilter = "available";
+        private const string SoldFilter = "sold";
+        private const string AscendingFilter = "ascending";
+        private const string DescendingFilter = "descending";
+
         private WAGDbContext DbContext;
         private IFileService FileService;
 
@@ -125,6 +130,52 @@ namespace WAG.Services
         public List<ArtisticWork> GetArtWorksByCategoryId(int id)
         {
             var artworks = DbContext.ArtisticWorks.Where(x => x.ArtisticWorkCategoryId == id).OrderByDescending(x => x.Id).ToList();
+
+            return artworks;
+        }
+
+        public List<ArtisticWork> GetArtWorksByCategoryIdAndFilter(int id, string availability, string price)
+        {
+            List<ArtisticWork> artworks;
+
+            if (availability == AvailableFilter)
+            {
+
+                artworks = DbContext
+                .ArtisticWorks
+                .Where(artwork => artwork.ArtisticWorkCategoryId == id && artwork.Availability == true).ToList();
+            }
+
+            else if (availability == SoldFilter)
+            {
+
+                artworks = DbContext
+                .ArtisticWorks
+                .Where(artwork => artwork.ArtisticWorkCategoryId == id && artwork.Availability == false).ToList();
+            }
+
+            else
+            {
+                artworks = DbContext
+                    .ArtisticWorks
+                    .Where(artwork => artwork.ArtisticWorkCategoryId == id)
+                    .ToList();
+            }
+
+            if (price == AscendingFilter)
+            {
+                artworks = artworks.OrderBy(artwork => artwork.Price).ThenByDescending(order => order.Id).ToList();
+            }
+
+            else if (price == DescendingFilter)
+            {
+                artworks = artworks.OrderByDescending(artwork => artwork.Price).ThenByDescending(order => order.Id).ToList();
+            }
+
+            else
+            {
+                artworks.OrderByDescending(order => order.Id);
+            }
 
             return artworks;
         }

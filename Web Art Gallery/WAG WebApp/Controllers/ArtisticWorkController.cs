@@ -20,11 +20,11 @@ namespace WAG.WebApp.Controllers
             return View(categoriesViewModel);
         }
 
-        public IActionResult ArtWorksByCategory(int id)
+        public IActionResult ArtWorksByCategory(int id, string availability, string price)
         {
             var artWorkViewModel = new ArtWorkCollectionViewModel()
             {
-                ArtWorkCollection = this.ArtisticWorkService.GetArtWorksByCategoryId(id),
+                ArtWorkCollection = ArtisticWorkService.GetArtWorksByCategoryIdAndFilter(id, availability, price),
                 ArtWorkCategory = this.ArtisticWorkService.GetCategoryById(id),
             };
 

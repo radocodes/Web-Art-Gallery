@@ -7,7 +7,7 @@
 <header class="container header-default">
     <div class="row">
         <div class="col-12">
-            <h1>Добре дошли в артистичният блог на Ема Иванова</h1>
+            <h1>Добре дошли в артистичния блог на Ема Иванова</h1>
         </div>
     </div>
 </header>
@@ -85,8 +85,9 @@
                 else
                 {
                     <br />
-                    <div>
-                        <p>Please Sign Up or Sign In to make comments</p>
+                    <div class="text-center">
+                        <p>За да коментирате, трябва първо да влезете в профила си</p>
+                        <a class="btn btn-default" asp-controller="UserAccount" asp-action="Login">Login</a> <a class="btn btn-default" asp-controller="UserAccount" asp-action="Register">Sign Up</a>
                     </div>
                 }
             </div>
@@ -111,7 +112,7 @@
 
         articleContent.text("");
         articleContent.append(articlePartBeforeUrl);
-        articleContent.append(`<a href ="${urlMatch}">Click here</a >`);
+        articleContent.append(`<a href ="${urlMatch}">Щракни тук</a >`);
         articleContent.append(articlePartAfterUrl);
 
         //Add Comment

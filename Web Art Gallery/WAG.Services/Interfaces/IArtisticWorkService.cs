@@ -22,6 +22,8 @@ namespace WAG.Services.Interfaces
 
         List<ArtisticWork> GetArtWorksByCategoryId(int id);
 
+        List<ArtisticWork> GetArtWorksByCategoryIdAndFilter(int id, string availability, string price);
+
         ArtisticWork GetArtisticWorkById(int id);
 
         ArtisticWorkCategory GetCategoryById(int id);

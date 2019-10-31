@@ -19,6 +19,13 @@ namespace WAG.WebApp.Controllers
             this.UserAccountService = userAccountService;
         }
 
+        //IndexStart() exists to load start page from "BG" area, but only first time (when access application URL from the begining).
+        //Beacause I did't find better routing approach (Temporary solution).
+        public IActionResult IndexStart()
+        {
+            return RedirectToAction("Index", "Home", new { area = "BG" });
+        }
+
         public IActionResult Index()
         {
             if (this.User.Identity.IsAuthenticated)
@@ -55,7 +62,7 @@ namespace WAG.WebApp.Controllers
             {
                 return this.View(contactMessageViewModel);
             }
-            string userId = null; 
+            string userId = null;
 
             if (User.Identity.IsAuthenticated)
             {

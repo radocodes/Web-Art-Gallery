@@ -35,7 +35,7 @@ namespace WAG.WebApp
 
             services.AddDbContext<WAGDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("MasterHomeConnection")));
+                    Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<WAGUser, IdentityRole>(options =>
             {
                 options.Password.RequireDigit = false;
@@ -55,7 +55,7 @@ namespace WAG.WebApp
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<IHomeService, HomeService>();
             services.AddScoped<IOrderService, OrderService>();
-            
+
             services
                 .AddMvc(
                 options =>
@@ -90,6 +90,7 @@ namespace WAG.WebApp
 
             app.UseMvc(routes =>
             {
+
                 routes.MapRoute(
                   name: "areas",
                   template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
@@ -97,7 +98,8 @@ namespace WAG.WebApp
 
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=IndexStart}/{id?}"
+                    );
             });
         }
     }

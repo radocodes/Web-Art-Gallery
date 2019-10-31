@@ -1,5 +1,10 @@
 ﻿@model WAG.ViewModels.ArtisticWorks.ArtWorkCollectionViewModel
 @{
+    const string AvailableFilter = "available";
+    const string SoldFilter = "sold";
+    const string AscendingFilter = "ascending";
+    const string DescendingFilter = "descending";
+
     ViewData["Title"] = "ArtWorksByCategory";
 }
 
@@ -12,20 +17,79 @@
 </header>
 
 <main class="container main-default">
-    <div class="row">
 
-        <section>
-            @foreach (var artWork in Model.ArtWorkCollection)
-            {
-                <div class="col-sm-4">
-                    <div class="artwork-banner">
-                        <a asp-action="ArtWorkDetails" asp-controller="ArtisticWork" asp-route-id="@artWork.Id">
-                            <div>
-                                <img src="~/images/artWorks/@artWork.PictureFileName" alt="Card image cap" class="artwork-banner-img">
+    <section>
+        <p class="text-center">
+            <a class="btn btn-default" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                Филтрирай...
+            </a>
+        </p>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3" style="width:50%; background-color:#e7e6ed; border-radius:10px">
+                        <form method="get" asp-controller="ArtisticWork" asp-action="ArtWorksByCategory">
+                            <div class="col-sm-6 form-group" style="margin-left:auto; margin-right:auto;">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="availability" id="radio-prod-available-1" value="@AvailableFilter" checked>
+                                    <label class="form-check-label" for="radio-prod-available-1">В наличност</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="availability" id="radio-prod-available-2" value="@SoldFilter">
+                                    <label class="form-check-label" for="radio-prod-available-2">Продадени</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="availability" id="radio-prod-available-3" value="all">
+                                    <label class="form-check-label" for="radio-prod-available-3">Всички</label>
+                                </div>
                             </div>
-                        </a>
+                            <div class="col-sm-6 form-group" style="margin-left:auto; margin-right:auto;">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="price" id="radio-price-1" value="@AscendingFilter" checked>
+                                    <label class="form-check-label" for="radio-price-1">Цена (от ниска към висока)</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="price" id="radio-price-2" value="@DescendingFilter">
+                                    <label class="form-check-label" for="radio-price-2">Цена (от висока към ниска)</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 text-center">
+                                <button type="submit" class="btn btn-info" id="filter-submit-btn">
+                                    Въведи
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="row">
+
+        <section id="artwork-collection">
+            @{
+                var counter = 0;
+
+                @foreach (var artWork in Model.ArtWorkCollection)
+                {
+                    counter += 1;
+
+                    <div class="col-sm-4">
+                        <div class="artwork-banner">
+                            <a asp-action="ArtWorkDetails" asp-controller="ArtisticWork" asp-route-id="@artWork.Id">
+                                <div>
+                                    <img src="~/images/artWorks/@artWork.PictureFileName" alt="Card image cap" class="artwork-banner-img">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    @if (counter % 3 == 0)
+                    {
+                        <div class="clearfix"></div>
+                    }
+                }
             }
         </section>
 
