@@ -11,16 +11,19 @@ let parseUrl = () => {
     let expression = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@@#\/%?=~_|!:,.;]*[-A-Z0-9+&@@#\/%=~_|])/ig;
     let urlMatch = articleContent.text().match(expression);
 
-    let urlMatchStartIndex = articleContent.text().indexOf(urlMatch);
-    let articlePartBeforeUrl = articleContent.text().substring(0, urlMatchStartIndex);
-    let urlAsText = articleContent.text().substring(urlMatchStartIndex, (urlMatchStartIndex + urlMatch.length));
-    let articlePartAfterUrl = articleContent.text().substring((urlMatchStartIndex + urlMatch.toString().length + 1), (articleContent.text().length));
+    if (urlMatch != null) {
+        let urlMatchStartIndex = articleContent.text().indexOf(urlMatch);
+        let articlePartBeforeUrl = articleContent.text().substring(0, urlMatchStartIndex);
+        let urlAsText = articleContent.text().substring(urlMatchStartIndex, (urlMatchStartIndex + urlMatch.length));
+        let articlePartAfterUrl = articleContent.text().substring((urlMatchStartIndex + urlMatch.toString().length + 1), (articleContent.text().length));
 
-    articleContent.text("");
-    articleContent.append(articlePartBeforeUrl);
-    articleContent.append(`<a href ="${urlMatch}">Click here</a >`);
-    articleContent.append(articlePartAfterUrl);
+        articleContent.text("");
+        articleContent.append(articlePartBeforeUrl);
+        articleContent.append(`<a href ="${urlMatch}">Щракни тук</a >`);
+        articleContent.append(articlePartAfterUrl);
+    }
 }
+
 //Add Comment
 let addComment = () => {
     $("#post").on("click", () => {
