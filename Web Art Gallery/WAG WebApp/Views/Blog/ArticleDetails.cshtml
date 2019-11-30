@@ -2,6 +2,11 @@
 
 @{
     ViewData["Title"] = "Blog Article";
+
+    if (Model.ArticleContent == null)
+    {
+        Model.ArticleContent = "This article content was not found.";
+    }
 }
 
 <header class="container header-default">

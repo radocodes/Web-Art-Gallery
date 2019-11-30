@@ -140,9 +140,16 @@ namespace WAG.Services
 
         public string DownloadArticleContent(string fileName)
         {
-            var articleContent = this.FileService.DownloadTextFromFile(GlobalConstants.ArticlesContentDirectoryPath, fileName);
+            if (File.Exists($"{GlobalConstants.ArticlesContentDirectoryPath}{fileName}"))
+            {
+                var articleContent = this.FileService.DownloadTextFromFile(GlobalConstants.ArticlesContentDirectoryPath, fileName);
 
-            return articleContent;
+                return articleContent;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

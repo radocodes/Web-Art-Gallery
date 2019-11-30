@@ -23,6 +23,9 @@
     </environment>
 </head>
 <body>
+    @*this canvas row is needed for js snowflakes*@
+    <canvas id="canvas"></canvas>
+
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -110,5 +113,10 @@
     </environment>
 
     @RenderSection("Scripts", required: false)
+
+    @*JS SnowFlakes*@
+    <script>
+        addSnowFlakes();
+    </script>
 </body>
 </html>

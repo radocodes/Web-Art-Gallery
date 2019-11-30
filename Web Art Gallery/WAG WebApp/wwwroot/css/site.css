@@ -1,6 +1,7 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
 for details on configuring this project to bundle and minify static web assets. */
 
+
 body {
     padding-top: 50px;
     padding-bottom: 20px;
@@ -9,9 +10,12 @@ body {
         /*#e7e6ed;*/
 }
 
+#canvas {
+    position: absolute;
+}
+
 .navbar {
-    background-color: /*#333;*/
-    #1d1435;
+    background-color: darkslategray/*#333;*/
 }
 
 .navbar-button {
@@ -69,7 +73,7 @@ footer {
 }
 
 #footer-icons {
-    background-color: #333; /*#e7e6ed;*/
+    background-color: darkslategray;/*#333;*/ /*#e7e6ed;*/
     font-size: xx-large;
     text-align: center;
     padding-bottom: 2px;
@@ -81,7 +85,7 @@ footer {
 
 #footer-text {
     text-align: center;
-    background-color: #333;
+    background-color: darkslategray;/*#333;*/
     color: #e7e6ed; /*rgb(235, 235, 235);*/
     margin: 0%;
 }
@@ -515,3 +519,5 @@ pre {
     border-color: gray;
     border-radius: 10px;
 }
+
+
