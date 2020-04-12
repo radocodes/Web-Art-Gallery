@@ -15,7 +15,7 @@ body {
 }
 
 .navbar {
-    background-color: darkslategray/*#333;*/
+    background-color: #242d3a; /*#333;*/
 }
 
 .navbar-button {
@@ -73,7 +73,7 @@ footer {
 }
 
 #footer-icons {
-    background-color: darkslategray;/*#333;*/ /*#e7e6ed;*/
+    background-color: #242d3a; /*#264760;*/ /*#333;*/ /*#e7e6ed;*/
     font-size: xx-large;
     text-align: center;
     padding-bottom: 2px;
@@ -85,7 +85,7 @@ footer {
 
 #footer-text {
     text-align: center;
-    background-color: darkslategray;/*#333;*/
+    background-color: #242d3a; /*#333;*/
     color: #e7e6ed; /*rgb(235, 235, 235);*/
     margin: 0%;
 }
@@ -99,7 +99,7 @@ footer {
 }
 
 #about-header {
-    background-color: white;
+    background-color: lightsteelblue;
     margin-top: 0px;
     color: #333;
     font-family: 'Baskerville Old Face';
@@ -107,7 +107,7 @@ footer {
 }
 
 #about-main {
-    background-color: white;
+    background-color: lightsteelblue;
     margin-bottom: 47.6px;
     height: auto;
     min-height: 600px;
@@ -115,7 +115,7 @@ footer {
 
 #biography {
     font-family: Georgia, 'Times New Roman', Times, serif;
-    background-color: white;
+    background-color: lightsteelblue;
     font-size: large;
     border: hidden;
 }
@@ -138,7 +138,7 @@ footer {
 .index-body {
     background-image: url("/images/IndexHome.jpg");
     width: 100%;
-    min-height: 638px;
+    min-height: 800px;/*638px;*/
     height: auto;
     /*border-radius: 15px;*/
     /*margin-top: 15px;*/
@@ -356,14 +356,14 @@ footer {
 }
 
 .header-default {
-    background-color: white;
+    background-color: lightsteelblue;
     margin-top: 0px;
     padding-bottom: 30px;
     text-align: center;
 }
 
 .main-default {
-    background-color: white;
+    background-color: lightsteelblue;
     margin-bottom: 47.6px;
     height: auto;
     min-height: 600px;
@@ -432,7 +432,8 @@ footer {
     margin-left: 45px;
     margin-right: 45px;
     border: none;
-    background-color: white;
+    background-color: lightsteelblue;
+    /*background-color: white;*/
     font-size: medium;
     font-style: italic;
 }
@@ -440,7 +441,8 @@ footer {
 #blog-details-article-content {
     margin-left: 30px;
     margin-right: 30px;
-    background-color: white;
+    background-color: lightsteelblue;
+    /*background-color: white;*/
     border: none;
     font-size: medium;
 }
@@ -519,5 +521,3 @@ pre {
     border-color: gray;
     border-radius: 10px;
 }
-
-

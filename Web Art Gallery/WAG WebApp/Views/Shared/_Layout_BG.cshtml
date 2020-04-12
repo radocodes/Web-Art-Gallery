@@ -23,6 +23,9 @@
     </environment>
 </head>
 <body>
+    @*this canvas row is needed for js snowflakes*@
+    <canvas id="canvas" style="width: 100%;"></canvas>
+
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -67,11 +70,7 @@
 
     <partial name="_CookieConsentPartial" />
 
-    
-
     <div class="body-content">
-        @*this canvas row is needed for js snowflakes*@ 
-        <canvas id="canvas"></canvas>
         @RenderBody()
     </div>
 
@@ -116,8 +115,11 @@
     @RenderSection("Scripts", required: false)
 
     @*JS SnowFlakes*@
-    <script>
-        addSnowFlakes();
-    </script>
+    @if (DateTime.UtcNow.Month > 10 || DateTime.UtcNow.Month < 4)
+    {
+        <script>
+            addSnowFlakes();
+        </script>
+    }
 </body>
 </html>

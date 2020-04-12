@@ -83,42 +83,48 @@ let deleteComment = () => {
 
 //Winter snowflakes at background
 let addSnowFlakes = () => {
-    (function () {
-        var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame ||
-            function (callback) {
-                window.setTimeout(callback, 1000 / 60);
-            };
-        window.requestAnimationFrame = requestAnimationFrame;
-    })();
+    //(function () {
+    //    let requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame ||
+    //        function (callback) {
+    //            window.setTimeout(callback, 1000 / 60);
+    //        };
+    //    window.requestAnimationFrame = requestAnimationFrame;
+    //})();
 
 
-    var flakes = [],
+    let flakes = [],
         canvas = document.getElementById("canvas"),
         ctx = canvas.getContext("2d"),
         flakeCount = 400,
         mX = -100,
         mY = -100
 
+    let body = document.body,
+        html = document.documentElement;
+
+    let height = Math.max(body.scrollHeight, body.offsetHeight,
+        html.clientHeight, html.scrollHeight, html.offsetHeight);
+
     canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.height = height; /*window.innerHeight;*/
 
     function snow() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        for (var i = 0; i < flakeCount; i++) {
-            var flake = flakes[i],
+        for (let i = 0; i < flakeCount; i++) {
+            let flake = flakes[i],
                 x = mX,
                 y = mY,
                 minDist = 150,
                 x2 = flake.x,
                 y2 = flake.y;
 
-            var dist = Math.sqrt((x2 - x) * (x2 - x) + (y2 - y) * (y2 - y)),
+            let dist = Math.sqrt((x2 - x) * (x2 - x) + (y2 - y) * (y2 - y)),
                 dx = x2 - x,
                 dy = y2 - y;
 
             if (dist < minDist) {
-                var force = minDist / (dist * dist),
+                let force = minDist / (dist * dist),
                     xcomp = (x - x2) / dist,
                     ycomp = (y - y2) / dist,
                     deltaV = force / 2;
@@ -165,8 +171,8 @@ let addSnowFlakes = () => {
     }
 
     function init() {
-        for (var i = 0; i < flakeCount; i++) {
-            var x = Math.floor(Math.random() * canvas.width),
+        for (let i = 0; i < flakeCount; i++) {
+            let x = Math.floor(Math.random() * canvas.width),
                 y = Math.floor(Math.random() * canvas.height),
                 size = (Math.random() * 3) + 2,
                 speed = (Math.random() * 1) + 0.5,
@@ -194,8 +200,14 @@ let addSnowFlakes = () => {
     });
 
     window.addEventListener("resize", function () {
+        let body = document.body,
+            html = document.documentElement;
+
+        let height = Math.max(body.scrollHeight, body.offsetHeight,
+            html.clientHeight, html.scrollHeight, html.offsetHeight);
+
         canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        canvas.height = height; /*window.innerHeight;*/
     })
 
     init();

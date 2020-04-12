@@ -10,7 +10,7 @@
 
 <header class="container header-default">
     <div class="row">
-        <div class="col-12">
+        <div class="col-sm-12 col-12">
             <h1>@Model.ArtWorkCategory.Name.ToUpper()</h1>
         </div>
     </div>
@@ -19,15 +19,17 @@
 <main class="container main-default">
 
     <section>
-        <p class="text-center">
-            <a class="btn btn-default" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                Filter...
-            </a>
-        </p>
+        <div class="row text-center">
+            <div class="col-sm-12">
+                <a class="btn btn-default" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    Filter...
+                </a>
+            </div>
+        </div>
         <div class="collapse" id="collapseExample">
             <div class="card card-body">
                 <div class="row">
-                    <div class="col-md-6 col-md-offset-3" style="width:50%; background-color:#e7e6ed; border-radius:10px">
+                    <div class="col-sm-6 col-sm-offset-3" style="width:50%; background-color:#e7e6ed; border-radius:10px">
                         <form method="get" asp-controller="ArtisticWork" asp-action="ArtWorksByCategory">
                             <div class="col-sm-6 form-group" style="margin-left:auto; margin-right:auto;">
                                 <div class="form-check form-check-inline">
@@ -53,7 +55,7 @@
                                     <label class="form-check-label" for="radio-price-2">Price (High to Low)</label>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-12 text-center">
+                            <div class="col-12 col-sm-12 text-center">
                                 <button type="submit" class="btn btn-info" id="filter-submit-btn">
                                     Submit
                                 </button>
