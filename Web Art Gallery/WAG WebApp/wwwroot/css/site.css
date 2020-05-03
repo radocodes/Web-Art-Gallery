@@ -155,6 +155,12 @@ footer {
     /*overflow-wrap:break-word;*/
 }
 
+@media screen and (max-width: 400px) {
+    #index-title {
+        font-size: 65px;
+    }
+}
+
 .index-btn {
     font-size: large;
     background-color: #e7e6ed;
@@ -226,6 +232,7 @@ footer {
 
 #artwork-details-main {
     padding-top: 25px;
+    padding-bottom: 70px;
     background-color: white;
     min-height: 638px;
     height: auto;
