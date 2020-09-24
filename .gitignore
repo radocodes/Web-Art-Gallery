@@ -330,3 +330,5 @@ ASALocalRun/
 .mfractor/
 /Web Art Gallery/WAG WebApp/appsettings.json
 /Web Art Gallery/WAG WebApp/appsettings.json
+/Web Art Gallery/WAG WebApp/appsettings.Development.json
+/Web Art Gallery/WAG WebApp/appsettings.Production.json
