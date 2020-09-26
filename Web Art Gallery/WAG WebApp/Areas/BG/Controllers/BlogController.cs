@@ -38,10 +38,13 @@ namespace WAG.WebApp.Areas.BG.Controllers
                 return RedirectToAction("Index", "Blog");
             }
 
-            articleDetailsViewModel.Article = article;
-
-            articleDetailsViewModel.ArticleContent = this.BlogService.DownloadArticleContent(article.ArticleContent);
-
+            articleDetailsViewModel.ArticleId = article.Id;
+            articleDetailsViewModel.Title = article.Title;
+            articleDetailsViewModel.ShortDescription = article.ShortDescription;
+            articleDetailsViewModel.ArticleContent = article.ArticleContent;
+            articleDetailsViewModel.CreatedOn = article.CreatedOn;
+            articleDetailsViewModel.EditedOn = article.EditedOn;
+            articleDetailsViewModel.MainPictureFileName = article.MainPictureFileName;
             articleDetailsViewModel.Comments = this.CommentService.GetArticleComments(article.Id);
 
             return this.View(articleDetailsViewModel);

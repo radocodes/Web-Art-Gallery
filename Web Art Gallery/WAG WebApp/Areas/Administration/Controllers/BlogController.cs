@@ -44,7 +44,7 @@ namespace WAG.WebApp.Areas.Administration.Controllers
             {
                 Title = articleToEdit.Title,
                 ShortDescription = articleToEdit.ShortDescription,
-                ArticleContent = this.BlogService.DownloadArticleContent(articleToEdit.ArticleContent),
+                ArticleContent = articleToEdit.ArticleContent,
             };
 
             return this.View(editArticleViewModel);
