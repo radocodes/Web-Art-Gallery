@@ -27,7 +27,7 @@ namespace WAG.Services
 
             articleNew.Title = createArticleViewModel.Title;
             articleNew.ShortDescription = createArticleViewModel.ShortDescription;
-            articleNew.ArticleContentFileName = this.UploadArticleContent(createArticleViewModel.ArticleContent);
+            articleNew.ArticleContent = this.UploadArticleContent(createArticleViewModel.ArticleContent);
 
             if (createArticleViewModel.MainPicture != null)
             {
@@ -50,7 +50,7 @@ namespace WAG.Services
             {
                 articleToUpdate.Title = editArticleViewModel.Title;
                 articleToUpdate.ShortDescription = editArticleViewModel.ShortDescription;
-                this.UploadArticleContent(editArticleViewModel.ArticleContent, articleToUpdate.ArticleContentFileName);
+                this.UploadArticleContent(editArticleViewModel.ArticleContent, articleToUpdate.ArticleContent);
 
                 if (editArticleViewModel.MainPicture != null)
                 {
@@ -80,7 +80,7 @@ namespace WAG.Services
 
             if (article != null)
             {
-                var articleContentFileName = article.ArticleContentFileName;
+                var articleContentFileName = article.ArticleContent;
 
                 if (File.Exists($"{GlobalConstants.ArticlesContentDirectoryPath}{articleContentFileName}"))
                 {
