@@ -32,8 +32,8 @@
                 {
                     <img src="~/images/articles/@Model.MainPictureFileName" id="blog-details-img-main" />
                 }
-                <pre id="blog-details-srt-desc">@Model.ShortDescription</pre>
-                <pre id="blog-details-article-content">@Model.ArticleContent</pre>
+                <div id="blog-details-srt-desc">@Html.Raw(Model.ShortDescription)</div>
+                <div id="blog-details-article-content">@Html.Raw(Model.ArticleContent)</div>
                 <br />
             </article>
 
@@ -107,7 +107,7 @@
         let currArticleId = @Model.ArticleId;
 
         //URL parsing from string to anchor-element at article content
-        parseUrl();
+        //parseUrl();
 
         //Add Comment
         addComment();

@@ -36,11 +36,11 @@
                         @if (article.ShortDescription.Length < 400)
                         {
 
-                            @article.ShortDescription
+                            @Html.Raw(article.ShortDescription)
                         }
                         else
                         {
-                            @article.ShortDescription.Substring(0, 400)
+                            @Html.Raw(article.ShortDescription.Substring(0, 400))
                         }
                         ...
                     </div>
