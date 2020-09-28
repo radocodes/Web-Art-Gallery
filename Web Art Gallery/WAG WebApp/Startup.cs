@@ -59,6 +59,7 @@ namespace WAG.WebApp
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<IHomeService, HomeService>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<ICloudinaryService, CloudinaryService>();
 
             services
                 .AddMvc(
