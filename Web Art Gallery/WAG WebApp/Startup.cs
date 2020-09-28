@@ -48,6 +48,10 @@ namespace WAG.WebApp
                 .AddEntityFrameworkStores<WAGDbContext>()
                 .AddDefaultTokenProviders();
 
+            // Additional application configs
+            services.Configure<CloudinaryConfigs>(Configuration.GetSection("CloudinaryAccountCredits"));
+
+            // Application services
             services.AddScoped<IUserAccountService, UserAccountService>();
             services.AddScoped<IArtisticWorkService, ArtisticWorkService>();
             services.AddScoped<IBlogService, BlogService>();
