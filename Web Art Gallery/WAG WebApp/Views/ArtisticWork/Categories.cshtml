@@ -1,13 +1,15 @@
 ﻿@model WAG.ViewModels.ArtisticWorks.ArtWorkCategoriesViewModel
 
 @{
-    ViewData["Title"] = "Categories";
+    ViewData["Title"] = "Artworks Categories";
+
+    Cloudinary cloudinary = Model.Cloudinary;
 }
 
 
 <header class="container header-default">
     <div class="row">
-        <div class="col-12">
+        <div class="col-sm-12 col-12">
             <h1>CATEGORIES</h1>
         </div>
     </div>
@@ -18,22 +20,27 @@
 
         <section>
             @{
-                var loop = 0;
+                var counter = 0;
+
                 @foreach (var category in Model.Categories)
                 {
-                    loop += 1;
-                    @if (loop % 3 == 0)
-                    {
-                        <div class="clearfix"></div>
-                    }
+                    counter += 1;
+
                     <div class="col-sm-4">
                         <div class="category-banner">
                             <a asp-action="ArtWorksByCategory" asp-controller="ArtisticWork" asp-route-id="@category.Id">
-                                <img class="card-img-top" id="category-banner-img" src="~/images/artCategories/@category.MainPictureFileName" alt="Card image cap">
+                                <img class="card-img-top" id="category-banner-img" src="@Html.Raw(cloudinary.Api.UrlImgUp.Secure(true).Format("jpg")
+                             .Transform(new Transformation().Width(350).Quality(100))
+                             .BuildUrl(category.MainPictureFileName))" alt="Card image cap">
                                 <div id="category-banner-name"><b>@category.Name</b></div>
                             </a>
                         </div>
                     </div>
+
+                    @if (counter % 3 == 0)
+                    {
+                        <div class="clearfix"></div>
+                    }
                 }
             }
         </section>

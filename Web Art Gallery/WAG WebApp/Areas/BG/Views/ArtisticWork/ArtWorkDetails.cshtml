@@ -1,6 +1,9 @@
 ﻿@model WAG.ViewModels.ArtisticWorks.ArtWorkDetailsViewModel
 @{
-    ViewData["Title"] = "ArtWorkDetails";
+    ViewData["Title"] = "Творба детайли";
+
+    Cloudinary cloudinary = Model.Cloudinary;
+
     string availability = "Продадена";
     string hasFrame = "Без рамка";
 
@@ -20,7 +23,9 @@
     <div class="row">
 
         <section class="col-sm-9 col-12">
-            <img src="~/images/artWorks/@Model.ArtisticWork.PictureFileName" id="artwork-details-img" alt="Picture of the artwork" />
+            <img src="@Html.Raw(cloudinary.Api.UrlImgUp.Secure(true).Format("jpg")
+                             .Transform(new Transformation().Width(350).Quality(100))
+                             .BuildUrl(Model.ArtisticWork.PictureFileName))" id="artwork-details-img" alt="Picture of the artwork" />
         </section>
 
         <aside class="col-sm-3 col-12" id="artwork-details-info">
@@ -37,12 +42,12 @@
             </p>
             @if (User.Identity.IsAuthenticated && !User.IsInRole("Admin"))
             {
-                <a class="btn btn-success" asp-area="BG" asp-controller="Order" asp-action="MakeOrder" asp-route-id="@Model.ArtisticWork.Id"><i class="fas fa-shopping-cart"></i> Поръчай</a>
+                <a class="btn btn-success" asp-area="BG" asp-controller="Home" asp-action="Contact"><i class="fas fa-shopping-cart"></i> Поръчай</a>
             }
 
             @if (!User.Identity.IsAuthenticated)
             {
-                <a class="btn btn-success" asp-area="BG" asp-controller="UserAccount" asp-action="Login"><i class="fas fa-shopping-cart"></i> Поръчай</a>
+                <a class="btn btn-success" asp-area="BG" asp-controller="Home" asp-action="Contact"><i class="fas fa-shopping-cart"></i> Поръчай</a>
             }
 
             @if (User.IsInRole("Admin"))

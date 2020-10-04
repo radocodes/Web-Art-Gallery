@@ -13,7 +13,7 @@
 
 <header class="container header-default">
     <div class="row">
-        <div class="col-12">
+        <div class="col-sm-12 col-12">
             <h2>Message Details</h2>
         </div>
     </div>
@@ -21,7 +21,7 @@
 
 <main class="container main-default">
     <div class="row">
-        <div class="col-12 text-center">
+        <div class="col-sm-12 col-12 text-center">
             <form method="post" asp-area="Administration" asp-controller="Home" asp-action="DeleteContactMessage" asp-route-id="@Model.Message.Id">
                 <button type="submit" class="btn btn-warning">Delete Message</button>
             </form>

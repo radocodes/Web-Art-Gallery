@@ -4,66 +4,68 @@ using WAG.ViewModels.Order;
 
 namespace WAG.WebApp.Areas.Administration.Controllers
 {
-    public class OrderController : AdministrationController
-    {
-        private IOrderService OrderService;
-        private IUserAccountService UserAccountService;
-        private IArtisticWorkService ArtisticWorkService;
-        
-        public OrderController(IOrderService orderService, IUserAccountService userAccountService, IArtisticWorkService artisticWorkService)
-        {
-            this.OrderService = orderService;
-            this.UserAccountService = userAccountService;
-            this.ArtisticWorkService = artisticWorkService;
-        }
+    //this controller is teporary disabled
 
-        public IActionResult ManageOrders()
-        {
-            return this.View();
-        }
+    //public class OrderController : AdministrationController
+    //{
+    //    private IOrderService OrderService;
+    //    private IUserAccountService UserAccountService;
+    //    private IArtisticWorkService ArtisticWorkService;
 
-        public IActionResult AllOrders(AllOrdersViewModel allOrdersViewModel)
-        {
-            allOrdersViewModel.AllOrders = this.OrderService.GetAllOrders();
+    //    public OrderController(IOrderService orderService, IUserAccountService userAccountService, IArtisticWorkService artisticWorkService)
+    //    {
+    //        this.OrderService = orderService;
+    //        this.UserAccountService = userAccountService;
+    //        this.ArtisticWorkService = artisticWorkService;
+    //    }
 
-            foreach (var order in allOrdersViewModel.AllOrders)
-            {
-                order.WAGUser = this.UserAccountService.GetUserById(order.WAGUserId);
-            }
+    //    public IActionResult ManageOrders()
+    //    {
+    //        return this.View();
+    //    }
 
-            return View(allOrdersViewModel);
-        }
+    //    public IActionResult AllOrders(AllOrdersViewModel allOrdersViewModel)
+    //    {
+    //        allOrdersViewModel.AllOrders = this.OrderService.GetAllOrders();
 
-        [HttpPost]
-        public IActionResult DeleteOrder(int id)
-        {
-            if (this.OrderService.GetOrderById(id) == null)
-            {
-                return RedirectToAction("AllOrders", "Order", new { area = "Administration" });
-            }
+    //        foreach (var order in allOrdersViewModel.AllOrders)
+    //        {
+    //            order.WAGUser = this.UserAccountService.GetUserById(order.WAGUserId);
+    //        }
 
-            this.OrderService.DeleteOrder(id);
+    //        return View(allOrdersViewModel);
+    //    }
 
-            return RedirectToAction("Success", "Home", new { area = "" });
-        }
+    //    [HttpPost]
+    //    public IActionResult DeleteOrder(int id)
+    //    {
+    //        if (this.OrderService.GetOrderById(id) == null)
+    //        {
+    //            return RedirectToAction("AllOrders", "Order", new { area = "Administration" });
+    //        }
 
-        public IActionResult OrderDetails(int id, OrderDetailsViewModel orderDetailsViewModel)
-        {
-            orderDetailsViewModel.Order = this.OrderService.GetOrderById(id);
+    //        this.OrderService.DeleteOrder(id);
 
-            if (orderDetailsViewModel.Order == null)
-            {
-                return RedirectToAction("AllOrders", "Order", new { area = "Administration" });
-            }
+    //        return RedirectToAction("Success", "Home", new { area = "" });
+    //    }
 
-            if (orderDetailsViewModel.Order.ArtisticWorkId != null)
-            {
-                orderDetailsViewModel.Order.ArtisticWork = this.ArtisticWorkService.GetArtisticWorkById(orderDetailsViewModel.Order.ArtisticWorkId.GetValueOrDefault());
-            }
+    //    public IActionResult OrderDetails(int id, OrderDetailsViewModel orderDetailsViewModel)
+    //    {
+    //        orderDetailsViewModel.Order = this.OrderService.GetOrderById(id);
 
-            orderDetailsViewModel.Order.WAGUser = this.UserAccountService.GetUserById(orderDetailsViewModel.Order.WAGUserId);
+    //        if (orderDetailsViewModel.Order == null)
+    //        {
+    //            return RedirectToAction("AllOrders", "Order", new { area = "Administration" });
+    //        }
 
-            return this.View(orderDetailsViewModel);
-        }
-    }
+    //        if (orderDetailsViewModel.Order.ArtisticWorkId != null)
+    //        {
+    //            orderDetailsViewModel.Order.ArtisticWork = this.ArtisticWorkService.GetArtisticWorkById(orderDetailsViewModel.Order.ArtisticWorkId.GetValueOrDefault());
+    //        }
+
+    //        orderDetailsViewModel.Order.WAGUser = this.UserAccountService.GetUserById(orderDetailsViewModel.Order.WAGUserId);
+
+    //        return this.View(orderDetailsViewModel);
+    //    }
+    //}
 }

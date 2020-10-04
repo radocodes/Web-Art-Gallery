@@ -6,7 +6,7 @@
 
 <header class="container header-default">
     <div class="row">
-        <div class="col-12">
+        <div class="col-sm-12 col-12">
             <h2>Edit Biography:</h2>
         </div>
     </div>
@@ -14,12 +14,12 @@
 
 <main class="container main-default">
     <div class="row">
-        <div class="col-12 text-center">
+        <div class="col-sm-12 col-12 text-center">
 
             <article>
                 <form method="post" asp-area="Administration" asp-controller="Home" asp-action="UpdateBiography">
-                    <div class="form-group">
-                        <textarea asp-for="Biography" class="form-control" style="width:900px; height:400px; font-size:large; margin-left:auto; margin-right:auto"></textarea>
+                    <div class="form-group" style="width:900px; height:400px; margin-left:auto; margin-right:auto">
+                        <textarea asp-for="Biography" class="form-control wysiwyg" rows="18"></textarea>
                     </div>
                     <div class="form-group">
                         <button class="btn btn-primary" type="submit">Save</button>

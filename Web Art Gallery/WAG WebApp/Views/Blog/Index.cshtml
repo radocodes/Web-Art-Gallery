@@ -1,12 +1,14 @@
 ﻿@model WAG.ViewModels.Blog.BlogIndexViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Blog";
+
+    Cloudinary cloudinary = Model.Cloudinary;
 }
 
 <header class="container header-default">
     <div class="row">
-        <div class="col-12">
+        <div class="col-sm-12 col-12">
             <h1>Welcome to Ema Ivanova's Artistic Blog</h1>
         </div>
     </div>
@@ -19,7 +21,9 @@
             <aside class="col-sm-5">
                 @if (article.MainPictureFileName != null)
                 {
-                    <img src="~/images/articles/@article.MainPictureFileName" class="blog-index-img">
+                    <img src="@Html.Raw(cloudinary.Api.UrlImgUp.Secure(true).Format("jpg")
+                             .Transform(new Transformation().Width(300).Quality(100))
+                             .BuildUrl(article.MainPictureFileName))" class="blog-index-img">
                 }
             </aside>
 
@@ -35,11 +39,11 @@
                         @if (article.ShortDescription.Length < 400)
                         {
 
-                            @article.ShortDescription
+                            @Html.Raw(article.ShortDescription)
                         }
                         else
                         {
-                            @article.ShortDescription.Substring(0, 400)
+                            @Html.Raw(article.ShortDescription.Substring(0, 400))
                         }
                         ...
                     </div>

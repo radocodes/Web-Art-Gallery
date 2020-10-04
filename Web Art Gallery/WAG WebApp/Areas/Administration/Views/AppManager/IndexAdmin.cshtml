@@ -6,7 +6,7 @@
 
 <header class="container-fluid">
     <div class="row">
-        <div class="col-12">
+        <div class="col-sm-12 col-12">
             <h2 class="text-center">Administrator Panel</h2>
         </div>
     </div>
@@ -14,13 +14,14 @@
 
 <main class="container-fluid">
     <div class="row">
-        <div class="col-12">
+        <div class="col-sm-12 col-12">
             <div class="list-group center-block text-center" style="width:30%">
                 <a asp-area="Administration" asp-controller="ArtisticWork" asp-action="ManageArtWorks" class="list-group-item list-group-item-action">Artworks</a>
                 <a asp-area="Administration" asp-controller="UserAccount" asp-action="ManageUsers" class="list-group-item list-group-item-action">Users</a>
                 <a asp-area="Administration" asp-controller="Blog" asp-action="ManageArticles" class="list-group-item list-group-item-action">Blog Articles</a>
                 <a asp-area="Administration" asp-controller="Home" asp-action="Messages" class="list-group-item list-group-item-action">Messages</a>
-                <a asp-area="Administration" asp-controller="Order" asp-action="ManageOrders" class="list-group-item list-group-item-action">Orders</a>
+                <!-- the following link is teporary disabled-->
+                @*<a asp-area="Administration" asp-controller="Order" asp-action="ManageOrders" class="list-group-item list-group-item-action">Orders</a>*@
                 <a asp-area="Administration" asp-controller="Home" asp-action="EditBiography" class="list-group-item list-group-item-action">Edit Biography</a>
             </div>
         </div>

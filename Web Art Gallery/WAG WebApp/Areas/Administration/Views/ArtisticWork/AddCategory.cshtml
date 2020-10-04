@@ -1,12 +1,31 @@
 ﻿@model WAG.ViewModels.ArtisticWorks.AddCategoryViewModel
+@inject Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnv
 
 @{
     ViewData["Title"] = "AddCategory";
+
+    string webDomainAddress = null;
+
+    if (hostingEnv.EnvironmentName == WAG.Services.Constants.Environments.Production)
+    {
+        webDomainAddress = WAGDomainAddress.ProductionAddress;
+    }
+    else
+    {
+        webDomainAddress = WAGDomainAddress.LocalHost;
+    }
+
+    string generateSignatureEndpoint = $"{webDomainAddress}/Administration/Cloudinary/GenerateSignature";
+
+    Cloudinary cloudinary = Model.Cloudinary;
+    string cloudName = "emaivanova";
+    string apiKey = "767268356668237";
+    string uploadPreset = "ml_default";
 }
 
 <header class="container header-default">
     <div class="row">
-        <div class="col-12">
+        <div class="col-sm-12 col-12">
             <h1 class="text-center">Adding new artwork category</h1>
         </div>
     </div>
@@ -15,7 +34,7 @@
 <main class="container main-default">
     <div class="row">
 
-        <section class="col-12">
+        <section class="col-sm-12 col-12">
             <div class="text-center">
                 <form method="post" enctype="multipart/form-data" asp-area="Administration" asp-controller="ArtisticWork" asp-action="AddCategory">
                     <div class="form-group">
@@ -24,8 +43,9 @@
                         <span asp-validation-for="CategoryName" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Picture"></label>
-                        <input type="file" class="center-block" name="Picture">
+                        <div id="upload_widget" class="cloudinary-button">Upload image file</div>
+                        <input type="hidden" class="form-control" id="imageId" asp-for="@Model.PictureFileName">
+                        <span asp-validation-for="PictureFileName" class="text-danger"></span>
                     </div>
                     <br />
                     <div class="form-group">
@@ -38,4 +58,31 @@
     </div>
 </main>
 
+<script type="text/javascript">
+    // Generate signature for upload operation with Cloudinary widget
+    var generateSignature = function (callback, params_to_sign) {
+        $.ajax({
+            url: "@generateSignatureEndpoint",
+            type: "GET",
+            dataType: "text",
+            data: { data: params_to_sign },
+            complete: function () { console.log("complete") },
+            success: function (signature, textStatus, xhr) { callback(signature); },
+            error: function (xhr, status, error) { console.log(xhr, status, error); }
+        });
+    }
+</script>
+
+<script type="text/javascript">
+    // Open Cloudinary widget and upload media content
+    $('#upload_widget').cloudinary_upload_widget({
+        cloudName: "@cloudName", apiKey: "@apiKey", upload_preset: "@uploadPreset", uploadSignature: generateSignature
+    }, (error, result) => {
+        if (!error && result && result.event === "success") {
+            console.log('Done! Here is the image info: ', result.info);
+            $("#imageId").val(result.info.public_id);
+            console.log($("#imageId").val());
+        }
+    });
+</script>
 

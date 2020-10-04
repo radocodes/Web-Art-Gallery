@@ -1,16 +1,21 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
 for details on configuring this project to bundle and minify static web assets. */
 
+
 body {
     padding-top: 50px;
     padding-bottom: 20px;
     font-family: Georgia, 'Times New Roman', Times, serif;
-    background-color: #e7e6ed;
+    background-color: whitesmoke;
+        /*#e7e6ed;*/
+}
+
+#canvas {
+    position: absolute;
 }
 
 .navbar {
-    background-color: #333;
-    /*#1d1435;*/
+    background-color: #242d3a; /*#333;*/
 }
 
 .navbar-button {
@@ -68,7 +73,7 @@ footer {
 }
 
 #footer-icons {
-    background-color: #333; /*#e7e6ed;*/
+    background-color: #242d3a; /*#264760;*/ /*#333;*/ /*#e7e6ed;*/
     font-size: xx-large;
     text-align: center;
     padding-bottom: 2px;
@@ -80,7 +85,7 @@ footer {
 
 #footer-text {
     text-align: center;
-    background-color: #333;
+    background-color: #242d3a; /*#333;*/
     color: #e7e6ed; /*rgb(235, 235, 235);*/
     margin: 0%;
 }
@@ -94,7 +99,7 @@ footer {
 }
 
 #about-header {
-    background-color: white;
+    background-color: lightsteelblue;
     margin-top: 0px;
     color: #333;
     font-family: 'Baskerville Old Face';
@@ -102,7 +107,7 @@ footer {
 }
 
 #about-main {
-    background-color: white;
+    background-color: lightsteelblue;
     margin-bottom: 47.6px;
     height: auto;
     min-height: 600px;
@@ -110,7 +115,7 @@ footer {
 
 #biography {
     font-family: Georgia, 'Times New Roman', Times, serif;
-    background-color: white;
+    background-color: lightsteelblue;
     font-size: large;
     border: hidden;
 }
@@ -133,7 +138,7 @@ footer {
 .index-body {
     background-image: url("/images/IndexHome.jpg");
     width: 100%;
-    min-height: 638px;
+    min-height: 800px;/*638px;*/
     height: auto;
     /*border-radius: 15px;*/
     /*margin-top: 15px;*/
@@ -148,6 +153,12 @@ footer {
     margin: auto;
     width: auto;
     /*overflow-wrap:break-word;*/
+}
+
+@media screen and (max-width: 400px) {
+    #index-title {
+        font-size: 65px;
+    }
 }
 
 .index-btn {
@@ -183,7 +194,7 @@ footer {
     }
 
 .category-banner {
-    max-width: 300px;
+    max-width:300px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 25px;
@@ -215,12 +226,13 @@ footer {
 
 .artwork-banner-img {
     width: auto;
-    max-width: 300px;
+    /*max-width: 300px;*/
     border-radius: 5px;
 }
 
 #artwork-details-main {
     padding-top: 25px;
+    padding-bottom: 70px;
     background-color: white;
     min-height: 638px;
     height: auto;
@@ -351,14 +363,14 @@ footer {
 }
 
 .header-default {
-    background-color: white;
+    background-color: lightsteelblue;
     margin-top: 0px;
     padding-bottom: 30px;
     text-align: center;
 }
 
 .main-default {
-    background-color: white;
+    background-color: lightsteelblue;
     margin-bottom: 47.6px;
     height: auto;
     min-height: 600px;
@@ -427,7 +439,8 @@ footer {
     margin-left: 45px;
     margin-right: 45px;
     border: none;
-    background-color: white;
+    background-color: lightsteelblue;
+    /*background-color: white;*/
     font-size: medium;
     font-style: italic;
 }
@@ -435,7 +448,8 @@ footer {
 #blog-details-article-content {
     margin-left: 30px;
     margin-right: 30px;
-    background-color: white;
+    background-color: lightsteelblue;
+    /*background-color: white;*/
     border: none;
     font-size: medium;
 }

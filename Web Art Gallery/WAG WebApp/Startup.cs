@@ -35,7 +35,7 @@ namespace WAG.WebApp
 
             services.AddDbContext<WAGDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("HomeConnection")));
+                    Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<WAGUser, IdentityRole>(options =>
             {
                 options.Password.RequireDigit = false;
@@ -48,6 +48,10 @@ namespace WAG.WebApp
                 .AddEntityFrameworkStores<WAGDbContext>()
                 .AddDefaultTokenProviders();
 
+            // Additional application configs
+            services.Configure<CloudinaryConfigs>(Configuration.GetSection("CloudinaryAccountCredits"));
+
+            // Application services
             services.AddScoped<IUserAccountService, UserAccountService>();
             services.AddScoped<IArtisticWorkService, ArtisticWorkService>();
             services.AddScoped<IBlogService, BlogService>();
@@ -55,6 +59,7 @@ namespace WAG.WebApp
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<IHomeService, HomeService>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<ICloudinaryService, CloudinaryService>();
 
             services
                 .AddMvc(
@@ -90,6 +95,7 @@ namespace WAG.WebApp
 
             app.UseMvc(routes =>
             {
+
                 routes.MapRoute(
                   name: "areas",
                   template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
@@ -97,7 +103,8 @@ namespace WAG.WebApp
 
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=IndexStart}/{id?}"
+                    );
             });
         }
     }

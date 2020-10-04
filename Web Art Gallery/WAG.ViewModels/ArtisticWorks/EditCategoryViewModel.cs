@@ -1,4 +1,5 @@
 ﻿
+using CloudinaryDotNet;
 namespace WAG.ViewModels.ArtisticWorks
 {
     public class EditCategoryViewModel
@@ -7,6 +8,8 @@ namespace WAG.ViewModels.ArtisticWorks
         
         public string CategoryName { get; set; }
 
-        public string PictureOld { get; set; }
+        public string PictureFileName { get; set; }
+
+        public Cloudinary Cloudinary { get; set; }
     }
 }

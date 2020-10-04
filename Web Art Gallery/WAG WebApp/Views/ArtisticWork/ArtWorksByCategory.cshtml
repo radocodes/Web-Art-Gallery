@@ -1,33 +1,101 @@
 ﻿@model WAG.ViewModels.ArtisticWorks.ArtWorkCollectionViewModel
 @{
-    ViewData["Title"] = "ArtWorksByCategory";
+    const string AvailableFilter = "available";
+    const string SoldFilter = "sold";
+    const string AscendingFilter = "ascending";
+    const string DescendingFilter = "descending";
+
+    ViewData["Title"] = "Artworks By Category";
+
+    Cloudinary cloudinary = Model.Cloudinary;
 }
 
 <header class="container header-default">
     <div class="row">
-        <div class="col-12">
+        <div class="col-sm-12 col-12">
             <h1>@Model.ArtWorkCategory.Name.ToUpper()</h1>
         </div>
     </div>
 </header>
 
 <main class="container main-default">
-    <div class="row">
 
-        <section>
-            @foreach (var artWork in Model.ArtWorkCollection)
-            {
-                <div class="col-sm-4">
-                    <div class="artwork-banner">
-                        <a asp-action="ArtWorkDetails" asp-controller="ArtisticWork" asp-route-id="@artWork.Id">
-                            <div>
-                                <img src="~/images/artWorks/@artWork.PictureFileName" alt="Card image cap" class="artwork-banner-img">
+    <section class="filter-artworks">
+        <div class="row text-center">
+            <div class="col-sm-12">
+                <a class="btn btn-default" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    Filter...
+                </a>
+            </div>
+        </div>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3" style="width:50%; background-color:#e7e6ed; border-radius:10px">
+                        <form method="get" asp-controller="ArtisticWork" asp-action="ArtWorksByCategory">
+                            <div class="col-sm-6 form-group" style="margin-left:auto; margin-right:auto;">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="availability" id="radio-prod-available-1" value="@AvailableFilter" checked>
+                                    <label class="form-check-label" for="radio-prod-available-1">In Stock</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="availability" id="radio-prod-available-2" value="@SoldFilter">
+                                    <label class="form-check-label" for="radio-prod-available-2">Sold</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="availability" id="radio-prod-available-3" value="all">
+                                    <label class="form-check-label" for="radio-prod-available-3">All</label>
+                                </div>
                             </div>
-                        </a>
+                            <div class="col-sm-6 form-group" style="margin-left:auto; margin-right:auto;">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="price" id="radio-price-1" value="@AscendingFilter" checked>
+                                    <label class="form-check-label" for="radio-price-1">Price (Low to High)</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="price" id="radio-price-2" value="@DescendingFilter">
+                                    <label class="form-check-label" for="radio-price-2">Price (High to Low)</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-12 text-center">
+                                <button type="submit" class="btn btn-info" id="filter-submit-btn">
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="row">
+        <section>
+            @{
+                var counter = 0;
+
+                @foreach (var artWork in Model.ArtWorkCollection)
+                {
+                    counter += 1;
+
+                    <div class="col-sm-4">
+                        <div class="artwork-banner">
+                            <a asp-action="ArtWorkDetails" asp-controller="ArtisticWork" asp-route-id="@artWork.Id">
+                                <div>
+                                    <img src="@Html.Raw(cloudinary.Api.UrlImgUp.Secure(true).Format("jpg")
+                             .Transform(new Transformation().Width(300).Quality(100))
+                             .BuildUrl(artWork.PictureFileName))" alt="Card image cap" class="artwork-banner-img">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    @if (counter % 3 == 0)
+                    {
+                        <div class="clearfix"></div>
+                    }
+                }
             }
         </section>
-
     </div>
 </main>

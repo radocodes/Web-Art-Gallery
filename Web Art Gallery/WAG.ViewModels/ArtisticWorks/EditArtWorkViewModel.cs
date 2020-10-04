@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using CloudinaryDotNet;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using WAG.Data.Models;
 
@@ -26,5 +27,7 @@ namespace WAG.ViewModels.ArtisticWorks
         public string PictureUrl { get; set; }
 
         public List<ArtisticWorkCategory> ExistingCategories { get; set; }
+
+        public Cloudinary Cloudinary { get; set; }
     }
 }

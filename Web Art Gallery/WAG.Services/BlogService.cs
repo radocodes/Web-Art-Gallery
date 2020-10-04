@@ -27,51 +27,29 @@ namespace WAG.Services
 
             articleNew.Title = createArticleViewModel.Title;
             articleNew.ShortDescription = createArticleViewModel.ShortDescription;
-            articleNew.ArticleContentFileName = this.UploadArticleContent(createArticleViewModel.ArticleContent);
-
-            if (createArticleViewModel.MainPicture != null)
-            {
-                var imgFileName = $"{Guid.NewGuid()}{GlobalConstants.JpegFileExtension}";
-
-                articleNew.MainPictureFileName = this.FileService.UploadImageAsync(GlobalConstants.ArticlesImageDirectoryPath, imgFileName, createArticleViewModel.MainPicture).Result;
-            }
-            
+            articleNew.ArticleContent = createArticleViewModel.ArticleContent;
+            articleNew.MainPictureFileName = createArticleViewModel.MainPictureFileName;
             articleNew.CreatedOn = DateTime.UtcNow;
 
             this.DbContext.Articles.Add(articleNew);
             this.DbContext.SaveChanges();
         }
 
-        public void EditArticle(int id, EditArticleViewModel editArticleViewModel)
+        public void EditArticle(EditArticleViewModel editArticleViewModel)
         {
-            var articleToUpdate = this.DbContext.Articles.FirstOrDefault(a => a.Id == id);
+            var articleToUpdate = this.DbContext.Articles.FirstOrDefault(a => a.Id == editArticleViewModel.ArticleId);
 
             if (articleToUpdate != null)
             {
                 articleToUpdate.Title = editArticleViewModel.Title;
                 articleToUpdate.ShortDescription = editArticleViewModel.ShortDescription;
-                this.UploadArticleContent(editArticleViewModel.ArticleContent, articleToUpdate.ArticleContentFileName);
+                articleToUpdate.ArticleContent = editArticleViewModel.ArticleContent;
+                articleToUpdate.EditedOn = DateTime.UtcNow;
+                articleToUpdate.MainPictureFileName = editArticleViewModel.MainPictureFileName;
 
-                if (editArticleViewModel.MainPicture != null)
-                {
-                    var oldImgFileName = this.DbContext.Articles.First(a => a.Id == id).MainPictureFileName;
-
-                    if (File.Exists($"{GlobalConstants.ArticlesImageDirectoryPath}{oldImgFileName}"))
-                    {
-                        File.Delete($"{GlobalConstants.ArticlesImageDirectoryPath}{oldImgFileName}");
-                    }
-
-                    var newImgFileName = $"{Guid.NewGuid()}{GlobalConstants.JpegFileExtension}";
-
-                    this.DbContext.Articles.First(a => a.Id == id).MainPictureFileName = this.FileService.UploadImageAsync(Constants.GlobalConstants.ArticlesImageDirectoryPath, newImgFileName, editArticleViewModel.MainPicture).Result;
-                }
-                
-                this.DbContext.Articles.First(a => a.Id == id).EditedOn = DateTime.UtcNow;
-
+                this.DbContext.Articles.Update(articleToUpdate);
                 this.DbContext.SaveChanges();
-
             }
-            
         }
 
         public void DeleteArticle(int id)
@@ -80,31 +58,6 @@ namespace WAG.Services
 
             if (article != null)
             {
-                var articleContentFileName = article.ArticleContentFileName;
-
-                if (File.Exists($"{GlobalConstants.ArticlesContentDirectoryPath}{articleContentFileName}"))
-                {
-                    File.Delete($"{GlobalConstants.ArticlesContentDirectoryPath}{articleContentFileName}");
-                }
-
-                var articleImgFileName = article.MainPictureFileName;
-
-                if (File.Exists($"{GlobalConstants.ArticlesImageDirectoryPath}{articleImgFileName}"))
-                {
-                    File.Delete($"{GlobalConstants.ArticlesImageDirectoryPath}{articleImgFileName}");
-                }
-
-                if (article.PicturesFileNames != null && article.PicturesFileNames.Count > 0)
-                {
-                    foreach (var picture in article.PicturesFileNames)
-                    {
-                        if (File.Exists($"{GlobalConstants.ArticlesImageDirectoryPath}{picture}"))
-                        {
-                            File.Delete($"{GlobalConstants.ArticlesImageDirectoryPath}{picture}");
-                        }
-                    }
-                }
-
                 this.DbContext.Articles.Remove(article);
                 this.DbContext.SaveChanges();
             }
@@ -140,9 +93,16 @@ namespace WAG.Services
 
         public string DownloadArticleContent(string fileName)
         {
-            var articleContent = this.FileService.DownloadTextFromFile(GlobalConstants.ArticlesContentDirectoryPath, fileName);
+            if (File.Exists($"{GlobalConstants.ArticlesContentDirectoryPath}{fileName}"))
+            {
+                var articleContent = this.FileService.DownloadTextFromFile(GlobalConstants.ArticlesContentDirectoryPath, fileName);
 
-            return articleContent;
+                return articleContent;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

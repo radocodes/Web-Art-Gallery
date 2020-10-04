@@ -7,29 +7,31 @@ namespace WAG.WebApp.Controllers
     public class BlogController : Controller
     {
         private IBlogService BlogService;
-        private IFileService CommonService;
+        private ICloudinaryService cloudinaryService;
         private ICommentService CommentService;
 
-        public BlogController(IBlogService blogService, IFileService commonService, ICommentService commentService)
+        public BlogController(IBlogService blogService, ICloudinaryService cloudinaryService, ICommentService commentService)
         {
             this.BlogService = blogService;
-            this.CommonService = commonService;
+            this.cloudinaryService = cloudinaryService;
             this.CommentService = commentService;
         }
 
-        public IActionResult Index(BlogIndexViewModel blogIndexViewModel)
+        public IActionResult Index(BlogIndexViewModel viewModel)
         {
-            blogIndexViewModel.AllArticles = this.BlogService.GetAllArticles();
+            viewModel.AllArticles = this.BlogService.GetAllArticles();
 
-            foreach (var article in blogIndexViewModel.AllArticles)
+            foreach (var article in viewModel.AllArticles)
             {
                 article.Comments = this.CommentService.GetArticleComments(article.Id);
             }
 
-            return this.View(blogIndexViewModel);
+            viewModel.Cloudinary = this.cloudinaryService.GetCloudinaryInstance();
+
+            return this.View(viewModel);
         }
 
-        public IActionResult ArticleDetails(int id, ArticleDetailsViewModel articleDetailsViewModel)
+        public IActionResult ArticleDetails(int id)
         {
             var article = this.BlogService.GetArticle(id);
 
@@ -38,13 +40,21 @@ namespace WAG.WebApp.Controllers
                 return RedirectToAction("Index", "Blog");
             }
 
-            articleDetailsViewModel.Article = article;
+            var viewModel = new ArticleDetailsViewModel()
+            {
+                ArticleId = article.Id,
+                Title = article.Title,
+                ShortDescription = article.ShortDescription,
+                ArticleContent = article.ArticleContent,
+                CreatedOn = article.CreatedOn,
+                EditedOn = article.EditedOn,
+                MainPictureFileName = article.MainPictureFileName,
+                Comments = this.CommentService.GetArticleComments(article.Id),
 
-            articleDetailsViewModel.ArticleContent = this.BlogService.DownloadArticleContent(article.ArticleContentFileName);
+                Cloudinary = this.cloudinaryService.GetCloudinaryInstance()
+            };
 
-            articleDetailsViewModel.Comments = this.CommentService.GetArticleComments(article.Id);
-
-            return this.View(articleDetailsViewModel);
+            return this.View(viewModel);
         }
     }
 }

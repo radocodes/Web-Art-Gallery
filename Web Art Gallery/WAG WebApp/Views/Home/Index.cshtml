@@ -1,5 +1,5 @@
 ﻿@{
-//ViewData["Title"] = "Gallery";
+    ViewData["Title"] = "Web Gallery";
 }
 
 <div class="container">
@@ -7,7 +7,7 @@
 
         @*Title*@
         <header class="row text-center">
-            <div class="col-12">
+            <div class="col-sm-12 col-12">
                 <div id="index-title">
                     Ema Ivanova Art
                 </div>
@@ -16,28 +16,30 @@
 
         @*buttons*@
         <nav class="row index-btns text-center">
-                <div class="col-12 col-sm-4 index-btn-hover index-btn-wrapper">
-                    <a asp-controller="UserAccount" asp-action="Register">
-                        <div class="index-btn">
-                            Sign Up - it's easy!
-                        </div>
-                    </a>
-                </div>
-                <div class="col-12 col-sm-4 index-btn-hover index-btn-wrapper">
-                    <a asp-controller="ArtisticWork" asp-action="Categories">
-                        <div class="index-btn">
-                            Visit Gallery
-                        </div>
-                    </a>
-                </div>
-                <div class="col-12 col-sm-4 index-btn-hover index-btn-wrapper">
-                    <a asp-area="" asp-controller="Home" asp-action="Contact">
-                        <div class="index-btn">
-                            You have a question? <br /> Contact us here
-                        </div>
-                    </a>
-                </div>
+            <div class="col-12 col-sm-4 index-btn-hover index-btn-wrapper">
+                <a asp-controller="UserAccount" asp-action="Register">
+                    <div class="index-btn">
+                        Sign Up - it's easy!
+                    </div>
+                </a>
+            </div>
+            <div class="col-12 col-sm-4 index-btn-hover index-btn-wrapper">
+                <a asp-controller="ArtisticWork" asp-action="Categories">
+                    <div class="index-btn">
+                        Visit Gallery
+                    </div>
+                </a>
+            </div>
+            <div class="col-12 col-sm-4 index-btn-hover index-btn-wrapper">
+                <a asp-area="" asp-controller="Home" asp-action="Contact">
+                    <div class="index-btn">
+                        You have a question? <br /> Contact us here
+                    </div>
+                </a>
+            </div>
         </nav>
 
     </div>
 </div>
+
+

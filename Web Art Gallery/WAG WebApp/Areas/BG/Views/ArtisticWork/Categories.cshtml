@@ -1,12 +1,14 @@
 ﻿@model WAG.ViewModels.ArtisticWorks.ArtWorkCategoriesViewModel
 
 @{
-    ViewData["Title"] = "Categories";
+    ViewData["Title"] = "Категории творби";
+
+    Cloudinary cloudinary = Model.Cloudinary;
 }
 
 <header class="container header-default">
     <div class="row">
-        <div class="col-12">
+        <div class="col-sm-12 -12">
             <h1>Категории</h1>
         </div>
     </div>
@@ -16,16 +18,29 @@
     <div class="row">
 
         <section>
-            @foreach (var category in Model.Categories)
-            {
-                <div class="col-sm-4">
-                    <div class="category-banner">
-                        <a asp-action="ArtWorksByCategory" asp-controller="ArtisticWork" asp-route-id="@category.Id">
-                            <img class="card-img-top" id="category-banner-img" src="~/images/artCategories/@category.MainPictureFileName" alt="Card image cap">
-                            <div id="category-banner-name"><b>@category.Name</b></div>
-                        </a>
+            @{
+                var counter = 0;
+
+                @foreach (var category in Model.Categories)
+                {
+                    counter += 1;
+
+                    <div class="col-sm-4">
+                        <div class="category-banner">
+                            <a asp-action="ArtWorksByCategory" asp-controller="ArtisticWork" asp-route-id="@category.Id">
+                                <img class="card-img-top" id="category-banner-img" src="@Html.Raw(cloudinary.Api.UrlImgUp.Secure(true).Format("jpg")
+                             .Transform(new Transformation().Width(350).Quality(100))
+                             .BuildUrl(category.MainPictureFileName))" alt="Card image cap">
+                                <div id="category-banner-name"><b>@category.Name</b></div>
+                            </a>
+                        </div>
                     </div>
-                </div>
+
+                    @if (counter % 3 == 0)
+                    {
+                        <div class="clearfix"></div>
+                    }
+                }
             }
         </section>
 

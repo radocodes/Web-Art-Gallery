@@ -5,117 +5,119 @@ using WAG.ViewModels.Order;
 
 namespace WAG.WebApp.Controllers
 {
-    [Authorize]
-    public class OrderController : Controller
-    {
-        private IOrderService OrderService;
-        private IUserAccountService UserAccountService;
-        private IArtisticWorkService ArtisticWorkService;
+    //this controller is teporary disabled
 
-        public OrderController(IOrderService orderService, IUserAccountService userAccountService, IArtisticWorkService artisticWorkService)
-        {
-            this.OrderService = orderService;
-            this.UserAccountService = userAccountService;
-            this.ArtisticWorkService = artisticWorkService;
-        }
+    //[Authorize]
+    //public class OrderController : Controller
+    //{
+    //    private IOrderService OrderService;
+    //    private IUserAccountService UserAccountService;
+    //    private IArtisticWorkService ArtisticWorkService;
 
-        [AllowAnonymous]
-        public IActionResult Index()
-        {
-            return this.View();
-        }
+    //    public OrderController(IOrderService orderService, IUserAccountService userAccountService, IArtisticWorkService artisticWorkService)
+    //    {
+    //        this.OrderService = orderService;
+    //        this.UserAccountService = userAccountService;
+    //        this.ArtisticWorkService = artisticWorkService;
+    //    }
 
-        public IActionResult MakeOrder(int id, MakeOrderViewModel makeOrderViewModel)
-        {
-            if (this.ArtisticWorkService.GetArtisticWorkById(id) == null)
-            {
-                return RedirectToAction("Categories", "ArtisticWork");
-            }
+    //    [AllowAnonymous]
+    //    public IActionResult Index()
+    //    {
+    //        return this.View();
+    //    }
 
-            makeOrderViewModel.ArtWorkId = id;
+    //    public IActionResult MakeOrder(int id, MakeOrderViewModel makeOrderViewModel)
+    //    {
+    //        if (this.ArtisticWorkService.GetArtisticWorkById(id) == null)
+    //        {
+    //            return RedirectToAction("Categories", "ArtisticWork");
+    //        }
 
-            return this.View(makeOrderViewModel);
-        }
+    //        makeOrderViewModel.ArtWorkId = id;
 
-        [HttpPost]
-        public IActionResult MakeOrder(MakeOrderViewModel makeOrderViewModel)
-        {
-            if (this.ArtisticWorkService.GetArtisticWorkById(makeOrderViewModel.ArtWorkId) == null)
-            {
-                return RedirectToAction("Categories", "ArtisticWork");
-            }
+    //        return this.View(makeOrderViewModel);
+    //    }
 
-            var currUser = this.UserAccountService.GetCurrentUser(HttpContext);
+    //    [HttpPost]
+    //    public IActionResult MakeOrder(MakeOrderViewModel makeOrderViewModel)
+    //    {
+    //        if (this.ArtisticWorkService.GetArtisticWorkById(makeOrderViewModel.ArtWorkId) == null)
+    //        {
+    //            return RedirectToAction("Categories", "ArtisticWork");
+    //        }
 
-            this.OrderService.SaveOrder(currUser, makeOrderViewModel);
+    //        var currUser = this.UserAccountService.GetCurrentUser(HttpContext);
+
+    //        this.OrderService.SaveOrder(currUser, makeOrderViewModel);
             
-            return RedirectToAction("Success", "Home");
-        }
+    //        return RedirectToAction("Success", "Home");
+    //    }
 
-        public IActionResult MyOrders(MyOrdersViewModel myOrdersViewModel)
-        {
-            var currUser = this.UserAccountService.GetCurrentUser(HttpContext);
+    //    public IActionResult MyOrders(MyOrdersViewModel myOrdersViewModel)
+    //    {
+    //        var currUser = this.UserAccountService.GetCurrentUser(HttpContext);
 
-            myOrdersViewModel.UserOrders =  this.OrderService.GetUserOrders(currUser.Id);
+    //        myOrdersViewModel.UserOrders =  this.OrderService.GetUserOrders(currUser.Id);
 
-            return this.View(myOrdersViewModel);
-        }
+    //        return this.View(myOrdersViewModel);
+    //    }
 
-        [HttpPost]
-        public IActionResult DeleteOrder(int id)
-        {
-            var currUser = this.UserAccountService.GetCurrentUser(HttpContext);
+    //    [HttpPost]
+    //    public IActionResult DeleteOrder(int id)
+    //    {
+    //        var currUser = this.UserAccountService.GetCurrentUser(HttpContext);
 
-            var order = this.OrderService.GetOrderById(id);
+    //        var order = this.OrderService.GetOrderById(id);
 
-            if (order == null)
-            {
-                return RedirectToAction("MyOrders", "Order");
-            }
+    //        if (order == null)
+    //        {
+    //            return RedirectToAction("MyOrders", "Order");
+    //        }
 
-            if (order.WAGUserId == currUser.Id)
-            {
-                this.OrderService.DeleteOrder(order.Id);
-            }
+    //        if (order.WAGUserId == currUser.Id)
+    //        {
+    //            this.OrderService.DeleteOrder(order.Id);
+    //        }
 
-            return RedirectToAction("Success", "Home");
-        }
+    //        return RedirectToAction("Success", "Home");
+    //    }
 
-        public IActionResult MakeSpecialOrder()
-        {
-            return this.View();
-        }
+    //    public IActionResult MakeSpecialOrder()
+    //    {
+    //        return this.View();
+    //    }
 
-        [HttpPost]
-        public IActionResult MakeSpecialOrder(MakeSpecialOrderViewModel makeSpecialOrderViewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return this.View(makeSpecialOrderViewModel);
-            }
+    //    [HttpPost]
+    //    public IActionResult MakeSpecialOrder(MakeSpecialOrderViewModel makeSpecialOrderViewModel)
+    //    {
+    //        if (!ModelState.IsValid)
+    //        {
+    //            return this.View(makeSpecialOrderViewModel);
+    //        }
 
-            var currUser = this.UserAccountService.GetCurrentUser(HttpContext);
+    //        var currUser = this.UserAccountService.GetCurrentUser(HttpContext);
 
-            this.OrderService.SaveSpecialOrder(currUser, makeSpecialOrderViewModel);
+    //        this.OrderService.SaveSpecialOrder(currUser, makeSpecialOrderViewModel);
 
-            return RedirectToAction("Success", "Home");
-        }
+    //        return RedirectToAction("Success", "Home");
+    //    }
 
-        public IActionResult OrderDetails(int id, OrderDetailsViewModel orderDetailsViewModel)
-        {
-            orderDetailsViewModel.Order = this.OrderService.GetOrderById(id);
+    //    public IActionResult OrderDetails(int id, OrderDetailsViewModel orderDetailsViewModel)
+    //    {
+    //        orderDetailsViewModel.Order = this.OrderService.GetOrderById(id);
 
-            if (orderDetailsViewModel.Order == null)
-            {
-                return RedirectToAction("MyOrders", "Order");
-            }
+    //        if (orderDetailsViewModel.Order == null)
+    //        {
+    //            return RedirectToAction("MyOrders", "Order");
+    //        }
 
-            if (orderDetailsViewModel.Order.ArtisticWorkId != null )
-            {
-                orderDetailsViewModel.Order.ArtisticWork = this.ArtisticWorkService.GetArtisticWorkById(orderDetailsViewModel.Order.ArtisticWorkId.GetValueOrDefault());
-            }
+    //        if (orderDetailsViewModel.Order.ArtisticWorkId != null )
+    //        {
+    //            orderDetailsViewModel.Order.ArtisticWork = this.ArtisticWorkService.GetArtisticWorkById(orderDetailsViewModel.Order.ArtisticWorkId.GetValueOrDefault());
+    //        }
 
-            return this.View(orderDetailsViewModel);
-        }
-    }
+    //        return this.View(orderDetailsViewModel);
+    //    }
+    //}
 }

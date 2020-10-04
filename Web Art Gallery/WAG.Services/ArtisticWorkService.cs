@@ -12,6 +12,11 @@ namespace WAG.Services
 {
     public class ArtisticWorkService : IArtisticWorkService
     {
+        private const string AvailableFilter = "available";
+        private const string SoldFilter = "sold";
+        private const string AscendingFilter = "ascending";
+        private const string DescendingFilter = "descending";
+
         private WAGDbContext DbContext;
         private IFileService FileService;
 
@@ -37,15 +42,9 @@ namespace WAG.Services
                 HasFrame = addArtWorkViewModel.HasFrame,
                 ArtisticWorkCategory = category,
                 Technique = technique,
+                PictureFileName = addArtWorkViewModel.PictureFileName,
                 CreatedOn = DateTime.UtcNow
             };
-
-            string imgFileName = $"{Guid.NewGuid()}{GlobalConstants.JpegFileExtension}";
-
-            if (addArtWorkViewModel.Picture != null)
-            {
-                artWork.PictureFileName = this.FileService.UploadImageAsync(Constants.GlobalConstants.ArtWorksImageDirectoryPath, imgFileName, addArtWorkViewModel.Picture).Result;
-            }
 
             this.DbContext.ArtisticWorks.Add(artWork);
             this.DbContext.SaveChanges();
@@ -65,10 +64,15 @@ namespace WAG.Services
                 artworkToUpdate.Price = editArtWorkViewModel.Price;
                 artworkToUpdate.Availability = editArtWorkViewModel.Availability;
                 artworkToUpdate.HasFrame = editArtWorkViewModel.HasFrame;
+                if (categoryNew != null)
+                {
+                    artworkToUpdate.ArtisticWorkCategory = categoryNew;
+                }
                 artworkToUpdate.ArtisticWorkCategory = categoryNew;
                 artworkToUpdate.Technique = editArtWorkViewModel.Technique;
                 artworkToUpdate.EditedOn = DateTime.UtcNow;
 
+                DbContext.ArtisticWorks.Update(artworkToUpdate);
                 DbContext.SaveChanges();
             }
         }
@@ -79,13 +83,6 @@ namespace WAG.Services
 
             if (artWork != null)
             {
-                var artWorkImgFileName = artWork.PictureFileName;
-
-                if (File.Exists($"{GlobalConstants.ArtWorksImageDirectoryPath}{artWorkImgFileName}"))
-                {
-                    File.Delete($"{GlobalConstants.ArtWorksImageDirectoryPath}{artWorkImgFileName}");
-                }
-
                 this.DbContext.ArtisticWorks.Remove(artWork);
                 this.DbContext.SaveChanges();
             }
@@ -129,6 +126,52 @@ namespace WAG.Services
             return artworks;
         }
 
+        public List<ArtisticWork> GetArtWorksByCategoryIdAndFilter(int id, string availability, string price)
+        {
+            List<ArtisticWork> artworks;
+
+            if (availability == AvailableFilter)
+            {
+
+                artworks = DbContext
+                .ArtisticWorks
+                .Where(artwork => artwork.ArtisticWorkCategoryId == id && artwork.Availability == true).ToList();
+            }
+
+            else if (availability == SoldFilter)
+            {
+
+                artworks = DbContext
+                .ArtisticWorks
+                .Where(artwork => artwork.ArtisticWorkCategoryId == id && artwork.Availability == false).ToList();
+            }
+
+            else
+            {
+                artworks = DbContext
+                    .ArtisticWorks
+                    .Where(artwork => artwork.ArtisticWorkCategoryId == id)
+                    .ToList();
+            }
+
+            if (price == AscendingFilter)
+            {
+                artworks = artworks.OrderBy(artwork => artwork.Price).ThenByDescending(order => order.Id).ToList();
+            }
+
+            else if (price == DescendingFilter)
+            {
+                artworks = artworks.OrderByDescending(artwork => artwork.Price).ThenByDescending(order => order.Id).ToList();
+            }
+
+            else
+            {
+                artworks.OrderByDescending(order => order.Id);
+            }
+
+            return artworks;
+        }
+
         public ArtisticWork GetArtisticWorkById(int id)
         {
             var artWork = DbContext.ArtisticWorks.FirstOrDefault(x => x.Id == id);
@@ -150,56 +193,32 @@ namespace WAG.Services
                 var category = new ArtisticWorkCategory();
 
                 category.Name = addCategoryViewModel.CategoryName;
-
-                if (addCategoryViewModel.Picture != null)
-                {
-                    var imgFileName = $"{Guid.NewGuid()}{GlobalConstants.JpegFileExtension}";
-
-                    category.MainPictureFileName = this.FileService.UploadImageAsync(Constants.GlobalConstants.ArtCategoriesDirectoryPath, imgFileName, addCategoryViewModel.Picture).Result;
-                }
+                category.MainPictureFileName = addCategoryViewModel.PictureFileName;
 
                 this.DbContext.ArtisticWorkCategories.Add(category);
                 this.DbContext.SaveChanges();
             }
         }
 
-        public void EditCategory(int CategoryId, EditCategoryInputViewModel editCategoryInputViewModel)
+        public void EditCategory(EditCategoryViewModel editCategoryViewModel)
         {
-            if (this.DbContext.ArtisticWorkCategories.Any(c => c.Id == CategoryId) && editCategoryInputViewModel.PictureNew != null)
+            ArtisticWorkCategory categoryToEdit = DbContext.ArtisticWorkCategories.FirstOrDefault(c => c.Id == editCategoryViewModel.CategoryId);
+            if (categoryToEdit != null)
             {
-                var imgFileName = $"{Guid.NewGuid()}{GlobalConstants.JpegFileExtension}";
-
-                if (editCategoryInputViewModel.PictureNew != null)
-                {
-                    var oldImageFileName = DbContext.ArtisticWorkCategories.First(c => c.Id == CategoryId).MainPictureFileName;
-
-                    if (File.Exists($"{GlobalConstants.ArtCategoriesDirectoryPath}{oldImageFileName}"))
-                    {
-                        File.Delete($"{GlobalConstants.ArtCategoriesDirectoryPath}{oldImageFileName}");
-                    }
-
-                    var newImageFileName = this.FileService.UploadImageAsync(GlobalConstants.ArtCategoriesDirectoryPath, imgFileName, editCategoryInputViewModel.PictureNew).Result;
-
-                    DbContext.ArtisticWorkCategories.First(c => c.Id == CategoryId).MainPictureFileName = newImageFileName;
-                    DbContext.SaveChanges();
-                }
+                categoryToEdit.MainPictureFileName = editCategoryViewModel.PictureFileName;
+                DbContext.ArtisticWorkCategories.Update(categoryToEdit);
+                DbContext.SaveChanges();
             }
         }
 
+
         public void DeleteCategory(int categoryId)
         {
-            var currCategory = this.DbContext.ArtisticWorkCategories.FirstOrDefault(c => c.Id == categoryId);
+            var categoryToDelete = this.DbContext.ArtisticWorkCategories.FirstOrDefault(c => c.Id == categoryId);
 
-            if (currCategory != null)
+            if (categoryToDelete != null)
             {
-                var categoryImgFileName = currCategory.MainPictureFileName;
-
-                if (File.Exists($"{GlobalConstants.ArtCategoriesDirectoryPath}{categoryImgFileName}"))
-                {
-                    File.Delete($"{GlobalConstants.ArtCategoriesDirectoryPath}{categoryImgFileName}");
-                }
-
-                this.DbContext.ArtisticWorkCategories.Remove(currCategory);
+                this.DbContext.ArtisticWorkCategories.Remove(categoryToDelete);
                 this.DbContext.SaveChanges();
             }
         }

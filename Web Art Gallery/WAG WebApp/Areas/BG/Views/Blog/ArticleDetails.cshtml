@@ -1,34 +1,43 @@
 ﻿@model WAG.ViewModels.Blog.ArticleDetailsViewModel
 
 @{
-    ViewData["Title"] = "ArticleDetails";
+    ViewData["Title"] = "Блог Статия";
+
+    Cloudinary cloudinary = Model.Cloudinary;
+
+    if (Model.ArticleContent == null)
+    {
+        Model.ArticleContent = "Съдържанието на тази статия не е намерено.";
+    }
 }
 
 <header class="container header-default">
     <div class="row">
-        <div class="col-12">
-            <h1>Добре дошли в артистичният блог на Ема Иванова</h1>
+        <div class="col-sm-12 col-12">
+            <h1>Добре дошли в артистичния блог на Ема Иванова</h1>
         </div>
     </div>
 </header>
 
 <main class="container main-default">
     <div class="row">
-        <div class="col-12">
+        <div class="col-sm-12 col-12">
 
             <article>
 
                 <header class="header-default">
-                    <h2>@Model.Article.Title</h2>
+                    <h2>@Model.Title</h2>
                 </header>
 
-                <p class="blog-index-info-icons"><i class="far fa-calendar-alt"></i> @Model.Article.CreatedOn.ToShortDateString() &ensp; <i class="fas fa-comment-dots"></i> @Model.Article.Comments.Count() Коментари</p>
-                @if (Model.Article.MainPictureFileName != null)
+                <p class="blog-index-info-icons"><i class="far fa-calendar-alt"></i> @Model.CreatedOn.ToShortDateString() &ensp; <i class="fas fa-comment-dots"></i> @Model.Comments.Count() Коментари</p>
+                @if (Model.MainPictureFileName != null)
                 {
-                    <img src="~/images/articles/@Model.Article.MainPictureFileName" id="blog-details-img-main" />
+                    <img src="@Html.Raw(cloudinary.Api.UrlImgUp.Secure(true).Format("jpg")
+                             .Transform(new Transformation().Width(1.0).Quality(100))
+                             .BuildUrl(Model.MainPictureFileName))" id="blog-details-img-main" />
                 }
-                <pre id="blog-details-srt-desc">@Model.Article.ShortDescription</pre>
-                <pre id="blog-details-article-content">@Model.ArticleContent</pre>
+                <div id="blog-details-srt-desc">@Html.Raw(Model.ShortDescription)</div>
+                <div id="blog-details-article-content">@Html.Raw(Model.ArticleContent)</div>
                 <br />
             </article>
 
@@ -36,8 +45,8 @@
             {
                 <div id="blog-details-admins-buttons">
                     <h3>Manage the article:</h3>
-                    <a class="btn btn-primary" asp-area="Administration" asp-controller="Blog" asp-action="EditArticle" asp-route-id="@Model.Article.Id">Edit</a>
-                    <a class="btn btn-primary" asp-area="Administration" asp-controller="Blog" asp-action="DeleteArticle" asp-route-id="@Model.Article.Id">Delete</a>
+                    <a class="btn btn-primary" asp-area="Administration" asp-controller="Blog" asp-action="EditArticle" asp-route-id="@Model.ArticleId">Edit</a>
+                    <a class="btn btn-primary" asp-area="Administration" asp-controller="Blog" asp-action="DeleteArticle" asp-route-id="@Model.ArticleId">Delete</a>
                 </div>
             }
             <br />
@@ -85,8 +94,9 @@
                 else
                 {
                     <br />
-                    <div>
-                        <p>Please Sign Up or Sign In to make comments</p>
+                    <div class="text-center">
+                        <p>За да коментирате, трябва първо да влезете в профила си</p>
+                        <a class="btn btn-default" asp-controller="UserAccount" asp-action="Login">Login</a> <a class="btn btn-default" asp-controller="UserAccount" asp-action="Register">Sign Up</a>
                     </div>
                 }
             </div>
@@ -98,10 +108,10 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script>
-        let currArticleId = @Model.Article.Id;
+        let currArticleId = @Model.ArticleId;
 
         //URL parsing from string to anchor-element at article content
-        parseUrl();
+        //parseUrl();
 
         //Add Comment
         addComment();

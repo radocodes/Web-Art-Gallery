@@ -14,13 +14,15 @@ namespace WAG.Services.Interfaces
 
         void AddCategory(AddCategoryViewModel addCategoryViewModel);
 
-        void EditCategory(int CategoryId, EditCategoryInputViewModel editCategoryInputViewModel);
+        void EditCategory(EditCategoryViewModel editCategoryViewModel);
 
         void DeleteCategory(int categoryId);
 
         List<ArtisticWorkCategory> GetArtisticWorkCategories();
 
         List<ArtisticWork> GetArtWorksByCategoryId(int id);
+
+        List<ArtisticWork> GetArtWorksByCategoryIdAndFilter(int id, string availability, string price);
 
         ArtisticWork GetArtisticWorkById(int id);
 

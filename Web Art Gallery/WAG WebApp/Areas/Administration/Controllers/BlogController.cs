@@ -7,26 +7,33 @@ namespace WAG.WebApp.Areas.Administration.Controllers
     public class BlogController : AdministrationController
     {
         private IBlogService BlogService;
+        private ICloudinaryService cloudinaryService;
 
-        public BlogController(IBlogService blogService)
+        public BlogController(IBlogService blogService, ICloudinaryService cloudinaryService)
         {
             this.BlogService = blogService;
+            this.cloudinaryService = cloudinaryService;
         }
 
         public IActionResult CreateArticle()
         {
-            return this.View();
+            var viewModel = new CreateArticleViewModel()
+            {
+                Cloudinary = this.cloudinaryService.GetCloudinaryInstance()
+            };
+
+            return this.View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult CreateArticle(CreateArticleViewModel createArticleViewModel)
+        public IActionResult CreateArticle(CreateArticleViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
-                return this.View(createArticleViewModel);
+                return this.View(viewModel);
             }
 
-            this.BlogService.CreateArticle(createArticleViewModel);
+            this.BlogService.CreateArticle(viewModel);
 
             return RedirectToAction("Success", "Home", new { area = "" });
         }
@@ -40,48 +47,56 @@ namespace WAG.WebApp.Areas.Administration.Controllers
                 return RedirectToAction("Index", "Blog", new { area = "" });
             }
 
-            var editArticleViewModel = new EditArticleViewModel
+            var viewModel = new EditArticleViewModel
             {
+                ArticleId = articleToEdit.Id,
                 Title = articleToEdit.Title,
                 ShortDescription = articleToEdit.ShortDescription,
-                ArticleContent = this.BlogService.DownloadArticleContent(articleToEdit.ArticleContentFileName),
+                ArticleContent = articleToEdit.ArticleContent,
+
+                Cloudinary = this.cloudinaryService.GetCloudinaryInstance()
             };
 
-            return this.View(editArticleViewModel);
+            return this.View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult EditArticle(int id, EditArticleViewModel editArticleViewModel)
+        public IActionResult EditArticle(EditArticleViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
-                return this.View(editArticleViewModel);
+                return this.View(viewModel);
             }
             
-            if (this.BlogService.GetArticle(id) == null)
+            if (this.BlogService.GetArticle(viewModel.ArticleId) == null)
             {
                 return RedirectToAction("Index", "Blog", new { area = "" });
             }
 
-            this.BlogService.EditArticle(id, editArticleViewModel);
+            this.BlogService.EditArticle(viewModel);
 
             return RedirectToAction("Success", "Home", new { area = "" });
         }
 
-        public IActionResult DeleteArticle(int id, DeleteArticleViewModel deleteArticleViewModel)
+        public IActionResult DeleteArticle(int id)
         {
-            deleteArticleViewModel.Article = this.BlogService.GetArticle(id);
+            var viewModel = new DeleteArticleViewModel()
+            {
+                Article = this.BlogService.GetArticle(id)
+            };
 
-            if (deleteArticleViewModel.Article == null)
+            if (viewModel.Article == null)
             {
                 return RedirectToAction("Index", "Blog", new { area = "" });
             }
 
-            return this.View(deleteArticleViewModel);
+            viewModel.Cloudinary = this.cloudinaryService.GetCloudinaryInstance();
+
+            return this.View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult DeleteArticle(int id)
+        public IActionResult DeleteArticlePost(int id)
         {
             if (this.BlogService.GetArticle(id) == null)
             {

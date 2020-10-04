@@ -6,11 +6,33 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Administration\Data\**" />
+    <Compile Remove="Areas\Administration\Models\**" />
+    <Compile Remove="Areas\BG\Data\**" />
+    <Compile Remove="Areas\BG\Models\**" />
+    <Content Remove="Areas\Administration\Data\**" />
+    <Content Remove="Areas\Administration\Models\**" />
+    <Content Remove="Areas\BG\Data\**" />
+    <Content Remove="Areas\BG\Models\**" />
+    <EmbeddedResource Remove="Areas\Administration\Data\**" />
+    <EmbeddedResource Remove="Areas\Administration\Models\**" />
+    <EmbeddedResource Remove="Areas\BG\Data\**" />
+    <EmbeddedResource Remove="Areas\BG\Models\**" />
+    <None Remove="Areas\Administration\Data\**" />
+    <None Remove="Areas\Administration\Models\**" />
+    <None Remove="Areas\BG\Data\**" />
+    <None Remove="Areas\BG\Models\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="CloudinaryDotNet" Version="1.13.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.TagHelpers" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.5" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.10" PrivateAssets="All" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
 
@@ -109,10 +131,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Administration\Data\" />
-    <Folder Include="Areas\Administration\Models\" />
-    <Folder Include="Areas\BG\Data\" />
-    <Folder Include="Areas\BG\Models\" />
     <Folder Include="wwwroot\articles\" />
     <Folder Include="wwwroot\images\artWorks\" />
     <Folder Include="wwwroot\images\articles\" />

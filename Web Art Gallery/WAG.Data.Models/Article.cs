@@ -16,7 +16,7 @@ namespace WAG.Data.Models
 
         public string ShortDescription { get; set; }
 
-        public string ArticleContentFileName { get; set; }
+        public string ArticleContent { get; set; }
 
         public string WAGUserId { get; set; }
 
