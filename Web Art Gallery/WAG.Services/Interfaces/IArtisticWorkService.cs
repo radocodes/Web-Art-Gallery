@@ -14,7 +14,7 @@ namespace WAG.Services.Interfaces
 
         void AddCategory(AddCategoryViewModel addCategoryViewModel);
 
-        void EditCategory(int CategoryId, EditCategoryInputViewModel editCategoryInputViewModel);
+        void EditCategory(EditCategoryViewModel editCategoryViewModel);
 
         void DeleteCategory(int categoryId);
 

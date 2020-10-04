@@ -1,7 +1,10 @@
 ﻿@model WAG.ViewModels.ArtisticWorks.ArtWorkDetailsViewModel
+@inject Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnv
 
 @{
     ViewData["Title"] = "DeleteArtWork";
+
+    Cloudinary cloudinary = Model.Cloudinary;
 }
 
 <header class="container header-default">
@@ -16,7 +19,9 @@
     <div class="row">
 
         <aside class="col-sm-3 col-12 left-panel">
-            <img src="~/images/artWorks//@Model.ArtisticWork.PictureFileName" style="width:200px; padding-bottom:25px" />
+            <img src="@Html.Raw(cloudinary.Api.UrlImgUp.Secure(true).Format("jpg")
+                             .Transform(new Transformation().Width(200).Quality(100))
+                             .BuildUrl(Model.ArtisticWork.PictureFileName))" style="padding-bottom:25px" />
             <div>
                 <p>Year: @Model.ArtisticWork.Year</p>
                 <p>Price: @Model.ArtisticWork.Price</p>

@@ -6,6 +6,8 @@
     const string DescendingFilter = "descending";
 
     ViewData["Title"] = "Artworks By Category";
+
+    Cloudinary cloudinary = Model.Cloudinary;
 }
 
 <header class="container header-default">
@@ -18,7 +20,7 @@
 
 <main class="container main-default">
 
-    <section>
+    <section class="filter-artworks">
         <div class="row text-center">
             <div class="col-sm-12">
                 <a class="btn btn-default" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -68,7 +70,6 @@
     </section>
 
     <div class="row">
-
         <section>
             @{
                 var counter = 0;
@@ -81,7 +82,9 @@
                         <div class="artwork-banner">
                             <a asp-action="ArtWorkDetails" asp-controller="ArtisticWork" asp-route-id="@artWork.Id">
                                 <div>
-                                    <img src="~/images/artWorks/@artWork.PictureFileName" alt="Card image cap" class="artwork-banner-img">
+                                    <img src="@Html.Raw(cloudinary.Api.UrlImgUp.Secure(true).Format("jpg")
+                             .Transform(new Transformation().Width(300).Quality(100))
+                             .BuildUrl(artWork.PictureFileName))" alt="Card image cap" class="artwork-banner-img">
                                 </div>
                             </a>
                         </div>
@@ -94,6 +97,5 @@
                 }
             }
         </section>
-
     </div>
 </main>

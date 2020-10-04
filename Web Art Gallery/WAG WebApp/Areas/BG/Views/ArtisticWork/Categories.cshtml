@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Категории творби";
+
+    Cloudinary cloudinary = Model.Cloudinary;
 }
 
 <header class="container header-default">
@@ -26,7 +28,9 @@
                     <div class="col-sm-4">
                         <div class="category-banner">
                             <a asp-action="ArtWorksByCategory" asp-controller="ArtisticWork" asp-route-id="@category.Id">
-                                <img class="card-img-top" id="category-banner-img" src="~/images/artCategories/@category.MainPictureFileName" alt="Card image cap">
+                                <img class="card-img-top" id="category-banner-img" src="@Html.Raw(cloudinary.Api.UrlImgUp.Secure(true).Format("jpg")
+                             .Transform(new Transformation().Width(350).Quality(100))
+                             .BuildUrl(category.MainPictureFileName))" alt="Card image cap">
                                 <div id="category-banner-name"><b>@category.Name</b></div>
                             </a>
                         </div>

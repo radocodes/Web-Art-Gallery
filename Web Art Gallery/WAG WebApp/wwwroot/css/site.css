@@ -226,7 +226,7 @@ footer {
 
 .artwork-banner-img {
     width: auto;
-    max-width: 300px;
+    /*max-width: 300px;*/
     border-radius: 5px;
 }
 

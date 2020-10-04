@@ -2,6 +2,8 @@
 @{
     ViewData["Title"] = "Artwork Details";
 
+    Cloudinary cloudinary = Model.Cloudinary;
+
     string availability = "Not available";
     string hasFrame = "Without Frame";
 
@@ -28,7 +30,9 @@
     <div class="row">
 
         <section class="col-sm-9 col-12">
-            <img src="~/images/artWorks/@Model.ArtisticWork.PictureFileName" id="artwork-details-img" alt="Picture of the artwork" />
+            <img id="artwork-details-img" alt="Picture of the artwork" src="@Html.Raw(cloudinary.Api.UrlImgUp.Secure(true).Format("jpg")
+                             .Transform(new Transformation().Width(350).Quality(100))
+                             .BuildUrl(Model.ArtisticWork.PictureFileName))" />
         </section>
 
         <aside class="col-sm-3 col-12" id="artwork-details-info">

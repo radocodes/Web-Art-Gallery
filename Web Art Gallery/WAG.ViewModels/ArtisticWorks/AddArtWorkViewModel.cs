@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CloudinaryDotNet;
+using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using WAG.Data.Models;
@@ -27,10 +28,10 @@ namespace WAG.ViewModels.ArtisticWorks
         public string Technique { get; set; }
 
         [Required]
-        public IFormFile Picture { get; set; }
-
-        public string PictureUrl { get; set; }
+        public string PictureFileName { get; set; }
 
         public List<ArtisticWorkCategory> ExistingCategories { get; set; }
+
+        public Cloudinary Cloudinary { get; set; }
     }
 }
