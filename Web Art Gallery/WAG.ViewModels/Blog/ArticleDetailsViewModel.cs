@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CloudinaryDotNet;
+using System;
 using System.Collections.Generic;
 using WAG.Data.Models;
 
@@ -26,5 +27,7 @@ namespace WAG.ViewModels.Blog
         public virtual ICollection<WAG.Data.Models.Comment> Comments { get; set; }
 
         public string MainPictureFileName { get; set; }
+
+        public Cloudinary Cloudinary { get; set; }
     }
 }

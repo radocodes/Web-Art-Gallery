@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "Блог Статия";
 
+    Cloudinary cloudinary = Model.Cloudinary;
+
     if (Model.ArticleContent == null)
     {
         Model.ArticleContent = "Съдържанието на тази статия не е намерено.";
@@ -30,7 +32,9 @@
                 <p class="blog-index-info-icons"><i class="far fa-calendar-alt"></i> @Model.CreatedOn.ToShortDateString() &ensp; <i class="fas fa-comment-dots"></i> @Model.Comments.Count() Коментари</p>
                 @if (Model.MainPictureFileName != null)
                 {
-                    <img src="~/images/articles/@Model.MainPictureFileName" id="blog-details-img-main" />
+                    <img src="@Html.Raw(cloudinary.Api.UrlImgUp.Secure(true).Format("jpg")
+                             .Transform(new Transformation().Width(1.0).Quality(100))
+                             .BuildUrl(Model.MainPictureFileName))" id="blog-details-img-main" />
                 }
                 <div id="blog-details-srt-desc">@Html.Raw(Model.ShortDescription)</div>
                 <div id="blog-details-article-content">@Html.Raw(Model.ArticleContent)</div>

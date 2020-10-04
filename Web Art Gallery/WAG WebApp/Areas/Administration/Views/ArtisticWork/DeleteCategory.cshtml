@@ -31,7 +31,7 @@
                 <h2>Are you sure you want to delete permanently this Category?</h2>
                 <br />
                 <div>
-                    <form method="post" asp-area="Administration" asp-controller="ArtisticWork" asp-action="DeleteCategory" asp-route-id="@Model.ArtWorkCategory.Id">
+                    <form method="post" asp-area="Administration" asp-controller="ArtisticWork" asp-action="DeleteCategoryPost" asp-route-id="@Model.ArtWorkCategory.Id">
                         <button type="submit" class="btn btn-warning">Delete</button>
                     </form>
                 </div>

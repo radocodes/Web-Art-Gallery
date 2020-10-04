@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "DeleteArticle";
+
+    Cloudinary cloudinary = Model.Cloudinary;
 }
 
 <header class="container header-default">
@@ -16,7 +18,9 @@
     <div class="row">
 
         <aside class="col-sm-3 col-12 left-panel">
-            <img src="~/images/articles/@Model.Article.MainPictureFileName" style="width:200px; padding-bottom:25px" />
+            <img src="@Html.Raw(cloudinary.Api.UrlImgUp.Secure(true).Format("jpg")
+                             .Transform(new Transformation().Width(200).Quality(100))
+                             .BuildUrl(Model.Article.MainPictureFileName))" style="padding-bottom:25px" />
             <div>
                 <p>Article Title: @Model.Article.Title</p>
             </div>
@@ -27,7 +31,7 @@
                 <h2>Are you sure you want to delete permanently this Article?</h2>
                 <br />
                 <div>
-                    <form method="post" asp-area="Administration" asp-controller="Blog" asp-action="DeleteArticle" asp-route-id="@Model.Article.Id">
+                    <form method="post" asp-area="Administration" asp-controller="Blog" asp-action="DeleteArticlePost" asp-route-id="@Model.Article.Id">
                         <button type="submit" class="btn btn-warning">Delete</button>
                     </form>
                 </div>

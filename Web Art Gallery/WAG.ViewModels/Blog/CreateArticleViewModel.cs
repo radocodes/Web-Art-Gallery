@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CloudinaryDotNet;
+using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -17,8 +18,10 @@ namespace WAG.ViewModels.Blog
         [Required]
         public string ArticleContent { get; set; }
 
-        public IFormFile MainPicture { get; set; }
+        public string MainPictureFileName { get; set; }
 
-        public ICollection<IFormFile> Pictures { get; set; }
+        public ICollection<string> Pictures { get; set; }
+
+        public Cloudinary Cloudinary { get; set; }
     }
 }

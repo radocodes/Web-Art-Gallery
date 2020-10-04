@@ -8,7 +8,7 @@ namespace WAG.Services.Interfaces
     {
         void CreateArticle(CreateArticleViewModel createArticleViewModel);
 
-        void EditArticle(int id, EditArticleViewModel editArticleInputViewModel);
+        void EditArticle(EditArticleViewModel editArticleInputViewModel);
 
         void DeleteArticle(int id);
 

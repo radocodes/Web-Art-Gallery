@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Blog";
+
+    Cloudinary cloudinary = Model.Cloudinary;
 }
 
 <header class="container header-default">
@@ -19,7 +21,9 @@
             <aside class="col-sm-5">
                 @if (article.MainPictureFileName != null)
                 {
-                    <img src="~/images/articles/@article.MainPictureFileName" class="blog-index-img">
+                    <img src="@Html.Raw(cloudinary.Api.UrlImgUp.Secure(true).Format("jpg")
+                             .Transform(new Transformation().Width(300).Quality(100))
+                             .BuildUrl(article.MainPictureFileName))" class="blog-index-img">
                 }
             </aside>
 
