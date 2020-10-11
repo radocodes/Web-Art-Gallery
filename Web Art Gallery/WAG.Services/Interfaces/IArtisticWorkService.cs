@@ -6,28 +6,26 @@ namespace WAG.Services.Interfaces
 {
     public interface IArtisticWorkService
     {
-        void AddArtWork(AddArtWorkViewModel inputViewModel);
+        void AddArtWork(ArtisticWork artisticWork);
 
-        void EditArtWork(int id, EditArtWorkViewModel editArtWorkViewModel);
+        void EditArtWork(ArtisticWork artWorkUdate);
 
         void DeleteArtWork(int id);
 
-        void AddCategory(AddCategoryViewModel addCategoryViewModel);
+        void AddCategory(ArtisticWorkCategory artWorkCategory);
 
-        void EditCategory(EditCategoryViewModel editCategoryViewModel);
+        void EditCategory(ArtisticWorkCategory artWorkCategory);
 
         void DeleteCategory(int categoryId);
 
-        List<ArtisticWorkCategory> GetArtisticWorkCategories();
+        IEnumerable<ArtisticWorkCategory> GetArtisticWorkCategories();
 
-        List<ArtisticWork> GetArtWorksByCategoryId(int id);
+        IEnumerable<ArtisticWork> GetArtWorksByCategoryId(int id);
 
-        List<ArtisticWork> GetArtWorksByCategoryIdAndFilter(int id, string availability, string price);
+        IEnumerable<ArtisticWork> GetFilteredArtWorksByCategoryId(int id, string availability, string price);
 
         ArtisticWork GetArtisticWorkById(int id);
 
         ArtisticWorkCategory GetCategoryById(int id);
-
-        EditArtWorkViewModel GetEditArtWorkViewModel(int id);
     }
 }
