@@ -103,8 +103,13 @@ namespace WAG.WebApp
 
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=IndexStart}/{id?}"
+                    template: "{controller=Home}/{action=Index}/{id?}"
                     );
+
+                //routes.MapRoute(
+                //    name: "default",
+                //    template: "{controller=Home}/{action=IndexStart}/{id?}"
+                //    );
             });
         }
     }
