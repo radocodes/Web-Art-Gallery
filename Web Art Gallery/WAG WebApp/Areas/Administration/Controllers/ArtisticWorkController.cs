@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using WAG.Data.Models;
 using WAG.Services.Interfaces;
 using WAG.ViewModels.ArtisticWorks;
 
@@ -9,7 +12,8 @@ namespace WAG.WebApp.Areas.Administration.Controllers
         private IArtisticWorkService ArtisticWorkService;
         private ICloudinaryService cloudinaryService;
 
-        public ArtisticWorkController(IArtisticWorkService artisticWorkService, ICloudinaryService cloudinaryService)
+        public ArtisticWorkController(IArtisticWorkService artisticWorkService, ICloudinaryService cloudinaryService, IMapper mapper)
+            : base(mapper)
         {
             this.ArtisticWorkService = artisticWorkService;
             this.cloudinaryService = cloudinaryService;
@@ -22,74 +26,82 @@ namespace WAG.WebApp.Areas.Administration.Controllers
 
         public IActionResult AddArtWork()
         {
-            var addArtWorkViewModel = new AddArtWorkViewModel()
-            {
-                ExistingCategories = this.ArtisticWorkService.GetArtisticWorkCategories()
-            };
+            var viewModel = new AddArtWorkViewModel();
 
-            addArtWorkViewModel.Cloudinary = this.cloudinaryService.GetCloudinaryInstance();
+            var existingArtWorkCategories = this.ArtisticWorkService.GetArtisticWorkCategories();
+            viewModel.ExistingCategories = mapper.Map<IEnumerable<ArtWorkCategoryViewModel>>(existingArtWorkCategories);
 
-            return View(addArtWorkViewModel);
+            viewModel.Cloudinary = this.cloudinaryService.GetCloudinaryInstance();
+
+            return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult AddArtWork(AddArtWorkViewModel addArtWorkViewModel)
+        public IActionResult AddArtWork(AddArtWorkViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
-                addArtWorkViewModel.ExistingCategories = this.ArtisticWorkService.GetArtisticWorkCategories();
+                var existingArtWorkCategories = this.ArtisticWorkService.GetArtisticWorkCategories();
+                viewModel.ExistingCategories = mapper.Map<IEnumerable<ArtWorkCategoryViewModel>>(existingArtWorkCategories);
 
-                return this.View(addArtWorkViewModel);
+                return this.View(viewModel);
             }
 
-            this.ArtisticWorkService.AddArtWork(addArtWorkViewModel);
+            var newArtWork = mapper.Map<ArtisticWork>(viewModel);
+            this.ArtisticWorkService.AddArtWork(newArtWork);
 
             return RedirectToAction("Success", "Home", new { area = "" });
         }
 
         public IActionResult EditArtWork(int id)
         {
-            var editArtWorkViewModel = ArtisticWorkService.GetEditArtWorkViewModel(id);
-
-            if (editArtWorkViewModel == null)
+            ArtisticWork artWorkToEdit = this.ArtisticWorkService.GetArtisticWorkById(id);
+            if (artWorkToEdit == null)
             {
                return RedirectToAction("Categories", "ArtisticWork", new { area = "" });
             }
 
-            editArtWorkViewModel.Cloudinary = this.cloudinaryService.GetCloudinaryInstance();
+            var viewModel = mapper.Map<EditArtWorkViewModel>(artWorkToEdit);
 
-            return View(editArtWorkViewModel);
+            var existingArtWorkCategories = this.ArtisticWorkService.GetArtisticWorkCategories();
+            viewModel.ExistingCategories = mapper.Map<IEnumerable<ArtWorkCategoryViewModel>>(existingArtWorkCategories);
+
+            viewModel.Cloudinary = this.cloudinaryService.GetCloudinaryInstance();
+
+            return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult EditArtWork(int id, EditArtWorkViewModel editArtWorkViewModel)
+        public IActionResult EditArtWork(EditArtWorkViewModel viewModel)
         {
-            if (this.ArtisticWorkService.GetArtisticWorkById(id) == null)
+            if (this.ArtisticWorkService.GetArtisticWorkById(viewModel.Id) == null)
             {
                 return RedirectToAction("Categories", "ArtisticWork", new { area = "" });
             };
 
-            this.ArtisticWorkService.EditArtWork(id, editArtWorkViewModel);
+            ArtisticWork ArtWorkUpdate = mapper.Map<ArtisticWork>(viewModel);
+            this.ArtisticWorkService.EditArtWork(ArtWorkUpdate);
 
             return RedirectToAction("Categories", "ArtisticWork", new { area = "" });
         }
 
-        public IActionResult DeleteArtWork(int id, ArtWorkDetailsViewModel artWorkDetailsViewModel)
+        public IActionResult DeleteArtWork(int id)
         {
-            artWorkDetailsViewModel.ArtisticWork = ArtisticWorkService.GetArtisticWorkById(id);
+            ArtisticWork artWorkToDelete = ArtisticWorkService.GetArtisticWorkById(id);
 
-            if (artWorkDetailsViewModel.ArtisticWork == null)
+            if (artWorkToDelete == null)
             {
                 return RedirectToAction("Categories", "ArtisticWork", new { area = "" });
             }
 
-            artWorkDetailsViewModel.Cloudinary = this.cloudinaryService.GetCloudinaryInstance();
+            var ViewModel = mapper.Map<DeleteArtWorkViewModel>(artWorkToDelete);
+            ViewModel.Cloudinary = this.cloudinaryService.GetCloudinaryInstance();
 
-            return View(artWorkDetailsViewModel);
+            return View(ViewModel);
         }
 
         [HttpPost]
-        public IActionResult DeleteArtWork(int id)
+        public IActionResult DeleteArtWorkPost(int id)
         {
             if (this.ArtisticWorkService.GetArtisticWorkById(id) == null)
             {
@@ -98,37 +110,41 @@ namespace WAG.WebApp.Areas.Administration.Controllers
 
             this.ArtisticWorkService.DeleteArtWork(id);
 
-            return RedirectToAction("Index", "Home", new { area = "" });
+            return RedirectToAction("Success", "Home", new { area = "" });
         }
 
         public IActionResult AddCategory()
         {
-            var addCategoryViewModel = new AddCategoryViewModel() 
+            var viewModel = new AddCategoryViewModel() 
             { 
                 Cloudinary = this.cloudinaryService.GetCloudinaryInstance() 
             };
         
-            return this.View(addCategoryViewModel);
+            return this.View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult AddCategory(AddCategoryViewModel addCategoryViewModel)
+        public IActionResult AddCategory(AddCategoryViewModel ViewModel)
         {
             if (!ModelState.IsValid)
             {
-                return this.View(addCategoryViewModel);
+                return this.View(ViewModel);
             }
 
-            this.ArtisticWorkService.AddCategory(addCategoryViewModel);
+            var newArtWorkCategory = mapper.Map<ArtisticWorkCategory>(ViewModel);
+            this.ArtisticWorkService.AddCategory(newArtWorkCategory);
 
             return RedirectToAction("Success", "Home", new { area = "" });
         }
 
-        public IActionResult AllCategories(ArtWorkCategoriesViewModel artWorkCategoriesViewModel)
+        public IActionResult AllCategories(ArtWorkCategoriesViewModel viewModel)
         {
-            artWorkCategoriesViewModel.Categories = this.ArtisticWorkService.GetArtisticWorkCategories();
+            var existingArtWorkCategories = this.ArtisticWorkService.GetArtisticWorkCategories();
+            viewModel.Categories = mapper.Map<List<ArtWorkCategoryViewModel>>(existingArtWorkCategories);
 
-            return this.View(artWorkCategoriesViewModel);
+            viewModel.Cloudinary = this.cloudinaryService.GetCloudinaryInstance();
+
+            return this.View(viewModel);
         }
 
         public IActionResult EditCategory(int id)
@@ -140,14 +156,8 @@ namespace WAG.WebApp.Areas.Administration.Controllers
                 return RedirectToAction("Categories", "ArtisticWork", new { area = "" });
             }
 
-            var viewModel = new EditCategoryViewModel()
-            {
-                CategoryId = categoryToEdit.Id,
-                CategoryName = categoryToEdit.Name,
-                PictureFileName = categoryToEdit.MainPictureFileName,
-
-                Cloudinary = this.cloudinaryService.GetCloudinaryInstance()
-            };
+            var viewModel = mapper.Map<EditCategoryViewModel>(categoryToEdit);
+            viewModel.Cloudinary = this.cloudinaryService.GetCloudinaryInstance();
 
             return this.View(viewModel);
         }
@@ -162,7 +172,9 @@ namespace WAG.WebApp.Areas.Administration.Controllers
                 return RedirectToAction("Categories", "ArtisticWork", new { area = "" });
             }
 
-            this.ArtisticWorkService.EditCategory(viewModel);
+            var ArtWorkCategoryUpdate = mapper.Map<ArtisticWorkCategory>(viewModel);
+
+            this.ArtisticWorkService.EditCategory(ArtWorkCategoryUpdate);
 
             return RedirectToAction("Success", "Home", new { area = "" });
         }
@@ -177,13 +189,10 @@ namespace WAG.WebApp.Areas.Administration.Controllers
                 return RedirectToAction("Categories", "ArtisticWork", new { area = "" });
             }
 
-            var deleteCategoryViewModel = new DeleteCategoryViewModel()
-            {
-                ArtWorkCategory = this.ArtisticWorkService.GetCategoryById(id),
-                Cloudinary = this.cloudinaryService.GetCloudinaryInstance()
-            };
+            var viewModel = mapper.Map<DeleteCategoryViewModel>(currCategory);
+            viewModel.Cloudinary = this.cloudinaryService.GetCloudinaryInstance();
 
-            return this.View(deleteCategoryViewModel);
+            return this.View(viewModel);
         }
 
         [HttpPost]

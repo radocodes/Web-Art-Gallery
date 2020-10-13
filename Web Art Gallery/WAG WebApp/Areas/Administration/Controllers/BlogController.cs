@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using WAG.Services.Interfaces;
 using WAG.ViewModels.Blog;
 
@@ -9,7 +10,8 @@ namespace WAG.WebApp.Areas.Administration.Controllers
         private IBlogService BlogService;
         private ICloudinaryService cloudinaryService;
 
-        public BlogController(IBlogService blogService, ICloudinaryService cloudinaryService)
+        public BlogController(IBlogService blogService, ICloudinaryService cloudinaryService, IMapper mapper)
+            : base(mapper)
         {
             this.BlogService = blogService;
             this.cloudinaryService = cloudinaryService;
