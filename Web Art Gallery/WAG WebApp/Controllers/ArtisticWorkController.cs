@@ -1,58 +1,68 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using WAG.Services.Interfaces;
 using WAG.ViewModels.ArtisticWorks;
+using WAG.WebApp.Controllers.Common;
 
 namespace WAG.WebApp.Controllers
 {
-    public class ArtisticWorkController : Controller
+    public class ArtisticWorkController : BaseController
     {
         private IArtisticWorkService ArtisticWorkService;
         private ICloudinaryService cloudinaryService;
 
-        public ArtisticWorkController(IArtisticWorkService artisticWorkService, ICloudinaryService cloudinaryService)
+        public ArtisticWorkController(IArtisticWorkService artisticWorkService, ICloudinaryService cloudinaryService, IMapper mapper)
+            : base(mapper)
         {
             this.ArtisticWorkService = artisticWorkService;
             this.cloudinaryService = cloudinaryService;
         }
 
-        public IActionResult Categories(ArtWorkCategoriesViewModel categoriesViewModel)
+        public IActionResult Categories()
         {
-            categoriesViewModel.Categories = ArtisticWorkService.GetArtisticWorkCategories();
-            categoriesViewModel.Cloudinary = this.cloudinaryService.GetCloudinaryInstance();
+            var existingArtWorkCategories = ArtisticWorkService.GetArtisticWorkCategories();
 
-            return View(categoriesViewModel);
+            var viewModel = new ArtWorkCategoriesViewModel();
+            viewModel.Categories = mapper.Map<List<ArtWorkCategoryViewModel>>(existingArtWorkCategories);
+            viewModel.Cloudinary = this.cloudinaryService.GetCloudinaryInstance();
+
+            return View(viewModel);
         }
 
         public IActionResult ArtWorksByCategory(int id, string availability, string price)
         {
-            var artWorkViewModel = new ArtWorkCollectionViewModel()
-            {
-                ArtWorkCollection = ArtisticWorkService.GetArtWorksByCategoryIdAndFilter(id, availability, price),
-                ArtWorkCategory = this.ArtisticWorkService.GetCategoryById(id),
-            };
+            var filteredArtWorks = ArtisticWorkService.GetFilteredArtWorksByCategoryId(id, availability, price);
+            var currentArtWorkCategory = this.ArtisticWorkService.GetCategoryById(id);
 
-            if (artWorkViewModel.ArtWorkCollection == null || artWorkViewModel.ArtWorkCategory == null)
+            if (currentArtWorkCategory == null || filteredArtWorks == null)
             {
                 return RedirectToAction("Categories", "ArtisticWork");
             }
 
-            artWorkViewModel.Cloudinary = this.cloudinaryService.GetCloudinaryInstance();
+            var viewModel = new ArtWorkCollectionViewModel()
+            {
+                ArtWorkCollection = mapper.Map<IEnumerable<ArtWorkByCategoryViewModel>>(filteredArtWorks),
+                ArtWorkCategory = mapper.Map<ArtWorkCategoryViewModel>(currentArtWorkCategory),
+                Cloudinary = this.cloudinaryService.GetCloudinaryInstance()
+            };
 
-            return View(artWorkViewModel);
+            return View(viewModel);
         }
 
         public IActionResult ArtWorkDetails(int id)
         {
-            var viewModel = new ArtWorkDetailsViewModel();
 
-            viewModel.ArtisticWork = ArtisticWorkService.GetArtisticWorkById(id);
-
-            if (viewModel.ArtisticWork == null)
+            var currArtWork = ArtisticWorkService.GetArtisticWorkById(id);
+            if (currArtWork == null)
             {
                 return RedirectToAction("Categories", "ArtisticWork");
             }
+            
+            var currArtWorkCategory = ArtisticWorkService.GetCategoryById(currArtWork.ArtisticWorkCategoryId);
 
-            viewModel.ArtisticWork.ArtisticWorkCategory = ArtisticWorkService.GetCategoryById(viewModel.ArtisticWork.ArtisticWorkCategoryId);
+            var viewModel = mapper.Map<ArtWorkDetailsViewModel>(currArtWork);
+            viewModel.ArtWorkCategory = mapper.Map<ArtWorkCategoryViewModel>(currArtWorkCategory);
             viewModel.Cloudinary = this.cloudinaryService.GetCloudinaryInstance();
 
             return View(viewModel);
