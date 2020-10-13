@@ -152,7 +152,9 @@ namespace WAG.Services
             ArtisticWorkCategory ExistingCurrentCategory = this.GetCategoryById(artWorkCategoryUpdate.Id);
             if (ExistingCurrentCategory != null)
             {
-                DbContext.ArtisticWorkCategories.Update(artWorkCategoryUpdate);
+                ExistingCurrentCategory.MainPictureFileName = artWorkCategoryUpdate.MainPictureFileName;
+                DbContext.ArtisticWorkCategories.Update(ExistingCurrentCategory);
+
                 DbContext.SaveChanges();
             }
         }
