@@ -11,6 +11,7 @@ using WAG.Data.Models;
 using WAG.Services.Interfaces;
 using WAG.Services;
 using WAG.WebApp.Middlewares;
+using AutoMapper;
 
 namespace WAG.WebApp
 {
@@ -47,6 +48,8 @@ namespace WAG.WebApp
             })
                 .AddEntityFrameworkStores<WAGDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddAutoMapper(typeof(Startup));
 
             // Additional application configs
             services.Configure<CloudinaryConfigs>(Configuration.GetSection("CloudinaryAccountCredits"));
