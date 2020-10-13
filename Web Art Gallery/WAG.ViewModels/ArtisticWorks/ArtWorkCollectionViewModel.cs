@@ -1,6 +1,5 @@
 ﻿using CloudinaryDotNet;
 using System.Collections.Generic;
-using WAG.Data.Models;
 
 namespace WAG.ViewModels.ArtisticWorks
 {
