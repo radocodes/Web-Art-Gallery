@@ -1,9 +1,8 @@
 # Web-Art-Gallery
-[Branch: owner-choice-version]
 
 Web Art Gallery - Web application, personal website of a professional artist for the presentation and sale of his own artworks, such as paintings, illustrations and caricatures to order.
 
-http://emaivanova.com - **The deployed source code version is located at branch "owner-choice-version" because some differences**
+http://emaivanova.com 
 
 More details:
 - The web app is written by .NET CORE 2.1 ASP MVC, using MS SQL Server and MS Entity Framework.
