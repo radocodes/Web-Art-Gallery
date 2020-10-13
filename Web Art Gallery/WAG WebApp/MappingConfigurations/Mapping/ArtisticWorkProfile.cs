@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using System.Collections.Generic;
 using WAG.Data.Models;
 using WAG.ViewModels.ArtisticWorks;
 
@@ -9,9 +8,24 @@ namespace WAG.WebApp.MappingConfigurations.Mapping
     {
         public ArtisticWorkProfile()
         {
+            // artwork
+
             this.CreateMap<AddArtWorkViewModel, ArtisticWork>()
                 .ForMember(dest => dest.ArtisticWorkCategoryId, opt => opt.MapFrom(src => src.CategoryId));
 
+            this.CreateMap<ArtisticWork, EditArtWorkViewModel>();
+
+            this.CreateMap<EditArtWorkViewModel, ArtisticWork>();
+
+            this.CreateMap<ArtisticWork, ArtWorkDetailsViewModel>();
+
+            this.CreateMap<ArtisticWork, DeleteArtWorkViewModel>();
+
+            this.CreateMap<ArtisticWork, ArtWorkByCategoryViewModel>()
+                .ForMember(dest => dest.ArtWorkId, opt => opt.MapFrom(src => src.Id));
+
+
+            // artwork category
 
             this.CreateMap<ArtisticWorkCategory, ArtWorkCategoryViewModel>();
 
@@ -28,15 +42,14 @@ namespace WAG.WebApp.MappingConfigurations.Mapping
             this.CreateMap<ArtisticWorkCategory, DeleteCategoryViewModel>()
                 .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Id));
 
-            this.CreateMap<ArtisticWork, ArtWorkByCategoryViewModel>()
-                .ForMember(dest => dest.ArtWorkId, opt => opt.MapFrom(src => src.Id));
 
-            this.CreateMap<ArtisticWork, ArtWorkDetailsViewModel>();
 
-            this.CreateMap<ArtisticWork, EditArtWorkViewModel>();
 
-            this.CreateMap<EditArtWorkViewModel, ArtisticWork>();
-            this.CreateMap<ArtisticWork, DeleteArtWorkViewModel>();
+
+
+
+
+
 
             this.CreateMap<AddCategoryViewModel, ArtisticWorkCategory>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.CategoryName))
