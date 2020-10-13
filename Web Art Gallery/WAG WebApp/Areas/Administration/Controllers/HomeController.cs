@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using WAG.Services.Interfaces;
 using WAG.ViewModels.Home;
 
@@ -8,7 +9,8 @@ namespace WAG.WebApp.Areas.Administration.Controllers
     {
         private IHomeService HomeService;
 
-        public HomeController(IHomeService homeService)
+        public HomeController(IHomeService homeService, IMapper mapper)
+            : base(mapper)
         {
             this.HomeService = homeService;
         }

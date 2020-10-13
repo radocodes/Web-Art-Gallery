@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using WAG.Data;
 using WAG.Data.Models;
-using WAG.Services.Constants;
 using WAG.Services.Interfaces;
-using WAG.ViewModels.ArtisticWorks;
 
 namespace WAG.Services
 {
@@ -26,60 +23,39 @@ namespace WAG.Services
             this.FileService = fileService;
         }
 
-        public void AddArtWork(AddArtWorkViewModel addArtWorkViewModel)
+        public void AddArtWork(ArtisticWork newArtWork)
         {
-            var technique = addArtWorkViewModel.Technique;
+            newArtWork.ArtisticWorkCategory = this.DbContext.ArtisticWorkCategories.FirstOrDefault(c => c.Id == newArtWork.ArtisticWorkCategoryId);
+            newArtWork.CreatedOn = DateTime.UtcNow;
 
-            var category = this.DbContext.ArtisticWorkCategories.FirstOrDefault(c => c.Id == addArtWorkViewModel.CategoryId);
-
-            var artWork = new ArtisticWork()
-            {
-                Year = addArtWorkViewModel.Year,
-                Height = addArtWorkViewModel.Height,
-                Width = addArtWorkViewModel.Width,
-                Price = addArtWorkViewModel.Price,
-                Availability = addArtWorkViewModel.Availability,
-                HasFrame = addArtWorkViewModel.HasFrame,
-                ArtisticWorkCategory = category,
-                Technique = technique,
-                PictureFileName = addArtWorkViewModel.PictureFileName,
-                CreatedOn = DateTime.UtcNow
-            };
-
-            this.DbContext.ArtisticWorks.Add(artWork);
+            this.DbContext.ArtisticWorks.Add(newArtWork);
             this.DbContext.SaveChanges();
         }
 
-        public void EditArtWork(int id, EditArtWorkViewModel editArtWorkViewModel)
+        public void EditArtWork(ArtisticWork artWorkUpdate)
         {
-            var categoryNew = DbContext.ArtisticWorkCategories.FirstOrDefault(c => c.Id == editArtWorkViewModel.CategoryId);
+            var existingCurrentArtwork = this.GetArtisticWorkById(artWorkUpdate.Id);
 
-            var artworkToUpdate = this.DbContext.ArtisticWorks.FirstOrDefault(artwork => artwork.Id == id);
-
-            if (artworkToUpdate != null)
+            if (existingCurrentArtwork == null)
             {
-                artworkToUpdate.Year = editArtWorkViewModel.Year;
-                artworkToUpdate.Height = editArtWorkViewModel.Height;
-                artworkToUpdate.Width = editArtWorkViewModel.Width;
-                artworkToUpdate.Price = editArtWorkViewModel.Price;
-                artworkToUpdate.Availability = editArtWorkViewModel.Availability;
-                artworkToUpdate.HasFrame = editArtWorkViewModel.HasFrame;
-                if (categoryNew != null)
-                {
-                    artworkToUpdate.ArtisticWorkCategory = categoryNew;
-                }
-                artworkToUpdate.ArtisticWorkCategory = categoryNew;
-                artworkToUpdate.Technique = editArtWorkViewModel.Technique;
-                artworkToUpdate.EditedOn = DateTime.UtcNow;
-
-                DbContext.ArtisticWorks.Update(artworkToUpdate);
-                DbContext.SaveChanges();
+                return;
             }
+
+            var categoryNew = DbContext.ArtisticWorkCategories.FirstOrDefault(c => c.Id == artWorkUpdate.ArtisticWorkCategoryId);
+            if (categoryNew != null)
+            {
+                artWorkUpdate.ArtisticWorkCategory = categoryNew;
+            }
+
+            artWorkUpdate.EditedOn = DateTime.UtcNow;
+
+            DbContext.ArtisticWorks.Update(artWorkUpdate);
+            DbContext.SaveChanges();
         }
 
         public void DeleteArtWork(int id)
         {
-            var artWork = this.DbContext.ArtisticWorks.FirstOrDefault(p => p.Id == id);
+            var artWork = this.GetArtisticWorkById(id);
 
             if (artWork != null)
             {
@@ -88,45 +64,21 @@ namespace WAG.Services
             }
         }
 
-        public EditArtWorkViewModel GetEditArtWorkViewModel(int id)
-        {
-            var artWork = GetArtisticWorkById(id);
-
-            if (artWork == null)
-            {
-                return null;
-            }
-
-            var viewModel = new EditArtWorkViewModel()
-            {
-                Year = artWork.Year,
-                Height = artWork.Height,
-                Width = artWork.Width,
-                Price = artWork.Price,
-                Availability = artWork.Availability,
-                HasFrame = artWork.HasFrame,
-                Technique = artWork.Technique,
-                ExistingCategories = this.GetArtisticWorkCategories()
-            };
-
-            return viewModel;
-        }
-
-        public List<ArtisticWorkCategory> GetArtisticWorkCategories()
+        public IEnumerable<ArtisticWorkCategory> GetArtisticWorkCategories()
         {
             var categories = this.DbContext.ArtisticWorkCategories.ToList();
 
             return categories;
         }
 
-        public List<ArtisticWork> GetArtWorksByCategoryId(int id)
+        public IEnumerable<ArtisticWork> GetArtWorksByCategoryId(int id)
         {
             var artworks = DbContext.ArtisticWorks.Where(x => x.ArtisticWorkCategoryId == id).OrderByDescending(x => x.Id).ToList();
 
             return artworks;
         }
 
-        public List<ArtisticWork> GetArtWorksByCategoryIdAndFilter(int id, string availability, string price)
+        public IEnumerable<ArtisticWork> GetFilteredArtWorksByCategoryId(int id, string availability, string price)
         {
             List<ArtisticWork> artworks;
 
@@ -186,35 +138,30 @@ namespace WAG.Services
             return category;
         }
 
-        public void AddCategory(AddCategoryViewModel addCategoryViewModel)
+        public void AddCategory(ArtisticWorkCategory newArtWorkCategory)
         {
-            if (!DbContext.ArtisticWorkCategories.Any(x => x.Name == addCategoryViewModel.CategoryName))
+            if (!DbContext.ArtisticWorkCategories.Any(x => x.Name == newArtWorkCategory.Name))
             {
-                var category = new ArtisticWorkCategory();
-
-                category.Name = addCategoryViewModel.CategoryName;
-                category.MainPictureFileName = addCategoryViewModel.PictureFileName;
-
-                this.DbContext.ArtisticWorkCategories.Add(category);
+                this.DbContext.ArtisticWorkCategories.Add(newArtWorkCategory);
                 this.DbContext.SaveChanges();
             }
         }
 
-        public void EditCategory(EditCategoryViewModel editCategoryViewModel)
+        public void EditCategory(ArtisticWorkCategory artWorkCategoryUpdate)
         {
-            ArtisticWorkCategory categoryToEdit = DbContext.ArtisticWorkCategories.FirstOrDefault(c => c.Id == editCategoryViewModel.CategoryId);
-            if (categoryToEdit != null)
+            ArtisticWorkCategory ExistingCurrentCategory = this.GetCategoryById(artWorkCategoryUpdate.Id);
+            if (ExistingCurrentCategory != null)
             {
-                categoryToEdit.MainPictureFileName = editCategoryViewModel.PictureFileName;
-                DbContext.ArtisticWorkCategories.Update(categoryToEdit);
+                ExistingCurrentCategory.MainPictureFileName = artWorkCategoryUpdate.MainPictureFileName;
+                DbContext.ArtisticWorkCategories.Update(ExistingCurrentCategory);
+
                 DbContext.SaveChanges();
             }
         }
 
-
         public void DeleteCategory(int categoryId)
         {
-            var categoryToDelete = this.DbContext.ArtisticWorkCategories.FirstOrDefault(c => c.Id == categoryId);
+            var categoryToDelete = this.GetCategoryById(categoryId);
 
             if (categoryToDelete != null)
             {

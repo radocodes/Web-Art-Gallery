@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using WAG.Services.Interfaces;
 
 namespace WAG.WebApp.Areas.Administration.Controllers
@@ -7,7 +8,8 @@ namespace WAG.WebApp.Areas.Administration.Controllers
     {
         private readonly ICloudinaryService cloudinaryService;
 
-        public CloudinaryController(ICloudinaryService cloudinaryService)
+        public CloudinaryController(ICloudinaryService cloudinaryService, IMapper mapper)
+            : base(mapper)
         {
             this.cloudinaryService = cloudinaryService;
         }

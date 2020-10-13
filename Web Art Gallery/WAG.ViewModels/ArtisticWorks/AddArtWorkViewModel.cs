@@ -1,5 +1,4 @@
 ﻿using CloudinaryDotNet;
-using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using WAG.Data.Models;
@@ -30,7 +29,7 @@ namespace WAG.ViewModels.ArtisticWorks
         [Required]
         public string PictureFileName { get; set; }
 
-        public List<ArtisticWorkCategory> ExistingCategories { get; set; }
+        public IEnumerable<ArtWorkCategoryViewModel> ExistingCategories { get; set; }
 
         public Cloudinary Cloudinary { get; set; }
     }

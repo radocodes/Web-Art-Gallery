@@ -5,7 +5,11 @@ namespace WAG.ViewModels.ArtisticWorks
 {
     public class DeleteCategoryViewModel
     {
-        public ArtisticWorkCategory ArtWorkCategory { get; set; }
+        public int CategoryId { get; set; }
+
+        public string Name { get; set; }
+
+        public string MainPictureFileName { get; set; }
 
         public Cloudinary Cloudinary { get; set; }
     }

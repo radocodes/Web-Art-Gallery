@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using WAG.Common.User;
 using WAG.Services.Constants;
@@ -11,7 +12,8 @@ namespace WAG.WebApp.Areas.Administration.Controllers
     {
         private IUserAccountService UserAccountService;
 
-        public UserAccountController(IUserAccountService userAccountService)
+        public UserAccountController(IUserAccountService userAccountService, IMapper mapper)
+            : base(mapper)
         {
             this.UserAccountService = userAccountService;
         }

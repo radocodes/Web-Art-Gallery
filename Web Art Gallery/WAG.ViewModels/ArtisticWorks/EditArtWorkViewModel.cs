@@ -5,7 +5,7 @@ using WAG.Data.Models;
 
 namespace WAG.ViewModels.ArtisticWorks
 {
-    public class EditArtWorkViewModel
+    public class EditArtWorkViewModel: BaseModel<int>
     {
         public int Year { get; set; }
 
@@ -20,13 +20,13 @@ namespace WAG.ViewModels.ArtisticWorks
         [Display(Name = "Has Frame")]
         public bool HasFrame { get; set; }
 
-        public int CategoryId { get; set; }
+        public int ArtisticWorkCategoryId { get; set; }
 
         public string Technique { get; set; }
 
-        public string PictureUrl { get; set; }
+        public string PictureFileName { get; set; }
 
-        public List<ArtisticWorkCategory> ExistingCategories { get; set; }
+        public IEnumerable<ArtWorkCategoryViewModel> ExistingCategories { get; set; }
 
         public Cloudinary Cloudinary { get; set; }
     }

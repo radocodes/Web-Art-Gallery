@@ -1,4 +1,4 @@
-﻿@model WAG.ViewModels.ArtisticWorks.ArtWorkDetailsViewModel
+﻿@model WAG.ViewModels.ArtisticWorks.DeleteArtWorkViewModel
 
 @{
     ViewData["Title"] = "DeleteArtWork";
@@ -20,10 +20,10 @@
         <aside class="col-sm-3 col-12 left-panel">
             <img src="@Html.Raw(cloudinary.Api.UrlImgUp.Secure(true).Format("jpg")
                              .Transform(new Transformation().Width(200).Quality(100))
-                             .BuildUrl(Model.ArtisticWork.PictureFileName))" style="padding-bottom:25px" />
+                             .BuildUrl(Model.PictureFileName))" style="padding-bottom:25px" />
             <div>
-                <p>Year: @Model.ArtisticWork.Year</p>
-                <p>Price: @Model.ArtisticWork.Price</p>
+                <p>Year: @Model.Year</p>
+                <p>Price: @Model.Price</p>
 
             </div>
         </aside>
@@ -33,7 +33,7 @@
                 <h2>Are you sure you want to delete permanently this Artwork?</h2>
                 <br />
                 <div>
-                    <form method="post" asp-area="Administration" asp-controller="ArtisticWork" asp-action="DeleteArtWork" asp-route-id="@Model.ArtisticWork.Id">
+                    <form method="post" asp-area="Administration" asp-controller="ArtisticWork" asp-action="DeleteArtWorkPost" asp-route-id="@Model.Id">
                         <button type="submit" class="btn btn-warning">Delete</button>
                     </form>
                 </div>
