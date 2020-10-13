@@ -29,6 +29,10 @@ namespace WAG.WebApp.MappingConfigurations.Mapping
 
             this.CreateMap<ArtisticWorkCategory, ArtWorkCategoryViewModel>();
 
+            this.CreateMap<AddCategoryViewModel, ArtisticWorkCategory>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.CategoryName))
+                .ForMember(dest => dest.MainPictureFileName, opt => opt.MapFrom(src => src.PictureFileName));
+
             this.CreateMap<ArtisticWorkCategory, EditCategoryViewModel>()
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Id))
@@ -41,21 +45,6 @@ namespace WAG.WebApp.MappingConfigurations.Mapping
 
             this.CreateMap<ArtisticWorkCategory, DeleteCategoryViewModel>()
                 .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Id));
-
-
-
-
-
-
-
-
-
-
-            this.CreateMap<AddCategoryViewModel, ArtisticWorkCategory>()
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.CategoryName))
-                .ForMember(dest => dest.MainPictureFileName, opt => opt.MapFrom(src => src.PictureFileName));
-
-
         }
     }
 }
