@@ -7,12 +7,12 @@
     string availability = "Продадена";
     string hasFrame = "Без рамка";
 
-    if (Model.ArtisticWork.Availability == true)
+    if (Model.Availability == true)
     {
         availability = "В наличност";
     }
 
-    if (Model.ArtisticWork.HasFrame == true)
+    if (Model.HasFrame == true)
     {
         hasFrame = "С рамка";
     }
@@ -25,19 +25,19 @@
         <section class="col-sm-9 col-12">
             <img src="@Html.Raw(cloudinary.Api.UrlImgUp.Secure(true).Format("jpg")
                              .Transform(new Transformation().Width(350).Quality(100))
-                             .BuildUrl(Model.ArtisticWork.PictureFileName))" id="artwork-details-img" alt="Picture of the artwork" />
+                             .BuildUrl(Model.PictureFileName))" id="artwork-details-img" alt="Picture of the artwork" />
         </section>
 
         <aside class="col-sm-3 col-12" id="artwork-details-info">
-            <h3>@Model.ArtisticWork.ArtisticWorkCategory.Name</h3>
+            <h3>@Model.ArtWorkCategory.Name</h3>
             <p>
-                &#x2116; @Model.ArtisticWork.Id<br />
-                &copy; @Model.ArtisticWork.Year Ema Ivanova<br />
-                @(Model.ArtisticWork.Height)x@(Model.ArtisticWork.Width)cm<br />
-                @Model.ArtisticWork.Technique<br />
+                &#x2116; @Model.Id<br />
+                &copy; @Model.Year Ema Ivanova<br />
+                @(Model.Height)x@(Model.Width)cm<br />
+                @Model.Technique<br />
                 @hasFrame<br />
                 @availability<br />
-                <span style="color:green;">@(Model.ArtisticWork.Price)лв</span>
+                <span style="color:green;">@(Model.Price)лв</span>
                 <br />
             </p>
             @if (User.Identity.IsAuthenticated && !User.IsInRole("Admin"))
@@ -52,8 +52,8 @@
 
             @if (User.IsInRole("Admin"))
             {
-                <a class="btn btn-primary" asp-area="Administration" asp-controller="ArtisticWork" asp-action="EditArtWork" asp-route-id="@Model.ArtisticWork.Id">Edit</a>
-                <a class="btn btn-primary" asp-area="Administration" asp-controller="ArtisticWork" asp-action="DeleteArtWork" asp-route-id="@Model.ArtisticWork.Id">Delete</a>
+                <a class="btn btn-primary" asp-area="Administration" asp-controller="ArtisticWork" asp-action="EditArtWork" asp-route-id="@Model.Id">Edit</a>
+                <a class="btn btn-primary" asp-area="Administration" asp-controller="ArtisticWork" asp-action="DeleteArtWork" asp-route-id="@Model.Id">Delete</a>
             }
         </aside>
 

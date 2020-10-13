@@ -81,7 +81,7 @@
 
                     <div class="col-sm-4">
                         <div class="artwork-banner">
-                            <a asp-action="ArtWorkDetails" asp-controller="ArtisticWork" asp-route-id="@artWork.Id">
+                            <a asp-action="ArtWorkDetails" asp-controller="ArtisticWork" asp-route-id="@artWork.ArtWorkId">
                                 <div>
                                     <img src="@Html.Raw(cloudinary.Api.UrlImgUp.Secure(true).Format("jpg")
                              .Transform(new Transformation().Width(300).Quality(100))

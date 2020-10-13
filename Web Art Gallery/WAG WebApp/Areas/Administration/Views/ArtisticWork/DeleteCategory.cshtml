@@ -20,9 +20,9 @@
         <aside class="col-sm-3 col-12 left-panel">
             <img src="@Html.Raw(cloudinary.Api.UrlImgUp.Secure(true).Format("jpg")
                              .Transform(new Transformation().Width(200).Quality(100))
-                             .BuildUrl(Model.ArtWorkCategory.MainPictureFileName))" style="padding-bottom:25px" />
+                             .BuildUrl(Model.MainPictureFileName))" style="padding-bottom:25px" />
             <div>
-                <p>Name: <strong>@Model.ArtWorkCategory.Name</strong></p>
+                <p>Name: <strong>@Model.Name</strong></p>
             </div>
         </aside>
 
@@ -31,7 +31,7 @@
                 <h2>Are you sure you want to delete permanently this Category?</h2>
                 <br />
                 <div>
-                    <form method="post" asp-area="Administration" asp-controller="ArtisticWork" asp-action="DeleteCategoryPost" asp-route-id="@Model.ArtWorkCategory.Id">
+                    <form method="post" asp-area="Administration" asp-controller="ArtisticWork" asp-action="DeleteCategoryPost" asp-route-id="@Model.CategoryId">
                         <button type="submit" class="btn btn-warning">Delete</button>
                     </form>
                 </div>
