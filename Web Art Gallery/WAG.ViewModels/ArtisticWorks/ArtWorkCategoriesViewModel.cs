@@ -6,7 +6,7 @@ namespace WAG.ViewModels.ArtisticWorks
 {
     public class ArtWorkCategoriesViewModel
     {
-        public List<ArtisticWorkCategory> Categories { get; set; }
+        public List<ArtWorkCategoryViewModel> Categories { get; set; }
 
         public Cloudinary Cloudinary { get; set; }
     }
