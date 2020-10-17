@@ -1,24 +1,29 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using WAG.Data.Models;
 using WAG.Services.Interfaces;
 using WAG.ViewModels.Blog;
+using WAG.WebApp.Controllers.Common;
 
 namespace WAG.WebApp.Controllers
 {
-    public class BlogController : Controller
+    public class BlogController : BaseController
     {
         private IBlogService BlogService;
         private ICloudinaryService cloudinaryService;
         private ICommentService CommentService;
 
-        public BlogController(IBlogService blogService, ICloudinaryService cloudinaryService, ICommentService commentService)
+        public BlogController(IBlogService blogService, ICloudinaryService cloudinaryService, ICommentService commentService, IMapper mapper)
+            : base(mapper)
         {
             this.BlogService = blogService;
             this.cloudinaryService = cloudinaryService;
             this.CommentService = commentService;
         }
 
-        public IActionResult Index(BlogIndexViewModel viewModel)
+        public IActionResult Index()
         {
+            var viewModel = new BlogIndexViewModel();
             viewModel.AllArticles = this.BlogService.GetAllArticles();
 
             foreach (var article in viewModel.AllArticles)
@@ -33,26 +38,16 @@ namespace WAG.WebApp.Controllers
 
         public IActionResult ArticleDetails(int id)
         {
-            var article = this.BlogService.GetArticle(id);
+            Article article = this.BlogService.GetArticle(id);
 
             if (article == null)
             {
                 return RedirectToAction("Index", "Blog");
             }
 
-            var viewModel = new ArticleDetailsViewModel()
-            {
-                ArticleId = article.Id,
-                Title = article.Title,
-                ShortDescription = article.ShortDescription,
-                ArticleContent = article.ArticleContent,
-                CreatedOn = article.CreatedOn,
-                EditedOn = article.EditedOn,
-                MainPictureFileName = article.MainPictureFileName,
-                Comments = this.CommentService.GetArticleComments(article.Id),
-
-                Cloudinary = this.cloudinaryService.GetCloudinaryInstance()
-            };
+            ArticleDetailsViewModel viewModel = mapper.Map<ArticleDetailsViewModel>(article);
+            viewModel.Comments = this.CommentService.GetArticleComments(article.Id);
+            viewModel.Cloudinary = this.cloudinaryService.GetCloudinaryInstance();
 
             return this.View(viewModel);
         }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using WAG.Data.Models;
 using WAG.Services.Interfaces;
 using WAG.ViewModels.Blog;
 
@@ -35,7 +36,9 @@ namespace WAG.WebApp.Areas.Administration.Controllers
                 return this.View(viewModel);
             }
 
-            this.BlogService.CreateArticle(viewModel);
+            Article articleModel = mapper.Map<Article>(viewModel);
+
+            this.BlogService.CreateArticle(articleModel);
 
             return RedirectToAction("Success", "Home", new { area = "" });
         }
@@ -49,15 +52,8 @@ namespace WAG.WebApp.Areas.Administration.Controllers
                 return RedirectToAction("Index", "Blog", new { area = "" });
             }
 
-            var viewModel = new EditArticleViewModel
-            {
-                ArticleId = articleToEdit.Id,
-                Title = articleToEdit.Title,
-                ShortDescription = articleToEdit.ShortDescription,
-                ArticleContent = articleToEdit.ArticleContent,
-
-                Cloudinary = this.cloudinaryService.GetCloudinaryInstance()
-            };
+            EditArticleViewModel viewModel = mapper.Map<EditArticleViewModel>(articleToEdit);
+            viewModel.Cloudinary = this.cloudinaryService.GetCloudinaryInstance();
 
             return this.View(viewModel);
         }
@@ -69,29 +65,24 @@ namespace WAG.WebApp.Areas.Administration.Controllers
             {
                 return this.View(viewModel);
             }
-            
-            if (this.BlogService.GetArticle(viewModel.ArticleId) == null)
-            {
-                return RedirectToAction("Index", "Blog", new { area = "" });
-            }
 
-            this.BlogService.EditArticle(viewModel);
+            Article articleToEdit = mapper.Map<Article>(viewModel);
+            this.BlogService.EditArticle(articleToEdit);
 
             return RedirectToAction("Success", "Home", new { area = "" });
         }
 
         public IActionResult DeleteArticle(int id)
         {
-            var viewModel = new DeleteArticleViewModel()
-            {
-                Article = this.BlogService.GetArticle(id)
-            };
 
-            if (viewModel.Article == null)
+            Article ArticleToDelete = this.BlogService.GetArticle(id);
+
+            if (ArticleToDelete == null)
             {
                 return RedirectToAction("Index", "Blog", new { area = "" });
             }
 
+            DeleteArticleViewModel viewModel = mapper.Map<DeleteArticleViewModel>(ArticleToDelete);
             viewModel.Cloudinary = this.cloudinaryService.GetCloudinaryInstance();
 
             return this.View(viewModel);
@@ -104,7 +95,7 @@ namespace WAG.WebApp.Areas.Administration.Controllers
             {
                 return RedirectToAction("Index", "Blog", new { area = "" });
             }
-            
+
             this.BlogService.DeleteArticle(id);
 
             return RedirectToAction("Success", "Home", new { area = "" });
