@@ -1,19 +1,23 @@
 ﻿using System.Diagnostics;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WAG.Data.Models;
 using WAG.Services.Interfaces;
 using WAG.ViewModels.Home;
+using WAG.WebApp.Controllers.Common;
 using WAG_WebApp.Models;
 
 namespace WAG.WebApp.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private IHomeService HomeService;
         private IUserAccountService UserAccountService;
 
-        public HomeController(IHomeService homeService, IUserAccountService userAccountService)
+        public HomeController(IHomeService homeService, IUserAccountService userAccountService, IMapper mapper)
+            : base(mapper)
         {
             this.HomeService = homeService;
             this.UserAccountService = userAccountService;
@@ -42,9 +46,12 @@ namespace WAG.WebApp.Controllers
             return View();
         }
 
-        public IActionResult About(AboutViewModel aboutViewModel)
+        public IActionResult About()
         {
-            aboutViewModel.Biography = this.HomeService.GetBiography();
+            var aboutViewModel = new AboutViewModel()
+            {
+                Biography = this.HomeService.GetBiography()
+            };
 
             return View(aboutViewModel);
         }
@@ -56,12 +63,13 @@ namespace WAG.WebApp.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Contact(ContactMessageViewModel contactMessageViewModel)
+        public IActionResult Contact(ContactMessageViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
-                return this.View(contactMessageViewModel);
+                return this.View(viewModel);
             }
+
             string userId = null;
 
             if (User.Identity.IsAuthenticated)
@@ -69,7 +77,8 @@ namespace WAG.WebApp.Controllers
                 userId = this.UserAccountService.GetCurrentUser(HttpContext).Id;
             }
 
-            this.HomeService.SaveContactMessage(contactMessageViewModel, userId);
+            ContactMessage contactMessage = mapper.Map<ContactMessage>(viewModel);
+            this.HomeService.SaveContactMessage(contactMessage, userId);
 
             return RedirectToAction("Success", "Home", new { area = "" });
         }

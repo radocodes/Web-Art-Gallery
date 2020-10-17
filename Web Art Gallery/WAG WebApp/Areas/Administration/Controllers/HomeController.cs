@@ -57,17 +57,20 @@ namespace WAG.WebApp.Areas.Administration.Controllers
             return RedirectToAction("Messages", "Home", new { area = "Administration" });
         }
 
-        public IActionResult EditBiography(EditBiographyViewModel editBiographyViewModel)
+        public IActionResult EditBiography()
         {
-            editBiographyViewModel.Biography = this.HomeService.GetBiography();
+            var editBiographyViewModel = new EditBiographyViewModel()
+            {
+                Biography = this.HomeService.GetBiography()
+            };
 
             return this.View(editBiographyViewModel);
         }
 
         [HttpPost]
-        public IActionResult UpdateBiography(EditBiographyViewModel editBiographyViewModel)
+        public IActionResult UpdateBiography(EditBiographyViewModel viewModel)
         {
-            this.HomeService.EditBiography(editBiographyViewModel.Biography);
+            this.HomeService.EditBiography(viewModel.Biography);
 
             return RedirectToAction("Success", "Home", new { area = "" });
         }

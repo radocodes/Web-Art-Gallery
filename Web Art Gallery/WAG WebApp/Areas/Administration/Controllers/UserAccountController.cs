@@ -30,7 +30,7 @@ namespace WAG.WebApp.Areas.Administration.Controllers
             return View(allUsersViewModel);
         }
 
-        public IActionResult UserDetails(string id, UserDetailsViewModel userDetailsViewModel)
+        public IActionResult UserDetails(string id)
         {
             var currUser = this.UserAccountService.GetUserById(id);
 
@@ -39,23 +39,13 @@ namespace WAG.WebApp.Areas.Administration.Controllers
                 return RedirectToAction("AllUsers", "UserAccount");
             }
 
-            var userRoles = this.UserAccountService.GetUserRolesNameById(id).ToList();
+            UserDetailsViewModel viewModel = mapper.Map<UserDetailsViewModel>(currUser);
+            viewModel.IdentityRoles = this.UserAccountService.GetUserRolesNameById(id).ToList();
 
-            userDetailsViewModel.UserId = currUser.Id;
-            userDetailsViewModel.UserName = currUser.UserName;
-            userDetailsViewModel.FirstName = currUser.FirstName;
-            userDetailsViewModel.LastName = currUser.LastName;
-            userDetailsViewModel.Email = currUser.Email;
-            userDetailsViewModel.PhoneNumber = currUser.PhoneNumber;
-            userDetailsViewModel.City = currUser.City;
-            userDetailsViewModel.Address = currUser.Address;
-
-            userDetailsViewModel.IdentityRoles = userRoles;
-
-            return View(userDetailsViewModel);
+            return View(viewModel);
         }
 
-        public IActionResult DeleteUser(string id, UserDetailsViewModel userDetailsViewModel)
+        public IActionResult DeleteUser(string id)
         {
             var UserToDelete = this.UserAccountService.GetUserById(id);
 
@@ -64,20 +54,13 @@ namespace WAG.WebApp.Areas.Administration.Controllers
                 return RedirectToAction("AllUsers", "UserAccount");
             }
 
-            userDetailsViewModel.UserId = UserToDelete.Id;
-            userDetailsViewModel.UserName = UserToDelete.UserName;
-            userDetailsViewModel.FirstName = UserToDelete.FirstName;
-            userDetailsViewModel.LastName = UserToDelete.LastName;
-            userDetailsViewModel.Email = UserToDelete.Email;
-            userDetailsViewModel.PhoneNumber = UserToDelete.PhoneNumber;
-            userDetailsViewModel.City = UserToDelete.City;
-            userDetailsViewModel.Address = UserToDelete.Address;
+            UserDetailsViewModel viewModel = mapper.Map<UserDetailsViewModel>(UserToDelete);
 
-            return View(userDetailsViewModel);
+            return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult DeleteUser(string id)
+        public IActionResult DeleteUserPost(string id)
         {
             var user = this.UserAccountService.GetUserById(id);
 
@@ -88,23 +71,26 @@ namespace WAG.WebApp.Areas.Administration.Controllers
 
             this.UserAccountService.DeleteUser(id);
 
-            return RedirectToAction("Index", "Home", new { area = "" });
+            return RedirectToAction("Success", "Home", new { area = "" });
         }
 
-        public IActionResult MakeUserAdmin(string userId, MakeUserAdminViewModel makeUserAdminViewModel)
-        { 
-            makeUserAdminViewModel.User = this.UserAccountService.GetUserById(userId);
+        public IActionResult MakeUserAdmin(string userId)
+        {
+            var viewModel = new MakeUserAdminViewModel()
+            {
+                User = this.UserAccountService.GetUserById(userId)
+            };
 
-            if (makeUserAdminViewModel.User == null)
+            if (viewModel.User == null)
             {
                 return RedirectToAction("AllUsers", "UserAccount");
             }
 
-            return View(makeUserAdminViewModel);
+            return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult MakeUserAdmin(string userId)
+        public IActionResult MakeUserAdminPost(string userId)
         {
             var adminRoleName = GlobalConstants.AdminRole;
 
@@ -122,12 +108,15 @@ namespace WAG.WebApp.Areas.Administration.Controllers
                 return RedirectToAction("Success", "Home", new { area = "" });
             }
 
-            return RedirectToAction("AllUsers", "UserAccount", new { area = "Administration"});
+            return RedirectToAction("AllUsers", "UserAccount", new { area = "Administration" });
         }
 
-        public IActionResult RemoveUserFromAdminRole(string userId, RemoveUserFromAdminRoleViewModel removeUserFromAdminRoleViewModel)
+        public IActionResult RemoveUserFromAdminRole(string userId)
         {
-            removeUserFromAdminRoleViewModel.User = this.UserAccountService.GetUserById(userId);
+            var removeUserFromAdminRoleViewModel = new RemoveUserFromAdminRoleViewModel()
+            {
+                User = this.UserAccountService.GetUserById(userId)
+            };
 
             if (removeUserFromAdminRoleViewModel.User == null)
             {
@@ -138,17 +127,16 @@ namespace WAG.WebApp.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        public IActionResult RemoveUserFromAdminRole(string id)
+        public IActionResult RemoveUserFromAdminRolePost(string id)
         {
-            var adminRoleName = GlobalConstants.AdminRole;
-
             var user = this.UserAccountService.GetUserById(id);
 
             if (user == null)
             {
-               return RedirectToAction("AllUsers", "UserAccount");
+                return RedirectToAction("AllUsers", "UserAccount");
             }
 
+            var adminRoleName = GlobalConstants.AdminRole;
             var removingResult = this.UserAccountService.RemoveUserFromRoleAsync(user, adminRoleName).Result;
 
             if (removingResult.Succeeded)

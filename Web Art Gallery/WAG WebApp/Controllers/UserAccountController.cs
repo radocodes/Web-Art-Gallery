@@ -1,22 +1,26 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using WAG.Data.Models;
 using WAG.Services.Constants;
 using WAG.Services.Interfaces;
 using WAG.ViewModels.UserAccount;
+using WAG.WebApp.Controllers.Common;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace WAG.WebApp.Controllers
 {
-    public class UserAccountController : Controller
+    public class UserAccountController : BaseController
     {
         private const string UnsuccessfulRegistrationMessage = "This Username already exist! Please choose another one";
         private const string UnsuccessfulLogInMessage = "Username or password is incorrect!";
 
         private IUserAccountService UserAccountService;
 
-        public UserAccountController(IUserAccountService userAccountService)
+        public UserAccountController(IUserAccountService userAccountService, IMapper mapper)
+            : base(mapper)
         {
             this.UserAccountService = userAccountService;
         }
@@ -69,7 +73,8 @@ namespace WAG.WebApp.Controllers
                 return this.View(registerInputViewModel);
             }
 
-            var registerResult = this.UserAccountService.CreateUserAsync(registerInputViewModel).Result;
+            WAGUser userNew = mapper.Map<WAGUser>(registerInputViewModel);
+            var registerResult = this.UserAccountService.CreateUserAsync(userNew, registerInputViewModel.Password).Result;
 
             if (registerResult != IdentityResult.Success)
             {
@@ -94,35 +99,23 @@ namespace WAG.WebApp.Controllers
         }
 
         [Authorize]
-        public IActionResult MyProfile(UserDetailsViewModel userDetailsViewModel)
+        public IActionResult MyProfile()
         {
             var currUser = this.UserAccountService.GetCurrentUser(HttpContext);
 
-            userDetailsViewModel.UserName = currUser.UserName;
-            userDetailsViewModel.FirstName = currUser.FirstName;
-            userDetailsViewModel.LastName = currUser.LastName;
-            userDetailsViewModel.City = currUser.City;
-            userDetailsViewModel.Address = currUser.Address;
-            userDetailsViewModel.Email = currUser.Email;
-            userDetailsViewModel.PhoneNumber = currUser.PhoneNumber;
-            userDetailsViewModel.IdentityRoles = this.UserAccountService.GetUserRolesNameById(currUser.Id).ToList();
+            UserDetailsViewModel viewModel = mapper.Map<UserDetailsViewModel>(currUser);
+            viewModel.IdentityRoles = this.UserAccountService.GetUserRolesNameById(currUser.Id).ToList();
 
-            return this.View(userDetailsViewModel);
+            return this.View(viewModel);
         }
 
         [Authorize]
-        public IActionResult EditUserProfile(EditUserProfileViewModel editUserProfileViewModel)
+        public IActionResult EditUserProfile()
         {
             var currUser = this.UserAccountService.GetCurrentUser(HttpContext);
 
-            editUserProfileViewModel.FirstName = currUser.FirstName;
-            editUserProfileViewModel.LastName = currUser.LastName;
-            editUserProfileViewModel.City = currUser.City;
-            editUserProfileViewModel.Address = currUser.Address;
-            editUserProfileViewModel.Email = currUser.Email;
-            editUserProfileViewModel.PhoneNumber = currUser.PhoneNumber;
-
-            return this.View(editUserProfileViewModel);
+            EditUserProfileViewModel viewModel = mapper.Map<EditUserProfileViewModel>(currUser);
+            return this.View(viewModel);
         }
 
         [Authorize]
