@@ -20,36 +20,30 @@ namespace WAG.Services
             this.DbContext = dbContext;
             this.FileService = fileService;
         }
-        
-        public void CreateArticle(CreateArticleViewModel createArticleViewModel)
-        {
-            var articleNew = new Article();
 
-            articleNew.Title = createArticleViewModel.Title;
-            articleNew.ShortDescription = createArticleViewModel.ShortDescription;
-            articleNew.ArticleContent = createArticleViewModel.ArticleContent;
-            articleNew.MainPictureFileName = createArticleViewModel.MainPictureFileName;
+        public void CreateArticle(Article articleNew)
+        {
             articleNew.CreatedOn = DateTime.UtcNow;
 
             this.DbContext.Articles.Add(articleNew);
             this.DbContext.SaveChanges();
         }
 
-        public void EditArticle(EditArticleViewModel editArticleViewModel)
+        public void EditArticle(Article articleToUpdate)
         {
-            var articleToUpdate = this.DbContext.Articles.FirstOrDefault(a => a.Id == editArticleViewModel.ArticleId);
+            //var articleToUpdate = this.DbContext.Articles.FirstOrDefault(a => a.Id == editArticleViewModel.ArticleId);
 
-            if (articleToUpdate != null)
-            {
-                articleToUpdate.Title = editArticleViewModel.Title;
-                articleToUpdate.ShortDescription = editArticleViewModel.ShortDescription;
-                articleToUpdate.ArticleContent = editArticleViewModel.ArticleContent;
-                articleToUpdate.EditedOn = DateTime.UtcNow;
-                articleToUpdate.MainPictureFileName = editArticleViewModel.MainPictureFileName;
+            //if (articleToUpdate != null)
+            //{
+            //    articleToUpdate.Title = editArticleViewModel.Title;
+            //    articleToUpdate.ShortDescription = editArticleViewModel.ShortDescription;
+            //    articleToUpdate.ArticleContent = editArticleViewModel.ArticleContent;
+            //    articleToUpdate.EditedOn = DateTime.UtcNow;
+            //    articleToUpdate.MainPictureFileName = editArticleViewModel.MainPictureFileName;
 
-                this.DbContext.Articles.Update(articleToUpdate);
-                this.DbContext.SaveChanges();
-            }
+            articleToUpdate.EditedOn = DateTime.UtcNow;
+            this.DbContext.Articles.Update(articleToUpdate);
+            this.DbContext.SaveChanges();
         }
 
         public void DeleteArticle(int id)

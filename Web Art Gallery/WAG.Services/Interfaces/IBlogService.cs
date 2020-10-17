@@ -6,9 +6,9 @@ namespace WAG.Services.Interfaces
 {
     public interface IBlogService
     {
-        void CreateArticle(CreateArticleViewModel createArticleViewModel);
+        void CreateArticle(Article articleNew);
 
-        void EditArticle(EditArticleViewModel editArticleInputViewModel);
+        void EditArticle(Article articleToUpdate);
 
         void DeleteArticle(int id);
 
