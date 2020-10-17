@@ -25,7 +25,7 @@
                 </div>
                 <br />
                 <div class="text-center">
-                    <form method="post" asp-area="Administration" asp-controller="UserAccount" asp-action="MakeUserAdmin" asp-route-userId="@Model.User.Id">
+                    <form method="post" asp-area="Administration" asp-controller="UserAccount" asp-action="MakeUserAdminPost" asp-route-userId="@Model.User.Id">
                         <button type="submit" class="btn btn-warning">Make this user Administrator</button>
                     </form>
                 </div>
