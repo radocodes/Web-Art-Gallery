@@ -41,20 +41,10 @@ namespace WAG.Services
             return this.SignInManager.PasswordSignInAsync(user, inputPassword, true, false).Result;
         }
 
-        public async Task<IdentityResult> CreateUserAsync(RegisterInputViewModel registerInputViewModel)
+        public async Task<IdentityResult> CreateUserAsync(WAGUser userModel, string userParssword)
         {
-            var user = new WAGUser()
-            {
-                UserName = registerInputViewModel.UserName,
-                FirstName = registerInputViewModel.FirstName,
-                LastName = registerInputViewModel.LastName,
-                City = registerInputViewModel.City,
-                Email = registerInputViewModel.Email,
-                PhoneNumber = registerInputViewModel.PhoneNumber,
-                Address = registerInputViewModel.Address
-            };
 
-            return await this.UserManager.CreateAsync(user, registerInputViewModel.Password);
+            return await this.UserManager.CreateAsync(userModel, userParssword);
         }
 
         public async void Logout()

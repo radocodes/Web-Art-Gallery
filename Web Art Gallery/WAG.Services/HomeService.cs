@@ -20,15 +20,10 @@ namespace WAG.Services
             this.FileService = fileService;
         }
 
-        public void SaveContactMessage(ContactMessageViewModel contactMessageViewModel, string userId)
+        public void SaveContactMessage(ContactMessage contactMessage, string userId)
         {
-            var contactMessage = new ContactMessage()
-            {
-                Title = contactMessageViewModel.Title,
-                TextBody = contactMessageViewModel.TextBody,
-                WAGUserId = userId,
-                Date = DateTime.UtcNow,
-            };
+            contactMessage.WAGUserId = userId;
+            contactMessage.Date = DateTime.UtcNow;
 
             this.DbContext.ContactMessages.Add(contactMessage);
             this.DbContext.SaveChanges();
@@ -80,7 +75,7 @@ namespace WAG.Services
 
                 if (messageAuthor != null)
                 {
-                    message.WAGUser.FirstName =messageAuthor.FirstName;
+                    message.WAGUser.FirstName = messageAuthor.FirstName;
                     message.WAGUser.LastName = messageAuthor.LastName;
                     message.WAGUser.UserName = messageAuthor.UserName;
                 }

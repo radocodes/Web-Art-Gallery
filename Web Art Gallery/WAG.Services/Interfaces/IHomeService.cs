@@ -6,7 +6,7 @@ namespace WAG.Services.Interfaces
 {
     public interface IHomeService
     {
-        void SaveContactMessage(ContactMessageViewModel contactMessageViewModel, string userId);
+        void SaveContactMessage(ContactMessage contactMessage, string userId);
 
         List<ContactMessage> GetAllMessages();
 

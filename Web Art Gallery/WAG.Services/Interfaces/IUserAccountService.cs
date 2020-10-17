@@ -11,7 +11,7 @@ namespace WAG.Services.Interfaces
     {
         SignInResult LoginUserSuccessfully(LoginInputViewModel loginInputViewModel);
 
-        Task<IdentityResult> CreateUserAsync(RegisterInputViewModel registerInputViewModel);
+        Task<IdentityResult> CreateUserAsync(WAGUser userModel, string userPassword);
 
         void Logout();
 
