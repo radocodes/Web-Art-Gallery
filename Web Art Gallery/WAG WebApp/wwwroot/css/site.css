@@ -12,6 +12,7 @@ body {
 
 #canvas {
     position: absolute;
+    max-width: 100%;
 }
 
 .navbar {
