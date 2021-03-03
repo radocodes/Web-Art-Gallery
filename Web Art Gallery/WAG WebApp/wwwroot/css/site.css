@@ -427,13 +427,17 @@ footer {
     text-overflow: clip;
 }
 
+#blog-details-image-wrapper {
+    width: 100%;
+}
+
 #blog-details-img-main {
     width: auto;
     max-width: 100%;
     height: auto;
     max-height: 300px;
-    margin-left: 25px;
-    margin-right: 25px;
+    /*margin-left: 25px;
+    margin-right: 25px;*/
 }
 
 #blog-details-srt-desc {

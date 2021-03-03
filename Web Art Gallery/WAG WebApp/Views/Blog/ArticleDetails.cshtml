@@ -20,35 +20,55 @@
 </header>
 
 <main class="container main-default">
-    <div class="row">
-        <div class="col-sm-12 col-12">
 
-            <article>
-
+    <article>
+        <div class="row">
+            <div class="col-sm-12 col-12">
                 <header class="header-default">
                     <h2>@Model.Title</h2>
                 </header>
-
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-12">
                 <p class="blog-index-info-icons"><i class="far fa-calendar-alt"></i> @Model.CreatedOn.ToShortDateString() &ensp; <i class="fas fa-comment-dots"></i> @Model.Comments.Count() Comments</p>
-                @if (Model.MainPictureFileName != null)
-                {
-                    <img src="@Html.Raw(cloudinary.Api.UrlImgUp.Secure(true).Format("jpg")
+            </div>
+        </div>
+        @if (Model.MainPictureFileName != null)
+        {
+            <div class="row">
+                <div class="col-sm-12 col-12">
+                    <div id="blog-details-image-wrapper">
+                        <img src="@Html.Raw(cloudinary.Api.UrlImgUp.Secure(true).Format("jpg")
                              .Transform(new Transformation().Width(1.0).Quality(100))
                              .BuildUrl(Model.MainPictureFileName))" id="blog-details-img-main" />
-                }
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div class="col-sm-12 col-12">
                 <div id="blog-details-srt-desc">@Html.Raw(Model.ShortDescription)</div>
                 <div id="blog-details-article-content">@Html.Raw(Model.ArticleContent)</div>
                 <br />
-            </article>
+            </div>
+        </div>
+    </article>
 
-            @if (User.IsInRole("Admin"))
-            {
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="row">
+            <div class="col-sm-12 col-12">
                 <div id="blog-details-admins-buttons">
                     <h3>Manage the article:</h3>
                     <a class="btn btn-primary" asp-area="Administration" asp-controller="Blog" asp-action="EditArticle" asp-route-id="@Model.ArticleId">Edit</a>
                     <a class="btn btn-primary" asp-area="Administration" asp-controller="Blog" asp-action="DeleteArticle" asp-route-id="@Model.ArticleId">Delete</a>
                 </div>
-            }
+            </div>
+        </div>
+    }
+    <div class="row">
+        <div class="col-sm-12 col-12">
             <br />
             <div id="comment-area">
                 <div id="all-comments">
