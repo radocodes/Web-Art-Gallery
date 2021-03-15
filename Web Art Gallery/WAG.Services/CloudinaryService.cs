@@ -34,10 +34,11 @@ namespace WAG.Services
             return this.cloudinaryAccount;
         }
 
-        public string GenerateSignature(string timestamp, string source)
+        public string GenerateSignature(string timestamp, string source, string cloudFolder)
         {
             string SignedUploadPreset = "ml_default";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("folder", cloudFolder);
             parameters.Add("source", source);
             parameters.Add("timestamp", timestamp);
             parameters.Add("upload_preset", SignedUploadPreset);

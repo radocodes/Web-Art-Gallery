@@ -243,7 +243,7 @@ footer {
     width: auto;
     max-width: 100%;
     height: auto;
-    max-height: 500px;
+    /*max-height: 500px;*/
 }
 
 #artwork-details-info {
@@ -441,6 +441,7 @@ footer {
 }
 
 #blog-details-srt-desc {
+    max-width: 100%;
     margin-left: 45px;
     margin-right: 45px;
     border: none;
@@ -448,15 +449,22 @@ footer {
     /*background-color: white;*/
     font-size: medium;
     font-style: italic;
+    word-wrap: break-word;
 }
 
 #blog-details-article-content {
+    max-width: 100%;
     margin-left: 30px;
     margin-right: 30px;
     background-color: lightsteelblue;
     /*background-color: white;*/
     border: none;
     font-size: medium;
+    word-wrap: break-word;
+}
+
+#blog-details-article-content a {
+    max-width: 100%;
 }
 
 #blog-details-admins-buttons {

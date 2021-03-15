@@ -8,6 +8,6 @@ namespace WAG.Services.Interfaces
 
         Account CloudinaryAccount();
 
-        string GenerateSignature(string timestamp, string source);
+        string GenerateSignature(string timestamp, string source, string cloudFolder);
     }
 }

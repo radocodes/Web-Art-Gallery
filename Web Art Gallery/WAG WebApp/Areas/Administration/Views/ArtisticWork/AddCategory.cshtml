@@ -21,6 +21,7 @@
     string cloudName = "emaivanova";
     string apiKey = "767268356668237";
     string uploadPreset = "ml_default";
+    string cloudFolder = "artwork-categories";
 }
 
 <header class="container header-default">
@@ -76,7 +77,7 @@
 <script type="text/javascript">
     // Open Cloudinary widget and upload media content
     $('#upload_widget').cloudinary_upload_widget({
-        cloudName: "@cloudName", apiKey: "@apiKey", upload_preset: "@uploadPreset", uploadSignature: generateSignature
+        cloudName: "@cloudName", apiKey: "@apiKey", upload_preset: "@uploadPreset", folder: "@cloudFolder", uploadSignature: generateSignature
     }, (error, result) => {
         if (!error && result && result.event === "success") {
             console.log('Done! Here is the image info: ', result.info);

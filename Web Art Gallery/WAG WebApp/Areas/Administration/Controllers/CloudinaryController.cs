@@ -18,8 +18,9 @@ namespace WAG.WebApp.Areas.Administration.Controllers
         {
             var timestamp = Request.Query["data[timestamp]"];
             var source = Request.Query["data[source]"];
+            var cloudFolder = Request.Query["data[folder]"];
 
-            string signature = this.cloudinaryService.GenerateSignature(timestamp, source);
+            string signature = this.cloudinaryService.GenerateSignature(timestamp, source, cloudFolder);
             return Ok(signature);
         }
     }
