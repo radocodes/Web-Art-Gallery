@@ -4,6 +4,19 @@ Web Art Gallery - Web application, personal website of a professional artist for
 
 http://emaivanova.com 
 
+### Technical Specifications:
+- ASP MVC .NET Core 2.1
+- MS SQL Server 
+- Entity Framework Core
+- Javascript additions
+- Ajax
+- JQuery
+- Bootstrap
+- Automapper
+- Cloudinary (image CDN) integration
+- Tiny WYSIWYG integration
+- Hosted in Production
+
 More details:
 - The web app is written by .NET CORE 2.1 ASP MVC, using MS SQL Server and MS Entity Framework.
 - It works with individual user accounts authentication Identity (but not scaffolded).
