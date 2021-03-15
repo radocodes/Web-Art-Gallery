@@ -30,7 +30,7 @@
                         <div class="category-banner">
                             <a asp-action="ArtWorksByCategory" asp-controller="ArtisticWork" asp-route-id="@category.Id">
                                 <img class="card-img-top" id="category-banner-img" src="@Html.Raw(cloudinary.Api.UrlImgUp.Secure(true).Format("jpg")
-                             .Transform(new Transformation().Width(350).Quality(100))
+                             .Transform(new Transformation().Width(300).Quality(100))
                              .BuildUrl(category.MainPictureFileName))" alt="Card image cap">
                                 <div id="category-banner-name"><b>@category.Name</b></div>
                             </a>

@@ -31,7 +31,7 @@
 
         <section class="col-sm-9 col-12">
             <img id="artwork-details-img" alt="Picture of the artwork" src="@Html.Raw(cloudinary.Api.UrlImgUp.Secure(true).Format("jpg")
-                             .Transform(new Transformation().Width(350).Quality(100))
+                             .Transform(new Transformation().Width(1.0).Quality(100))
                              .BuildUrl(Model.PictureFileName))" />
         </section>
 
