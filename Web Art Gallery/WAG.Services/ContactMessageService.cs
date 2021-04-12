@@ -35,6 +35,7 @@ namespace WAG.Services
             {
                 if (message.WAGUserId != null)
                 {
+                    //TODO: DRY according to GetContactMessageById()
                     var messageAuthorPersonalData = this.DbContext.Users
                         .Where(user => user.Id == message.WAGUserId)
                         .Select(user =>
