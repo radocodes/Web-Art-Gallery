@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using WAG.Data.Models;
+using WAG.Services.Implementation;
 
 namespace WAG.Services.Tests
 {

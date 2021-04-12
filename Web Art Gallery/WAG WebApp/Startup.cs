@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using WAG.Data;
 using WAG.Data.Models;
 using WAG.Services.Interfaces;
-using WAG.Services;
+using WAG.Services.Implementation;
 using WAG.WebApp.Middlewares;
 using AutoMapper;
 

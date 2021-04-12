@@ -6,7 +6,7 @@ using WAG.Data.Models;
 using WAG.Services.Interfaces;
 using WAG.ViewModels.Order;
 
-namespace WAG.Services
+namespace WAG.Services.Implementation
 {
     public class OrderService : IOrderService
     {

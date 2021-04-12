@@ -3,7 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using WAG.Services.Interfaces;
 
-namespace WAG.Services
+namespace WAG.Services.Implementation
 {
     public class FileService : IFileService
     {

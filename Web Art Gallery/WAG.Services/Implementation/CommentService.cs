@@ -5,7 +5,7 @@ using WAG.Data;
 using WAG.Data.Models;
 using WAG.Services.Interfaces;
 
-namespace WAG.Services
+namespace WAG.Services.Implementation
 {
     public class CommentService : ICommentService
     {

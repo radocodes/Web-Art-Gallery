@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using WAG.Data.Models;
 using WAG.Services.Interfaces;
 
-namespace WAG.Services
+namespace WAG.Services.Implementation
 {
     public class CloudinaryService: ICloudinaryService
     {

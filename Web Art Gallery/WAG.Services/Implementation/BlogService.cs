@@ -7,7 +7,7 @@ using WAG.Data.Models;
 using WAG.Services.Constants;
 using WAG.Services.Interfaces;
 
-namespace WAG.Services
+namespace WAG.Services.Implementation
 {
     public class BlogService : IBlogService
     {

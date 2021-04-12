@@ -10,7 +10,7 @@ using WAG.Data.Models;
 using WAG.Services.Interfaces;
 using WAG.ViewModels.UserAccount;
 
-namespace WAG.Services
+namespace WAG.Services.Implementation
 {
     public class UserAccountService : IUserAccountService
     {
