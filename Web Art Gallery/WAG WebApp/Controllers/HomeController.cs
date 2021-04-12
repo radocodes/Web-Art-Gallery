@@ -13,10 +13,10 @@ namespace WAG.WebApp.Controllers
 {
     public class HomeController : BaseController
     {
-        private IHomeService HomeService;
+        private IContactMessageService HomeService;
         private IUserAccountService UserAccountService;
 
-        public HomeController(IHomeService homeService, IUserAccountService userAccountService, IMapper mapper)
+        public HomeController(IContactMessageService homeService, IUserAccountService userAccountService, IMapper mapper)
             : base(mapper)
         {
             this.HomeService = homeService;

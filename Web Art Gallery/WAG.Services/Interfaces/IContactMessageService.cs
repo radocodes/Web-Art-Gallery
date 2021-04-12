@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using WAG.Data.Models;
-using WAG.ViewModels.Home;
 
 namespace WAG.Services.Interfaces
 {
-    public interface IHomeService
+    public interface IContactMessageService
     {
         void SaveContactMessage(ContactMessage contactMessage, string userId);
 
-        List<ContactMessage> GetAllMessages();
+        List<ContactMessage> GetAllContactMessages();
 
         ContactMessage GetContactMessageById(int messageId);
 

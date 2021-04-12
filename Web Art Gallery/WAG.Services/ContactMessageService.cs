@@ -5,16 +5,15 @@ using WAG.Data;
 using WAG.Data.Models;
 using WAG.Services.Constants;
 using WAG.Services.Interfaces;
-using WAG.ViewModels.Home;
 
 namespace WAG.Services
 {
-    public class HomeService : IHomeService
+    public class ContactMessageService : IContactMessageService
     {
         private WAGDbContext DbContext;
         private IFileService FileService;
 
-        public HomeService(WAGDbContext dbContext, IFileService fileService)
+        public ContactMessageService(WAGDbContext dbContext, IFileService fileService)
         {
             this.DbContext = dbContext;
             this.FileService = fileService;
@@ -29,7 +28,7 @@ namespace WAG.Services
             this.DbContext.SaveChanges();
         }
 
-        public List<ContactMessage> GetAllMessages()
+        public List<ContactMessage> GetAllContactMessages()
         {
             var messages = this.DbContext.ContactMessages.ToList();
 

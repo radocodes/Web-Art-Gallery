@@ -7,9 +7,9 @@ namespace WAG.WebApp.Areas.Administration.Controllers
 {
     public class HomeController : AdministrationController
     {
-        private IHomeService HomeService;
+        private IContactMessageService HomeService;
 
-        public HomeController(IHomeService homeService, IMapper mapper)
+        public HomeController(IContactMessageService homeService, IMapper mapper)
             : base(mapper)
         {
             this.HomeService = homeService;
@@ -17,7 +17,7 @@ namespace WAG.WebApp.Areas.Administration.Controllers
 
         public IActionResult Messages(MessagesViewModel messagesViewModel)
         {
-            messagesViewModel.Messages = this.HomeService.GetAllMessages();
+            messagesViewModel.Messages = this.HomeService.GetAllContactMessages();
 
             var MessageMaxLengthInTable = 100;
 
