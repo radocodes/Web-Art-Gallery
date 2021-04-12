@@ -6,14 +6,13 @@ using WAG.Data;
 using WAG.Data.Models;
 using WAG.Services.Constants;
 using WAG.Services.Interfaces;
-using WAG.ViewModels.Blog;
 
 namespace WAG.Services
 {
     public class BlogService : IBlogService
     {
-        private WAGDbContext DbContext;
-        private IFileService FileService;
+        private readonly WAGDbContext DbContext;
+        private readonly IFileService FileService;
 
         public BlogService(WAGDbContext dbContext, IFileService fileService)
         {

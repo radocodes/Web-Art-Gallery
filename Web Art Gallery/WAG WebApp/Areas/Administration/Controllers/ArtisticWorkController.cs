@@ -9,8 +9,8 @@ namespace WAG.WebApp.Areas.Administration.Controllers
 {
     public class ArtisticWorkController : AdministrationController
     {
-        private IArtisticWorkService ArtisticWorkService;
-        private ICloudinaryService cloudinaryService;
+        private readonly IArtisticWorkService ArtisticWorkService;
+        private readonly ICloudinaryService cloudinaryService;
 
         public ArtisticWorkController(IArtisticWorkService artisticWorkService, ICloudinaryService cloudinaryService, IMapper mapper)
             : base(mapper)

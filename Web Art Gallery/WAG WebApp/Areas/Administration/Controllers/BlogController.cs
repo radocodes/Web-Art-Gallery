@@ -8,8 +8,8 @@ namespace WAG.WebApp.Areas.Administration.Controllers
 {
     public class BlogController : AdministrationController
     {
-        private IBlogService BlogService;
-        private ICloudinaryService cloudinaryService;
+        private readonly IBlogService BlogService;
+        private readonly ICloudinaryService cloudinaryService;
 
         public BlogController(IBlogService blogService, ICloudinaryService cloudinaryService, IMapper mapper)
             : base(mapper)

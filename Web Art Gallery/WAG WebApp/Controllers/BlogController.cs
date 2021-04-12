@@ -9,9 +9,9 @@ namespace WAG.WebApp.Controllers
 {
     public class BlogController : BaseController
     {
-        private IBlogService BlogService;
-        private ICloudinaryService cloudinaryService;
-        private ICommentService CommentService;
+        private readonly IBlogService BlogService;
+        private readonly ICloudinaryService cloudinaryService;
+        private readonly ICommentService CommentService;
 
         public BlogController(IBlogService blogService, ICloudinaryService cloudinaryService, ICommentService commentService, IMapper mapper)
             : base(mapper)

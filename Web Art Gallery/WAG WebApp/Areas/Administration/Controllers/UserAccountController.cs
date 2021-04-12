@@ -9,7 +9,7 @@ namespace WAG.WebApp.Areas.Administration.Controllers
 {
     public class UserAccountController : AdministrationController
     {
-        private IUserAccountService UserAccountService;
+        private readonly IUserAccountService UserAccountService;
 
         public UserAccountController(IUserAccountService userAccountService, IMapper mapper)
             : base(mapper)

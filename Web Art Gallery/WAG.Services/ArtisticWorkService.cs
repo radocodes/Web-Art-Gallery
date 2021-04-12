@@ -14,8 +14,8 @@ namespace WAG.Services
         private const string AscendingFilter = "ascending";
         private const string DescendingFilter = "descending";
 
-        private WAGDbContext DbContext;
-        private IFileService FileService;
+        private readonly WAGDbContext DbContext;
+        private readonly IFileService FileService;
 
         public ArtisticWorkService(WAGDbContext dbContext, IFileService fileService)
         {

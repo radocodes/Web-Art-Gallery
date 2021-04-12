@@ -13,9 +13,9 @@ namespace WAG.WebApp.Controllers
 {
     public class HomeController : BaseController
     {
-        private IContactMessageService HomeService;
-        private IUserAccountService UserAccountService;
-        private IBiographyService biographyService;
+        private readonly IContactMessageService HomeService;
+        private readonly IUserAccountService UserAccountService;
+        private readonly IBiographyService biographyService;
 
         public HomeController(IContactMessageService homeService, IUserAccountService userAccountService, IBiographyService biographyService, IMapper mapper)
             : base(mapper)

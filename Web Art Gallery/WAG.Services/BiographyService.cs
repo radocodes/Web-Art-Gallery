@@ -6,6 +6,7 @@ namespace WAG.Services
     public class BiographyService : IBiographyService
     {
         private readonly IFileService FileService;
+
         public BiographyService(IFileService fileService)
         {
             this.FileService = fileService;

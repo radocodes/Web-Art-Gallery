@@ -9,7 +9,7 @@ namespace WAG.Services
 {
     public class CommentService : ICommentService
     {
-        private WAGDbContext DbContext;
+        private readonly WAGDbContext DbContext;
 
         public CommentService(WAGDbContext dbContext)
         {

@@ -17,7 +17,7 @@ namespace WAG.WebApp.Controllers
         private const string UnsuccessfulRegistrationMessage = "This Username already exist! Please choose another one";
         private const string UnsuccessfulLogInMessage = "Username or password is incorrect!";
 
-        private IUserAccountService UserAccountService;
+        private readonly IUserAccountService UserAccountService;
 
         public UserAccountController(IUserAccountService userAccountService, IMapper mapper)
             : base(mapper)

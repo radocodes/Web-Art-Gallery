@@ -10,8 +10,8 @@ namespace WAG.WebApp.Controllers
     [Authorize]
     public class CommentController : Controller
     {
-        private ICommentService CommentService;
-        private IUserAccountService UserAccountService;
+        private readonly ICommentService CommentService;
+        private readonly IUserAccountService UserAccountService;
 
         public CommentController(ICommentService commentService, IUserAccountService userAccountService)
         {

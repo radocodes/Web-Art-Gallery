@@ -10,9 +10,9 @@ namespace WAG.WebApp.Controllers
     //[Authorize]
     //public class OrderController : Controller
     //{
-    //    private IOrderService OrderService;
-    //    private IUserAccountService UserAccountService;
-    //    private IArtisticWorkService ArtisticWorkService;
+    //    private readonly IOrderService OrderService;
+    //    private readonly IUserAccountService UserAccountService;
+    //    private readonly IArtisticWorkService ArtisticWorkService;
 
     //    public OrderController(IOrderService orderService, IUserAccountService userAccountService, IArtisticWorkService artisticWorkService)
     //    {
@@ -50,7 +50,7 @@ namespace WAG.WebApp.Controllers
     //        var currUser = this.UserAccountService.GetCurrentUser(HttpContext);
 
     //        this.OrderService.SaveOrder(currUser, makeOrderViewModel);
-            
+
     //        return RedirectToAction("Success", "Home");
     //    }
 

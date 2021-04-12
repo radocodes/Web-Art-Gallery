@@ -10,6 +10,7 @@ namespace WAG.WebApp.Areas.Administration.Controllers
         {
 
         }
+
         public IActionResult IndexAdmin()
         {
             return View();

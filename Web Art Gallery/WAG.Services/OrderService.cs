@@ -10,8 +10,8 @@ namespace WAG.Services
 {
     public class OrderService : IOrderService
     {
-        private WAGDbContext DbContext;
-        private IArtisticWorkService ArtisticWorkService;
+        private readonly WAGDbContext DbContext;
+        private readonly IArtisticWorkService ArtisticWorkService;
 
         public OrderService(WAGDbContext dbContext, IArtisticWorkService artisticWorkService)
         {

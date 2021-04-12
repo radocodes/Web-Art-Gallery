@@ -7,8 +7,8 @@ namespace WAG.WebApp.Areas.Administration.Controllers
 {
     public class HomeController : AdministrationController
     {
-        private IContactMessageService HomeService;
-        private IBiographyService biographyService;
+        private readonly IContactMessageService HomeService;
+        private readonly IBiographyService biographyService;
 
         public HomeController(IContactMessageService homeService, IBiographyService biographyService, IMapper mapper)
             : base(mapper)

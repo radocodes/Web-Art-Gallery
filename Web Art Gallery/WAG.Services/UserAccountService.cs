@@ -14,10 +14,10 @@ namespace WAG.Services
 {
     public class UserAccountService : IUserAccountService
     {
-        private SignInManager<WAGUser> SignInManager;
-        private UserManager<WAGUser> UserManager;
-        private RoleManager<IdentityRole> RoleManager;
-        private WAGDbContext DbContext;
+        private readonly SignInManager<WAGUser> SignInManager;
+        private readonly UserManager<WAGUser> UserManager;
+        private readonly RoleManager<IdentityRole> RoleManager;
+        private readonly WAGDbContext DbContext;
 
         public UserAccountService(SignInManager<WAGUser> signInManager, UserManager<WAGUser> userManager, RoleManager<IdentityRole> roleManager, WAGDbContext dbContext)
         {

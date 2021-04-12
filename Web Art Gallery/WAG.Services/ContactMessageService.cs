@@ -10,7 +10,7 @@ namespace WAG.Services
 {
     public class ContactMessageService : IContactMessageService
     {
-        private WAGDbContext DbContext;
+        private readonly WAGDbContext DbContext;
 
 
         public ContactMessageService(WAGDbContext dbContext)

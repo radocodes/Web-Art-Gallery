@@ -8,9 +8,9 @@ namespace WAG.WebApp.Areas.Administration.Controllers
 
     //public class OrderController : AdministrationController
     //{
-    //    private IOrderService OrderService;
-    //    private IUserAccountService UserAccountService;
-    //    private IArtisticWorkService ArtisticWorkService;
+    //    private readonly IOrderService OrderService;
+    //    private readonly IUserAccountService UserAccountService;
+    //    private readonly IArtisticWorkService ArtisticWorkService;
 
     //    public OrderController(IOrderService orderService, IUserAccountService userAccountService, IArtisticWorkService artisticWorkService)
     //    {
