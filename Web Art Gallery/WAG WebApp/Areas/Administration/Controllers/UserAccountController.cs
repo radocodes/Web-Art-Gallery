@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using WAG.Common.User;
 using WAG.Services.Constants;
 using WAG.Services.Interfaces;
 using WAG.ViewModels.UserAccount;

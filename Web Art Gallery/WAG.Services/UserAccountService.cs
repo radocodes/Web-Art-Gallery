@@ -71,7 +71,7 @@ namespace WAG.Services
 
         public void ChangePassword(WAGUser user, string currPassword, string newPassword)
         {
-             var result = this.UserManager.ChangePasswordAsync(user, currPassword, newPassword).Result;
+            var result = this.UserManager.ChangePasswordAsync(user, currPassword, newPassword).Result;
         }
 
         public void DeleteUser(string id)
@@ -120,15 +120,11 @@ namespace WAG.Services
         {
             var result = new IdentityResult();
 
-            if (user != null)
+            if (user != null &&
+                this.RoleManager.RoleExistsAsync(role).Result &&
+                !UserManager.IsInRoleAsync(user, role).Result)
             {
-                if (this.RoleManager.RoleExistsAsync(role).Result)
-                {
-                    if (!UserManager.IsInRoleAsync(user, role).Result)
-                    {
-                        result = await this.UserManager.AddToRoleAsync(user, role);
-                    }
-                }
+                result = await this.UserManager.AddToRoleAsync(user, role);
             }
 
             return result;
@@ -138,15 +134,11 @@ namespace WAG.Services
         {
             var result = new IdentityResult();
 
-            if (user != null)
+            if (user != null &&
+                this.RoleManager.RoleExistsAsync(role).Result &&
+                UserManager.IsInRoleAsync(user, role).Result)
             {
-                if (this.RoleManager.RoleExistsAsync(role).Result)
-                {
-                    if (UserManager.IsInRoleAsync(user, role).Result)
-                    {
-                        result = await this.UserManager.RemoveFromRoleAsync(user, role);
-                    }
-                }
+                result = await this.UserManager.RemoveFromRoleAsync(user, role);
             }
 
             return result;
