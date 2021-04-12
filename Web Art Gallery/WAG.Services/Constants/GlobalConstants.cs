@@ -13,7 +13,6 @@ namespace WAG.Services.Constants
         public const string AdminRole = "Admin";
         public const string UserRole = "User";
         public const string AdminArea = "Administration";
-        public const string BGArea = "BG";
         public const string BioDirectoryPath = @"wwwroot\Bio\";
         public const string BioFileName = "Biography.txt";
     }
