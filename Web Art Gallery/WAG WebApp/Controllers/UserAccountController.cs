@@ -45,7 +45,7 @@ namespace WAG.WebApp.Controllers
 
             var loginResult = this.UserAccountService.LoginUserSuccessfully(loginInputModel);
 
-            if (loginResult != SignInResult.Success)
+            if (loginResult.Succeeded)
             {
                 loginInputModel.UnsuccessfulLogInMessage = UnsuccessfulLogInMessage;
 
@@ -76,7 +76,7 @@ namespace WAG.WebApp.Controllers
             WAGUser userNew = mapper.Map<WAGUser>(registerInputViewModel);
             var registerResult = this.UserAccountService.CreateUserAsync(userNew, registerInputViewModel.Password).Result;
 
-            if (registerResult != IdentityResult.Success)
+            if (registerResult.Succeeded)
             {
                 registerInputViewModel.UnsuccessfulRegistrationMessage = UnsuccessfulRegistrationMessage;
 
