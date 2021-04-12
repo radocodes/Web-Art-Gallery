@@ -11,7 +11,7 @@ namespace WAG.Services
     public class ContactMessageService : IContactMessageService
     {
         private WAGDbContext DbContext;
-        
+
 
         public ContactMessageService(WAGDbContext dbContext)
         {
@@ -33,17 +33,27 @@ namespace WAG.Services
 
             foreach (var message in messages)
             {
-                message.WAGUser = new WAGUser();
-
                 if (message.WAGUserId != null)
                 {
-                    var messageAuthor = this.DbContext.Users.FirstOrDefault(u => u.Id == message.WAGUserId);
+                    var messageAuthorPersonalData = this.DbContext.Users
+                        .Where(user => user.Id == message.WAGUserId)
+                        .Select(user =>
+                        new
+                        {
+                            user.UserName,
+                            user.FirstName,
+                            user.LastName
+                        })
+                        .FirstOrDefault();
 
-                    if (messageAuthor != null)
+                    if (messageAuthorPersonalData != null)
                     {
-                        message.WAGUser.FirstName = messageAuthor.FirstName;
-                        message.WAGUser.LastName = messageAuthor.LastName;
-                        message.WAGUser.UserName = messageAuthor.UserName;
+                        message.WAGUser = new WAGUser()
+                        {
+                            UserName = messageAuthorPersonalData.UserName,
+                            FirstName = messageAuthorPersonalData.FirstName,
+                            LastName = messageAuthorPersonalData.LastName
+                        };
                     }
                 }
 
@@ -65,17 +75,27 @@ namespace WAG.Services
                 return null;
             }
 
-            message.WAGUser = new WAGUser();
-
             if (message.WAGUserId != null)
             {
-                var messageAuthor = this.DbContext.Users.FirstOrDefault(u => u.Id == message.WAGUserId);
+                var messageAuthorPersonalData = this.DbContext.Users
+                        .Where(user => user.Id == message.WAGUserId)
+                        .Select(user =>
+                        new
+                        {
+                            user.UserName,
+                            user.FirstName,
+                            user.LastName
+                        })
+                        .FirstOrDefault();
 
-                if (messageAuthor != null)
+                if (messageAuthorPersonalData != null)
                 {
-                    message.WAGUser.FirstName = messageAuthor.FirstName;
-                    message.WAGUser.LastName = messageAuthor.LastName;
-                    message.WAGUser.UserName = messageAuthor.UserName;
+                    message.WAGUser = new WAGUser()
+                    {
+                        UserName = messageAuthorPersonalData.UserName,
+                        FirstName = messageAuthorPersonalData.FirstName,
+                        LastName = messageAuthorPersonalData.LastName
+                    };
                 }
             }
 
