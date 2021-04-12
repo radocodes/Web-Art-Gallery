@@ -13,12 +13,12 @@ namespace WAG.Services
 
         public string GetBiography()
         {
-            return this.FileService.DownloadTextFromFile(GlobalConstants.BioDirectoryPath, GlobalConstants.BioFileName);
+            return this.FileService.GetTextFromFile(GlobalConstants.BioDirectoryPath, GlobalConstants.BioFileName);
         }
 
         public void EditBiography(string editedText)
         {
-            this.FileService.UploadTextToFileAsync(GlobalConstants.BioDirectoryPath, GlobalConstants.BioFileName, editedText);
+            this.FileService.SaveTextToFileAsync(GlobalConstants.BioDirectoryPath, GlobalConstants.BioFileName, editedText);
         }
     }
 }

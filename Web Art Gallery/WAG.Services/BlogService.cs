@@ -75,21 +75,21 @@ namespace WAG.Services
         {
             var fileName = $"{Guid.NewGuid()}{GlobalConstants.TextFileExtension}";
 
-            var textFileName = this.FileService.UploadTextToFileAsync(GlobalConstants.ArticlesContentDirectoryPath, fileName, articleContent).Result;
+            var textFileName = this.FileService.SaveTextToFileAsync(GlobalConstants.ArticlesContentDirectoryPath, fileName, articleContent).Result;
 
             return textFileName;
         }
 
         private void UploadArticleContent(string articleContent, string fileName)
         {
-            var textFileName = this.FileService.UploadTextToFileAsync(GlobalConstants.ArticlesContentDirectoryPath, fileName, articleContent).Result;
+            var textFileName = this.FileService.SaveTextToFileAsync(GlobalConstants.ArticlesContentDirectoryPath, fileName, articleContent).Result;
         }
 
         public string DownloadArticleContent(string fileName)
         {
             if (File.Exists($"{GlobalConstants.ArticlesContentDirectoryPath}{fileName}"))
             {
-                var articleContent = this.FileService.DownloadTextFromFile(GlobalConstants.ArticlesContentDirectoryPath, fileName);
+                var articleContent = this.FileService.GetTextFromFile(GlobalConstants.ArticlesContentDirectoryPath, fileName);
 
                 return articleContent;
             }

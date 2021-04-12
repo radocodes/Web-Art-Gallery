@@ -7,7 +7,7 @@ namespace WAG.Services
 {
     public class FileService : IFileService
     {
-        public async Task<string> UploadImageAsync(string directoryPath, string fileName, IFormFile imgFile)
+        public async Task<string> SaveImageAsync(string directoryPath, string fileName, IFormFile imgFile)
         {
             var fileFullPath = $"{directoryPath}{fileName}";
 
@@ -19,7 +19,7 @@ namespace WAG.Services
             return fileName;
         }
 
-        public async Task<string> UploadTextToFileAsync(string directoryPath, string fileName, string text)
+        public async Task<string> SaveTextToFileAsync(string directoryPath, string fileName, string text)
         {
             var fileFullPath = $"{directoryPath}{fileName}";
 
@@ -31,7 +31,7 @@ namespace WAG.Services
             return fileName;
         }
 
-        public string DownloadTextFromFile(string directoryPath, string fileName)
+        public string GetTextFromFile(string directoryPath, string fileName)
         {
             var filePathFull = $"{directoryPath}{fileName}";
 

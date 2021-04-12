@@ -5,10 +5,10 @@ namespace WAG.Services.Interfaces
 {
     public interface IFileService
     {
-        Task<string> UploadImageAsync(string directoryPath, string fileName, IFormFile imgFile);
+        Task<string> SaveImageAsync(string directoryPath, string fileName, IFormFile imgFile);
 
-        Task<string> UploadTextToFileAsync(string directoryPath, string fileName, string text);
+        Task<string> SaveTextToFileAsync(string directoryPath, string fileName, string text);
 
-        string DownloadTextFromFile(string directoryPath, string fileName);
+        string GetTextFromFile(string directoryPath, string fileName);
     }
 }
