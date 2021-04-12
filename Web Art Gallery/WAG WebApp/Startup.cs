@@ -61,6 +61,7 @@ namespace WAG.WebApp
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<IContactMessageService, ContactMessageService>();
+            services.AddScoped<IBiographyService, BiographyService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<ICloudinaryService, CloudinaryService>();
 

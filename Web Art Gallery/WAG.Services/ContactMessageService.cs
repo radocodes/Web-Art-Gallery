@@ -11,12 +11,11 @@ namespace WAG.Services
     public class ContactMessageService : IContactMessageService
     {
         private WAGDbContext DbContext;
-        private IFileService FileService;
+        
 
-        public ContactMessageService(WAGDbContext dbContext, IFileService fileService)
+        public ContactMessageService(WAGDbContext dbContext)
         {
             this.DbContext = dbContext;
-            this.FileService = fileService;
         }
 
         public void SaveContactMessage(ContactMessage contactMessage, string userId)
@@ -97,16 +96,6 @@ namespace WAG.Services
                 this.DbContext.ContactMessages.Remove(message);
                 this.DbContext.SaveChanges();
             }
-        }
-
-        public string GetBiography()
-        {
-            return this.FileService.DownloadTextFromFile(GlobalConstants.BioDirectoryPath, GlobalConstants.BioFileName);
-        }
-
-        public void EditBiography(string editedText)
-        {
-            this.FileService.UploadTextToFileAsync(GlobalConstants.BioDirectoryPath, GlobalConstants.BioFileName, editedText);
         }
     }
 }

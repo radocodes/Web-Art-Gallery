@@ -12,9 +12,5 @@ namespace WAG.Services.Interfaces
         ContactMessage GetContactMessageById(int messageId);
 
         void DeleteContactMessage(int messageId);
-
-        string GetBiography();
-
-        void EditBiography(string editedText);
     }
 }

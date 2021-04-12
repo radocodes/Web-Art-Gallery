@@ -8,11 +8,13 @@ namespace WAG.WebApp.Areas.Administration.Controllers
     public class HomeController : AdministrationController
     {
         private IContactMessageService HomeService;
+        private IBiographyService biographyService;
 
-        public HomeController(IContactMessageService homeService, IMapper mapper)
+        public HomeController(IContactMessageService homeService, IBiographyService biographyService, IMapper mapper)
             : base(mapper)
         {
             this.HomeService = homeService;
+            this.biographyService = biographyService;
         }
 
         public IActionResult Messages(MessagesViewModel messagesViewModel)
@@ -61,7 +63,7 @@ namespace WAG.WebApp.Areas.Administration.Controllers
         {
             var editBiographyViewModel = new EditBiographyViewModel()
             {
-                Biography = this.HomeService.GetBiography()
+                Biography = this.biographyService.GetBiography()
             };
 
             return this.View(editBiographyViewModel);
@@ -70,7 +72,7 @@ namespace WAG.WebApp.Areas.Administration.Controllers
         [HttpPost]
         public IActionResult UpdateBiography(EditBiographyViewModel viewModel)
         {
-            this.HomeService.EditBiography(viewModel.Biography);
+            this.biographyService.EditBiography(viewModel.Biography);
 
             return RedirectToAction("Success", "Home", new { area = "" });
         }

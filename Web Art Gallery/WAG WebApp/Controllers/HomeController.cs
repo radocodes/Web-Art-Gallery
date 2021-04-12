@@ -15,12 +15,14 @@ namespace WAG.WebApp.Controllers
     {
         private IContactMessageService HomeService;
         private IUserAccountService UserAccountService;
+        private IBiographyService biographyService;
 
-        public HomeController(IContactMessageService homeService, IUserAccountService userAccountService, IMapper mapper)
+        public HomeController(IContactMessageService homeService, IUserAccountService userAccountService, IBiographyService biographyService, IMapper mapper)
             : base(mapper)
         {
             this.HomeService = homeService;
             this.UserAccountService = userAccountService;
+            this.biographyService = biographyService;
         }
 
         public IActionResult Index()
@@ -43,7 +45,7 @@ namespace WAG.WebApp.Controllers
         {
             var aboutViewModel = new AboutViewModel()
             {
-                Biography = this.HomeService.GetBiography()
+                Biography = this.biographyService.GetBiography()
             };
 
             return View(aboutViewModel);
