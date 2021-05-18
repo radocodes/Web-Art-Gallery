@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using WAG.Data.Models;
@@ -8,7 +7,6 @@ using WAG.Services.Constants;
 using WAG.Services.Interfaces;
 using WAG.ViewModels.UserAccount;
 using WAG.WebApp.Controllers.Common;
-using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace WAG.WebApp.Controllers
 {
@@ -45,7 +43,7 @@ namespace WAG.WebApp.Controllers
 
             var loginResult = this.UserAccountService.LoginUserSuccessfully(loginInputModel);
 
-            if (loginResult.Succeeded)
+            if (!loginResult.Succeeded)
             {
                 loginInputModel.UnsuccessfulLogInMessage = UnsuccessfulLogInMessage;
 
@@ -76,7 +74,7 @@ namespace WAG.WebApp.Controllers
             WAGUser userNew = mapper.Map<WAGUser>(registerInputViewModel);
             var registerResult = this.UserAccountService.CreateUserAsync(userNew, registerInputViewModel.Password).Result;
 
-            if (registerResult.Succeeded)
+            if (!registerResult.Succeeded)
             {
                 registerInputViewModel.UnsuccessfulRegistrationMessage = UnsuccessfulRegistrationMessage;
 
