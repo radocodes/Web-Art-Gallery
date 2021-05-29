@@ -13,24 +13,27 @@ namespace WAG.Services.Tests
         [Fact]
         public void AddCommentShouldAddsCommentAndReturnCommentIdCorrect()
         {
+            // Arrange
+
             var options = new DbContextOptionsBuilder<WAGDbContext>()
                 .UseInMemoryDatabase(databaseName: "Add_Comment_Db")
                 .Options;
 
             var dbContext = new WAGDbContext(options);
-
             var service = new CommentService(dbContext);
 
             var userId = Guid.NewGuid().ToString();
             var articleId = 5;
             var commentContent = "Test Comment Text";
 
+            // Act
             var commentId = service.AddComment(userId, articleId, commentContent);
 
             var addedComment = dbContext
                 .Comments
                 .FirstOrDefault(comment => comment.Id == commentId);
 
+            // Assert
             Assert.NotNull(addedComment);
             Assert.Equal(userId, addedComment.WAGUserId);
             Assert.Equal(articleId, addedComment.ArticleId);
@@ -40,12 +43,13 @@ namespace WAG.Services.Tests
         [Fact]
         public void DeleteCommentShouldDeleteCommentCorrect()
         {
+            // Arrange
+
             var options = new DbContextOptionsBuilder<WAGDbContext>()
                 .UseInMemoryDatabase(databaseName: "Delete_Comment_Db")
                 .Options;
 
             var dbContext = new WAGDbContext(options);
-
             var service = new CommentService(dbContext);
 
             var comment = new Comment()
@@ -60,8 +64,10 @@ namespace WAG.Services.Tests
 
             var storedCommentId = dbContext.Comments.LastOrDefault().Id;
 
+            // Act
             service.DeleteComment(storedCommentId);
 
+            // Assert
             Assert.False(dbContext.Comments.Contains<Comment>(comment));
         }
 
@@ -73,13 +79,12 @@ namespace WAG.Services.Tests
                 .Options;
 
             var dbContext = new WAGDbContext(options);
-
             var service = new CommentService(dbContext);
 
-            var commentsNumber = 5;
+            var numberOfComments = 5;
             var articleId = 3;
 
-            for (int i = 0; i < commentsNumber; i++)
+            for (int i = 0; i < numberOfComments; i++)
             {
                 var comment = new Comment()
                 {
@@ -95,7 +100,7 @@ namespace WAG.Services.Tests
 
             var articleCommentsList = service.GetArticleComments(articleId);
 
-            Assert.Equal(commentsNumber, articleCommentsList.Count);
+            Assert.Equal(numberOfComments, articleCommentsList.Count);
 
             foreach (var comment in articleCommentsList)
             {
@@ -112,12 +117,13 @@ namespace WAG.Services.Tests
         [Fact]
         public void GetCommentByIdShouldReturnsCommentByIdCorrect()
         {
+            // Arrange
+
             var options = new DbContextOptionsBuilder<WAGDbContext>()
                 .UseInMemoryDatabase(databaseName: "Get_Comments_ById_Db")
                 .Options;
 
             var dbContext = new WAGDbContext(options);
-
             var service = new CommentService(dbContext);
 
             var commentSeed = new Comment()
@@ -130,8 +136,10 @@ namespace WAG.Services.Tests
 
             var commentId = dbContext.Comments.LastOrDefault().Id;
 
+            // Act
             var comment = service.GetCommentById(commentId);
 
+            // Assert
             Assert.NotNull(comment);
             Assert.Equal(commentSeed.TextBody, comment.TextBody);
         }
