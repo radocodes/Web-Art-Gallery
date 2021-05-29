@@ -74,12 +74,13 @@ namespace WAG.WebApp.Areas.Administration.Controllers
         [HttpPost]
         public IActionResult EditArtWork(EditArtWorkViewModel viewModel)
         {
-            if (this.ArtisticWorkService.GetArtisticWorkById(viewModel.Id) == null)
+            var existingArtWork = this.ArtisticWorkService.GetArtisticWorkById(viewModel.Id);
+            if (existingArtWork == null)
             {
                 return RedirectToAction("Categories", "ArtisticWork", new { area = "" });
             };
 
-            ArtisticWork ArtWorkUpdate = mapper.Map<ArtisticWork>(viewModel);
+            ArtisticWork ArtWorkUpdate = mapper.Map(viewModel, existingArtWork);
             this.ArtisticWorkService.EditArtWork(ArtWorkUpdate);
 
             return RedirectToAction("Categories", "ArtisticWork", new { area = "" });

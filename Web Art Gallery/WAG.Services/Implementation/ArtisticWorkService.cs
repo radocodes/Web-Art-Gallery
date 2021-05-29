@@ -15,12 +15,10 @@ namespace WAG.Services.Implementation
         private const string DescendingFilter = "descending";
 
         private readonly WAGDbContext DbContext;
-        private readonly IFileService FileService;
 
-        public ArtisticWorkService(WAGDbContext dbContext, IFileService fileService)
+        public ArtisticWorkService(WAGDbContext dbContext)
         {
             this.DbContext = dbContext;
-            this.FileService = fileService;
         }
 
         public void AddArtWork(ArtisticWork newArtWork)
@@ -32,24 +30,17 @@ namespace WAG.Services.Implementation
             this.DbContext.SaveChanges();
         }
 
-        public void EditArtWork(ArtisticWork artWorkUpdate)
+        public void EditArtWork(ArtisticWork trackedArtworkUpdate)
         {
-            var existingCurrentArtwork = this.GetArtisticWorkById(artWorkUpdate.Id);
-
-            if (existingCurrentArtwork == null)
-            {
-                return;
-            }
-
-            var categoryNew = DbContext.ArtisticWorkCategories.FirstOrDefault(c => c.Id == artWorkUpdate.ArtisticWorkCategoryId);
+            var categoryNew = DbContext.ArtisticWorkCategories.FirstOrDefault(c => c.Id == trackedArtworkUpdate.ArtisticWorkCategoryId);
             if (categoryNew != null)
             {
-                artWorkUpdate.ArtisticWorkCategory = categoryNew;
+                trackedArtworkUpdate.ArtisticWorkCategory = categoryNew;
             }
 
-            artWorkUpdate.EditedOn = DateTime.UtcNow;
+            trackedArtworkUpdate.EditedOn = DateTime.UtcNow;
 
-            DbContext.ArtisticWorks.Update(artWorkUpdate);
+            DbContext.ArtisticWorks.Update(trackedArtworkUpdate);
             DbContext.SaveChanges();
         }
 
